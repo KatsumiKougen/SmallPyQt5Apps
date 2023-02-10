@@ -82,8 +82,9 @@ class VgVariant1:
         e = lambda OriginalChar, KeyChar: self.alp[(self.alp.index(ord(OriginalChar))+self.alp.index(KeyChar))%len(self.alp)]
         out = []
         idx = 0
-        key = self._CycleThrough(self.key, len(text))
-        for char in text:
+        bytearray_ = bytes(text)
+        key = self._CycleThrough(self.key, len(bytearray_))
+        for char in bytearray_:
             out.append(e(char, key[idx]))
             idx += 1
         return repr(bytes(out)) if readable else bytes(out)
@@ -92,8 +93,9 @@ class VgVariant1:
         d = lambda CipherChar, KeyChar: self.alp[(self.alp.index(ord(CipherChar))-self.alp.index(KeyChar))%len(self.alp)]
         out = []
         idx = 0
-        key = self._CycleThrough(self.key, len(text))
-        for char in text:
+        bytearray_ = bytes(text)
+        key = self._CycleThrough(self.key, len(bytearray_))
+        for char in bytearray_:
             out.append(d(char, key[idx]))
             idx += 1
         return repr(bytes(out)) if readable else bytes(out)
