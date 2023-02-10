@@ -82,7 +82,7 @@ class VgVariant1:
         e = lambda OriginalChar, KeyChar: self.alp[(self.alp.index(ord(OriginalChar))+self.alp.index(KeyChar))%len(self.alp)]
         out = []
         idx = 0
-        bytearray_ = bytes(text)
+        bytearray_ = bytes(text, "utf-8")
         key = self._CycleThrough(self.key, len(bytearray_))
         for char in bytearray_:
             out.append(e(char, key[idx]))
@@ -93,7 +93,7 @@ class VgVariant1:
         d = lambda CipherChar, KeyChar: self.alp[(self.alp.index(ord(CipherChar))-self.alp.index(KeyChar))%len(self.alp)]
         out = []
         idx = 0
-        bytearray_ = bytes(text)
+        bytearray_ = bytes(text, "utf-8")
         key = self._CycleThrough(self.key, len(bytearray_))
         for char in bytearray_:
             out.append(d(char, key[idx]))
