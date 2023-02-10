@@ -79,7 +79,7 @@ class VgVariant1:
         return out
 
     def encode(self, text: str, readable: bool = True) -> str:
-        e = lambda OriginalChar, KeyChar: self.alp[(self.alp.index(ord(OriginalChar))+self.alp.index(KeyChar))%len(self.alp)]
+        e = lambda OriginalChar, KeyChar: self.alp[(self.alp.index(int(OriginalChar))+self.alp.index(KeyChar))%len(self.alp)]
         out = []
         idx = 0
         bytearray_ = bytes(text, "utf-8")
@@ -90,7 +90,7 @@ class VgVariant1:
         return repr(bytes(out)) if readable else bytes(out)
     
     def decode(self, text: str, readable: bool = True) -> str:
-        d = lambda CipherChar, KeyChar: self.alp[(self.alp.index(ord(CipherChar))-self.alp.index(KeyChar))%len(self.alp)]
+        d = lambda CipherChar, KeyChar: self.alp[(self.alp.index(int(CipherChar))-self.alp.index(KeyChar))%len(self.alp)]
         out = []
         idx = 0
         bytearray_ = bytes(text, "utf-8")
