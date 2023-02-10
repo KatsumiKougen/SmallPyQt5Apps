@@ -143,9 +143,9 @@ class MainWindow(QtWidgets.QMainWindow):
                     Keyword = self.KeywordInputEdit.toPlainText()
                     match self._AppVariables.CryptogramMode:
                         case 0:
-                            fo.write(VC.VgVariant1(Keyword).encode(InputText), readable=False)
+                            fo.write(VC.VgVariant1(Keyword).encode(InputText, readable=False))
                         case 1:
-                            fo.write(VC.VgVariant1(Keyword).decode(InputText), readable=False)
+                            fo.write(VC.VgVariant1(Keyword).decode(InputText, readable=False))
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
