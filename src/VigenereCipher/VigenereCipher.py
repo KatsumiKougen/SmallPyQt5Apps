@@ -90,7 +90,7 @@ class VgVariant1:
     
     def decode(self, text: str, readable: bool = True) -> str:
         d = lambda CipherChar, KeyChar: self.alp[(self.alp.index(ord(CipherChar))-self.alp.index(KeyChar))%len(self.alp)]
-        out = ""
+        out = []
         idx = 0
         key = self._CycleThrough(self.key, len(text))
         for char in text:
