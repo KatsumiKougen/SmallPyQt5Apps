@@ -46,7 +46,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.VgOptionSelectGroup.buttonClicked.connect(self.SwitchCipherVariant)
         self.VgOptionSelectGroup.buttonClicked.connect(self.ShowTextOnOutput)
         self.CopyButton.clicked.connect(self.CopyOutput)
-        self.SaveButton.clicked.connect(self.OpenFileDialog)
+        self.SaveButton.clicked.connect(self.OpenSaveFileDialog)
     
     def ShowTextOnOutput(self):
         match self._AppVariables.CipherVariation:
@@ -107,12 +107,14 @@ class MainWindow(QtWidgets.QMainWindow):
     def CopyOutput(self, arg):
         pyperclip.copy(self.OutputSection.toPlainText())
     
-    def OpenFileDialog(self, arg):
-        FileDialog = QtWidgets.QFileDialog.getSaveFileName(
+    def OpenSaveFileDialog(self, arg):
+        SaveFile = QtWidgets.QFileDialog.getSaveFileName(
             self,
             caption = "Save file as...",
             directory = f"{self.KeywordInputEdit.toPlainText()}.txt"
         )
+        with open(SaveFile[0], "w") as fo:
+            fo.write(self.OutputSection.toPlainText())
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
