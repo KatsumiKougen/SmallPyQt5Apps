@@ -65,9 +65,24 @@ class MainWindow(QtWidgets.QMainWindow):
                             self.OutputSection.insertPlainText(InputText)
                         else:
                             self.OutputSection.insertPlainText(VC.VgVariant0(Keyword).decode(InputText))
-            case 1 | 2:
+            case 1:
+                InputText = self.UserInputEdit.toPlainText()
+                Keyword = self.KeywordInputEdit.toPlainText()
                 self.OutputSection.clear()
-                self.OutputSection.insertPlainText("Mode 1 and 2 output not available - TBA...")
+                match self._AppVariables.CryptogramMode:
+                    case 0:
+                        if Keyword == "":
+                            self.OutputSection.insertPlainText(InputText)
+                        else:
+                            self.OutputSection.insertPlainText(VC.VgVariant1(Keyword).encode(InputText))
+                    case 1:
+                        if Keyword == "":
+                            self.OutputSection.insertPlainText(InputText)
+                        else:
+                            self.OutputSection.insertPlainText(VC.VgVariant1(Keyword).decode(InputText))
+            case 2:
+                self.OutputSection.clear()
+                self.OutputSection.insertPlainText("Mode 2 output not available - TBA...")
     
     def SwitchCipherVariant(self, arg):
         match self.VgOptionSelectGroup.id(arg):
@@ -108,13 +123,29 @@ class MainWindow(QtWidgets.QMainWindow):
         pyperclip.copy(self.OutputSection.toPlainText())
     
     def OpenSaveFileDialog(self, arg):
-        SaveFile = QtWidgets.QFileDialog.getSaveFileName(
-            self,
-            caption = "Save file as...",
-            directory = f"{self.KeywordInputEdit.toPlainText()}.txt"
-        )
-        with open(SaveFile[0], "w") as fo:
-            fo.write(self.OutputSection.toPlainText())
+        match self._AppVariables.CipherVariation:
+            case 0:
+                SaveFile = QtWidgets.QFileDialog.getSaveFileName(
+                    self,
+                    caption = "Save file as...",
+                    directory = f"{self.KeywordInputEdit.toPlainText()}.txt"
+                )
+                with open(SaveFile[0], "w") as fo:
+                    fo.write(self.OutputSection.toPlainText())
+            case 1:
+                SaveFile = QtWidgets.QFileDialog.getSaveFileName(
+                    self,
+                    caption = "Save file as...",
+                    directory = f"{self.KeywordInputEdit.toPlainText()}"
+                )
+                with open(SaveFile[0], "wb") as fo:
+                    InputText = self.UserInputEdit.toPlainText()
+                    Keyword = self.KeywordInputEdit.toPlainText()
+                    match self._AppVariables.CryptogramMode:
+                        case 0:
+                            fo.write(VC.VgVariant1(Keyword).encode(InputText), readable=False)
+                        case 1:
+                            fo.write(VC.VgVariant1(Keyword).decode(InputText), readable=False)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
