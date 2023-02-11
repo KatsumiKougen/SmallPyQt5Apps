@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1359</width>
+    <height>589</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -26,7 +32,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>`INSERT`</string>
+         <string>`I`</string>
         </property>
         <property name="textFormat">
          <enum>Qt::MarkdownText</enum>
@@ -34,7 +40,7 @@
        </widget>
       </item>
       <item>
-       <widget class="Line" name="Status_VLine">
+       <widget class="Line" name="Status_VLine0">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -57,7 +63,7 @@
        </widget>
       </item>
       <item>
-       <widget class="Line" name="Status_VLine2">
+       <widget class="Line" name="Status_VLine1">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -65,63 +71,166 @@
       </item>
       <item>
        <widget class="QLabel" name="Status_StatusLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Ln/Col/Char/Word</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="Status_LCDDisplay0">
-        <property name="intValue" stdset="0">
-         <number>1</number>
+       <layout class="QHBoxLayout" name="Status_LCDLayout">
+        <item>
+         <widget class="QLCDNumber" name="Status_LCDDisplay1">
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <property name="intValue" stdset="0">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLCDNumber" name="Status_LCDDisplay0">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="intValue" stdset="0">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLCDNumber" name="Status_LCDDisplay2"/>
+        </item>
+        <item>
+         <widget class="QLCDNumber" name="Status_LCDDisplay3"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="Status_VLine2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="Status_LCDDisplay1">
-        <property name="intValue" stdset="0">
-         <number>1</number>
+       <widget class="QLabel" name="Status_LanguageLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Brainslag</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="Status_LCDDisplay2"/>
+       <widget class="Line" name="Status_VLine3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
       </item>
       <item>
-       <widget class="QLCDNumber" name="Status_LCDDisplay3"/>
+       <widget class="QLabel" name="Status_TimeLabel">
+        <property name="text">
+         <string>00:00:00</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
     <item>
-     <widget class="QTabWidget" name="TextEditorTabs">
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="tab">
-       <attribute name="title">
-        <string>Tab 1</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QHBoxLayout" name="TextEditorLayout">
+      <item>
+       <layout class="QVBoxLayout" name="FileViewLayout">
         <item>
-         <widget class="QPlainTextEdit" name="plainTextEdit">
-          <property name="font">
-           <font>
-            <family>Monospace</family>
-           </font>
+         <widget class="QLabel" name="FileView_CurrentDirLabel">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Current working directory&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
-          <property name="tabStopWidth">
-           <number>40</number>
+          <property name="textFormat">
+           <enum>Qt::RichText</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="FileView_CWDLayout">
+          <item>
+           <widget class="QLineEdit" name="CWD_DirInput">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="CWD_Button">
+            <property name="text">
+             <string>Change</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTreeView" name="FileView_TreeView">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
          </widget>
         </item>
        </layout>
-      </widget>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Tab 2</string>
-       </attribute>
-      </widget>
-     </widget>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="TextEditorTabs">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="TextEditor_Tab0">
+         <attribute name="title">
+          <string>Tab 1</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QPlainTextEdit" name="TextEditor_MainWidget">
+            <property name="font">
+             <font>
+              <family>Monospace</family>
+             </font>
+            </property>
+            <property name="tabStopWidth">
+             <number>40</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -130,7 +239,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1359</width>
      <height>25</height>
     </rect>
    </property>
@@ -144,7 +253,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
     <addaction name="separator"/>
-    <addaction name="action_Quit"/>
+    <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -192,7 +301,7 @@
     <string>Save &amp;as</string>
    </property>
   </action>
-  <action name="action_Quit">
+  <action name="actionQuit">
    <property name="text">
     <string>&amp;Quit</string>
    </property>
