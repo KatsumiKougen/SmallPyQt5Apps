@@ -161,6 +161,9 @@
      <layout class="QHBoxLayout" name="TextEditorLayout">
       <item>
        <layout class="QVBoxLayout" name="FileViewLayout">
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QLabel" name="FileView_CurrentDirLabel">
           <property name="text">
@@ -185,8 +188,38 @@
           </item>
           <item>
            <widget class="QPushButton" name="CWD_Button">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="sizeIncrement">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>ArrowCursor</cursorShape>
+            </property>
             <property name="text">
-             <string>Change</string>
+             <string>Open</string>
             </property>
            </widget>
           </item>
