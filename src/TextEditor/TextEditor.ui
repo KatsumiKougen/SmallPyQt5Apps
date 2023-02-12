@@ -200,6 +200,9 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
           <attribute name="horizontalHeaderMinimumSectionSize">
            <number>23</number>
           </attribute>
@@ -216,6 +219,27 @@
           <column>
            <property name="text">
             <string>Is directory</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Size</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Owner</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Owner ID</string>
+           </property>
+           <property name="font">
+            <font>
+             <family>Space Grotesk</family>
+             <italic>false</italic>
+            </font>
            </property>
           </column>
          </widget>

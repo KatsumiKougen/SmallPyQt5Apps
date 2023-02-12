@@ -37,7 +37,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.TE_DisplayTitle(self._TE_AppVariables.CurrentWorkspaceName[0])
         self.TE_UpdateTimeInBackground()
-        self.TE_ShowDirectory("a")
+        self.TE_ShowDirectory()
     
     def TE_DisplayTitle(self, workspace: Union[str, bool]):
         self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{workspace[0]}{'*' if not workspace[1] else ''}"))
@@ -50,16 +50,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._updater.time.connect(self.TE_DisplayTime)
         self._updater.start()
     
-    def TE_ShowDirectory(self, directory: str):
-        model = QtGui.QStandardItemModel()
-        model.setHorizontalHeaderLabels(["file"])
-        self.FileView_TreeView.setModel(model)
-        
-        parent = QtGui.QStandardItem("Traveller")
-        child0 = QtGui.QStandardItem("Aether")
-        child1 = QtGui.QStandardItem("Lumine")
-        parent.appendRow([child0, child1])
-        model.appendRow(parent)
+    def TE_ShowDirectory(self, directory: str = QtCore.QDir.current()):
+        self.CWD_DirInput.setText(directory.dirName())
+        self.FileView_TableWidget.clearContents()
+        FileList = directory.entryInfoList()
+        for idx, file in enumerate(FileList):
+            self.FileView_TableWidget.insertRow(idx)
+            self.FileView_TableWidget.setItem(idx, 0, QtWidgets.QTableWidgetItem(file.fileName()))
+            self.FileView_TableWidget.setItem(idx, 1, QtWidgets.QTableWidgetItem(file.completeSuffix()))
+            self.FileView_TableWidget.setItem(idx, 2, QtWidgets.QTableWidgetItem("✔️" if file.isDir() else "❌"))
+            self.FileView_TableWidget.setItem(idx, 3, QtWidgets.QTableWidgetItem(str(file.size())))
+            self.FileView_TableWidget.setItem(idx, 4, QtWidgets.QTableWidgetItem(file.owner()))
+            self.FileView_TableWidget.setItem(idx, 5, QtWidgets.QTableWidgetItem(str(file.ownerId())))
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
