@@ -193,13 +193,31 @@
          </layout>
         </item>
         <item>
-         <widget class="QTreeView" name="FileView_TreeView">
+         <widget class="QTableWidget" name="FileView_TableWidget">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <attribute name="horizontalHeaderMinimumSectionSize">
+           <number>23</number>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>File</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Extension</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Is directory</string>
+           </property>
+          </column>
          </widget>
         </item>
        </layout>
