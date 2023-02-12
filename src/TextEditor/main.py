@@ -1,5 +1,6 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
-from TextEditorUI import Ui_MainWindow
+from ui.TextEditorUI import Ui_MainWindow
+from highlighter import *
 import sys, time
 from typing import Union
 from datetime import datetime
@@ -40,6 +41,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TE_ShowDirectory()
         
         self.TE_SetIndentationSpace(4)
+        self.highlighter = TE_Highlighter(TE_HighlightStyle.Python, self.TextEditor_MainWidget.document())
     
     def TE_DisplayTitle(self, workspace: Union[str, bool]):
         self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{workspace[0]}{'*' if not workspace[1] else ''}"))
