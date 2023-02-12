@@ -36,8 +36,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         
         self.TE_DisplayTitle(self._TE_AppVariables.CurrentWorkspaceName[0])
-        
         self.TE_UpdateTimeInBackground()
+        self.TE_ShowDirectory("a")
     
     def TE_DisplayTitle(self, workspace: Union[str, bool]):
         self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{workspace[0]}{'*' if not workspace[1] else ''}"))
@@ -49,6 +49,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._updater = TE_TimeUpdate()
         self._updater.time.connect(self.TE_DisplayTime)
         self._updater.start()
+    
+    def TE_ShowDirectory(self, directory: str):
+        model = QtGui.QStandardItemModel()
+        model.setHorizontalHeaderLabels(["file"])
+        self.FileView_TreeView.setModel(model)
+        
+        parent = QtGui.QStandardItem("Traveller")
+        child0 = QtGui.QStandardItem("Aether")
+        child1 = QtGui.QStandardItem("Lumine")
+        parent.appendRow([child0, child1])
+        model.appendRow(parent)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
