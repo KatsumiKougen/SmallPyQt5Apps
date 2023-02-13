@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 from ui.TextEditorUI import Ui_MainWindow
-from highlighter import *
+from highlighter.highlighter import *
 import sys, time
 from typing import Union
 from datetime import datetime
