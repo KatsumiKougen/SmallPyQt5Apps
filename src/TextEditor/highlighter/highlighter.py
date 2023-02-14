@@ -28,8 +28,8 @@ TE_GlobalStyles = {
     'literals': TE_Format([74, 101, 255], Bold=True),
     'operator': TE_Format([185, 200, 201]),
     'brace': TE_Format([255, 210, 10]),
-    'deffunc': TE_Format([74, 101, 255], Bold=True),
-    'defclass': TE_Format([74, 101, 255], Bold=True),
+    'deffunc': TE_Format([29, 245, 72], Bold=True),
+    'defclass': TE_Format([29, 245, 72], Bold=True),
     'string': TE_Format([217, 123, 80], Italic=True),
     'string2': TE_Format([217, 123, 80], Italic=True),
     'meta': TE_Format([46, 199, 53]),
@@ -38,7 +38,8 @@ TE_GlobalStyles = {
     'comment': TE_Format([56, 120, 48], Italic=True),
     'self': TE_Format([141, 210, 240], Bold=True),
     'var': TE_Format([141, 210, 240]),
-    'numbers': TE_Format([148, 242, 133])
+    'numbers': TE_Format([148, 242, 133]),
+    'import': TE_Format([29, 245, 72], Bold=True),
 }
 
 class TE_Highlighter(QtGui.QSyntaxHighlighter):
@@ -53,13 +54,12 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                 self.SyntaxRules["keywords"] = [
                     'and', 'as', 'assert', 'async', 'await',
                     'break',
-                    'case', 'class', 'continue',
-                    'def', 'del',
+                    'case', 'continue',
+                    'del',
                     'elif', 'else', 'except',
                     'finally', 'for', 'from',
                     'global',
                     'if', 'import', 'in', 'is',
-                    'lambda',
                     'match',
                     'nonlocal', 'not',
                     'or',
@@ -71,7 +71,7 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                 ]
                 
                 self.SyntaxRules["keywords2"] = [
-                    'not', 'or', 'and'
+                    'not', 'or', 'and', 'lambda', 'def', 'class'
                 ]
 
                 # Python operators
@@ -166,9 +166,9 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                     ('\\bself\\b', 0, TE_GlobalStyles['self']),
 
                     # 'def' followed by an identifier
-                    ('\\bdef\\b\\s*(\\w+)', 1, TE_GlobalStyles['deffunc']),
+                    ('\\bdef\\b\\s+(\\w+)', 1, TE_GlobalStyles['deffunc']),
                     # 'class' followed by an identifier
-                    ('\\bclass\\b\\s*(\\w+)', 1, TE_GlobalStyles['defclass']),
+                    ('\\bclass\\b\\s+(\\w+)', 1, TE_GlobalStyles['defclass']),
 
                     # Numeric literals
                     ('\\b[+-]?[0-9]+[lL]?\\b', 0, TE_GlobalStyles['numbers']),
@@ -184,10 +184,8 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                     ('#[^\\n]*', 0, TE_GlobalStyles['comment']),
 
                     # From '@' until a newline
-                    ('#[^\\n]*', 0, TE_GlobalStyles['meta']),
-                    
-                    # Function keyword arguments
-                    ('\\w+\\(.*(\\w+)=.*\\)', 1, TE_GlobalStyles['var']),
+                    ('@[^\\n\\W]*', 0, TE_GlobalStyles['var']),
+                    ('@', 0, TE_GlobalStyles['builtin']),
                 ]
 
                 # Build a QRegExp for each pattern
