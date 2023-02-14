@@ -186,8 +186,6 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                     # From '@' until a newline
                     ('#[^\\n]*', 0, TE_GlobalStyles['meta']),
                     
-                    ('[A-Za-z_]\\w*', 0, TE_GlobalStyles['var']),
-                    
                     # Function keyword arguments
                     ('\\w+\\(.*(\\w+)=.*\\)', 1, TE_GlobalStyles['var']),
                 ]
