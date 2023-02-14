@@ -498,11 +498,20 @@
    </property>
   </action>
   <action name="actionSH_PlainText">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Plain text</string>
    </property>
   </action>
   <action name="actionSH_Python">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Python</string>
    </property>
