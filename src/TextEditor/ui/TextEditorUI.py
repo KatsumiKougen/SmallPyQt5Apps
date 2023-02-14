@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'TextEditor.ui'
+# Form implementation generated from reading ui file 'ui/TextEditor.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -173,7 +173,7 @@ class Ui_MainWindow(object):
         self.TextEditorLayout.addLayout(self.FileViewLayout)
         self.TextEditor_MainWidget = QtWidgets.QPlainTextEdit(self.centralwidget)
         palette = QtGui.QPalette()
-        brush = QtGui.QBrush(QtGui.QColor(160, 170, 172))
+        brush = QtGui.QBrush(QtGui.QColor(141, 210, 240))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Text, brush)
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
@@ -185,7 +185,7 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(160, 170, 172, 128))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.PlaceholderText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
+        brush = QtGui.QBrush(QtGui.QColor(141, 210, 240))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Text, brush)
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))

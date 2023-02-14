@@ -287,9 +287,9 @@
            <colorrole role="Text">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>160</red>
-              <green>170</green>
-              <blue>172</blue>
+              <red>141</red>
+              <green>210</green>
+              <blue>240</blue>
              </color>
             </brush>
            </colorrole>
@@ -325,9 +325,9 @@
            <colorrole role="Text">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>0</red>
-              <green>0</green>
-              <blue>0</blue>
+              <red>141</red>
+              <green>210</green>
+              <blue>240</blue>
              </color>
             </brush>
            </colorrole>
