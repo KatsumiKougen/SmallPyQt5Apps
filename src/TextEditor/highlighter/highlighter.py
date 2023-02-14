@@ -32,6 +32,7 @@ TE_GlobalStyles = {
     'string': TE_Format([217, 123, 80], Italic=True),
     'string2': TE_Format([217, 123, 80], Italic=True),
     'meta': TE_Format([46, 199, 53]),
+    'builtin': TE_Format([242, 238, 128]),
     'special_attributes': TE_Format([255, 250, 110], Bold=True, Italic=True),
     'comment': TE_Format([56, 120, 48], Italic=True),
     'self': TE_Format([141, 210, 240], Bold=True),
@@ -73,16 +74,16 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                     # Comparison
                     '==', '!=', '<', '<=', '>', '>=',
                     # Arithmetic
-                    '\+', '-', '\*', '/', '//', '\%', '\*\*',
+                    '\\+', '-', '\\*', '/', '//', '\\%', '\\*\\*',
                     # In-place
-                    '\+=', '-=', '\*=', '/=', '\%=',
+                    '\\+=', '-=', '\\*=', '/=', '\\%=',
                     # Bitwise
-                    '\^', '\|', '\&', '\~', '>>', '<<',
+                    '\\^', '\\|', '\\&', '\\~', '>>', '<<',
                 ]
 
                 # Python braces
                 self.SyntaxRules["braces"] = [
-                    '\{', '\}', '\(', '\)', '\[', '\]',
+                    '\\{', '\\}', '\\(', '\\)', '\\[', '\\]',
                 ]
                 
                 self.SyntaxRules["literals"] = [
@@ -120,7 +121,8 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                     'super', 'append', 'extend',
                     'insert', 'remove', 'pop',
                     'clear', 'index', 'count',
-                    'sort', 'reverse'
+                    'sort', 'reverse',
+                    'enumerate',
                 ]
                 
                 # Multi-line strings (expression, flag, style)
@@ -130,15 +132,15 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                 rules = []
 
                 # Keyword, operator, and brace rules
-                rules += [(f'\\b{w}\\b', 0, TE_GlobalStyles['keyword']) for w in self.SyntaxRules["keywords"]]
-                rules += [(f'\\b{o}\\b', 0, TE_GlobalStyles['operator']) for o in self.SyntaxRules["operators"]]
-                rules += [(f'\\b{b}\\b', 0, TE_GlobalStyles['brace']) for b in self.SyntaxRules["braces"]]
+                rules += [(f'\\b{i}\\b', 0, TE_GlobalStyles['keyword']) for i in self.SyntaxRules["keywords"]]
+                rules += [(f'\\b{i}\\b', 0, TE_GlobalStyles['literals']) for i in self.SyntaxRules["literals"]]
+                rules += [(f'\\b{i}\\b', 0, TE_GlobalStyles['builtin']) for i in self.SyntaxRules["other"]]
+                rules += [(f'\\b{i}\\b', 0, TE_GlobalStyles['meta']) for i in self.SyntaxRules["types"]]
                 
-                rules += [(f'\\b{b}\\b', 0, TE_GlobalStyles['meta']) for b in self.SyntaxRules["other"]]
-                rules += [(f'\\b{b}\\b', 0, TE_GlobalStyles['meta']) for b in self.SyntaxRules["types"]]
-                rules += [(f'\\b{b}\\b', 0, TE_GlobalStyles['special_attributes']) for b in self.SyntaxRules["special_attributes"]]
-                rules += [(f'\\b{b}\\b', 0, TE_GlobalStyles['meta']) for b in self.SyntaxRules["class_dir"]]
-                rules += [(f'\\b{b}\\b', 0, TE_GlobalStyles['brace']) for b in self.SyntaxRules["braces"]]
+                rules += [(i, 0, TE_GlobalStyles['operator']) for i in self.SyntaxRules["operators"]]
+                rules += [(i, 0, TE_GlobalStyles['brace']) for i in self.SyntaxRules["braces"]]
+                rules += [(i, 0, TE_GlobalStyles['special_attributes']) for i in self.SyntaxRules["special_attributes"]]
+                rules += [(i, 0, TE_GlobalStyles['meta']) for i in self.SyntaxRules["class_dir"]]
 
                 # All other rules
                 rules += [
@@ -165,6 +167,9 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
 
                     # From '@' until a newline
                     ('#[^\\n]*', 0, TE_GlobalStyles['meta']),
+                    
+                    # Variables
+                    ('\\b\\w+*\\b', 0, TE_GlobalStyles['meta']),
                 ]
 
                 # Build a QRegExp for each pattern
@@ -245,58 +250,3 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
             return True
         else:
             return False
-    
-    """
-    def highlightBlock(self, text):
-        # Do other syntax formatting
-        for expression, nth, format in self.rules:
-            index = expression.indexIn(text, 0)
-
-            while index >= 0:
-                # We actually want the index of the nth match
-                index = expression.pos(nth)
-                length = len(expression.cap(nth))
-                self.setFormat(index, length, format)
-                index = expression.indexIn(text, index + length)
-
-        self.setCurrentBlockState(0)
-
-        # Do multi-line strings
-        in_multiline = self.match_multiline(text, *self.tri_single)
-        if not in_multiline:
-            in_multiline = self.match_multiline(text, *self.tri_double)
-
-    def match_multiline(self, text, delimiter, in_state, style):
-        # If inside triple-single quotes, start at 0
-        if self.previousBlockState() == in_state:
-            start = 0
-            add = 0
-        # Otherwise, look for the delimiter on this line
-        else:
-            start = delimiter.indexIn(text)
-            # Move past this match
-            add = delimiter.matchedLength()
-
-        # As long as there's a delimiter match on this line...
-        while start >= 0:
-            # Look for the ending delimiter
-            end = delimiter.indexIn(text, start + add)
-            # Ending delimiter on this line?
-            if end >= add:
-                length = end - start + add + delimiter.matchedLength()
-                self.setCurrentBlockState(0)
-            # No; multi-line string
-            else:
-                self.setCurrentBlockState(in_state)
-                length = len(text) - start + add
-            # Apply formatting
-            self.setFormat(start, length, style)
-            # Look for the next match
-            start = delimiter.indexIn(text, start + length)
-
-        # Return True if still inside a multi-line string, False otherwise
-        if self.currentBlockState() == in_state:
-            return True
-        else:
-            return False
-    """
