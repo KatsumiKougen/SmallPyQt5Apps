@@ -40,6 +40,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TE_UpdateTimeInBackground()
         self.TE_ShowDirectory()
         
+        self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
+        self.TE_SyntaxHlActionGroup.addAction(self.actionSH_PlainText)
+        self.TE_SyntaxHlActionGroup.addAction(self.actionSH_Python)
+        self.TE_SyntaxHlActionGroup.setExclusive(True)
+        
         self.TE_SetIndentationSpace(4)
         self.highlighter = TE_Highlighter(TE_HighlightStyle.Python, self.TextEditor_MainWidget.document())
     
