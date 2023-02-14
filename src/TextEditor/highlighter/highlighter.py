@@ -28,7 +28,7 @@ TE_GlobalStyles = {
     'literals': TE_Format([74, 101, 255], Bold=True),
     'operator': TE_Format([185, 200, 201]),
     'brace': TE_Format([255, 210, 10]),
-    'deffunc': TE_Format([29, 245, 72], Bold=True),
+    'deffunc': TE_Format([242, 238, 128], Bold=True),
     'defclass': TE_Format([29, 245, 72], Bold=True),
     'string': TE_Format([217, 123, 80], Italic=True),
     'string2': TE_Format([217, 123, 80], Italic=True),
