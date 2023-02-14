@@ -24,6 +24,7 @@ class TE_HighlightStyle:
 
 TE_GlobalStyles = {
     'keyword': TE_Format([237, 31, 227], Bold=True),
+    'keyword2': TE_Format([74, 101, 255], Bold=True),
     'literals': TE_Format([74, 101, 255], Bold=True),
     'operator': TE_Format([185, 200, 201]),
     'brace': TE_Format([255, 210, 10]),
@@ -36,6 +37,7 @@ TE_GlobalStyles = {
     'special_attributes': TE_Format([255, 250, 110], Bold=True, Italic=True),
     'comment': TE_Format([56, 120, 48], Italic=True),
     'self': TE_Format([141, 210, 240], Bold=True),
+    'var': TE_Format([141, 210, 240]),
     'numbers': TE_Format([148, 242, 133])
 }
 
@@ -66,6 +68,10 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                     'try',
                     'while', 'with',
                     'yield'
+                ]
+                
+                self.SyntaxRules["keywords2"] = [
+                    'not', 'or', 'and'
                 ]
 
                 # Python operators
@@ -98,15 +104,20 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                 ]
                 
                 self.SyntaxRules["class_dir"] = [
-                    '__class__', '__delattr__', '__dict__',
-                    '__dir__', '__doc__', '__eq__',
-                    '__format__', '__ge__', '__getattribute__',
-                    '__gt__', '__hash__', '__init__',
-                    '__init_subclass__', '__le__', '__lt__',
-                    '__module__', '__ne__', '__new__',
+                    '__dir__',
+                    '__eq__',
+                    '__format__',
+                    '__ge__', '__getattribute__', '__gt__',
+                    '__hash__',
+                    '__init__',
+                    '__le__', '__lt__',
+                    '__ne__',
                     '__reduce__', '__reduce_ex__', '__repr__',
                     '__setattr__', '__sizeof__', '__str__',
-                    '__subclasshook__', '__weakref__'
+                    '__init__subclass__',
+                    '__subclasshook__',
+                    '__new__',
+                    '__class__',
                 ]
                 
                 self.SyntaxRules["types"] = [
@@ -114,15 +125,20 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                     'complex', 'list', 'tuple',
                     'range', 'str', 'bytes',
                     'bytearray', 'memoryview',
-                    'set', 'frozenset', 'dict'
+                    'set', 'frozenset', 'dict',
+                    'object'
                 ]
                 
-                self.SyntaxRules["other"] = [
+                self.SyntaxRules["builtin"] = [
                     'super', 'append', 'extend',
                     'insert', 'remove', 'pop',
                     'clear', 'index', 'count',
-                    'sort', 'reverse',
-                    'enumerate',
+                    'sort', 'reverse', 'print',
+                    'input',
+                ]
+                
+                self.SyntaxRules["builtin2"] = [
+                    'range', 'enumerate'
                 ]
                 
                 # Multi-line strings (expression, flag, style)
@@ -133,8 +149,10 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
 
                 # Keyword, operator, and brace rules
                 rules += [(f'\\b{i}\\b', 0, TE_GlobalStyles['keyword']) for i in self.SyntaxRules["keywords"]]
+                rules += [(f'\\b{i}\\b', 0, TE_GlobalStyles['keyword2']) for i in self.SyntaxRules["keywords2"]]
                 rules += [(f'\\b{i}\\b', 0, TE_GlobalStyles['literals']) for i in self.SyntaxRules["literals"]]
-                rules += [(f'\\b{i}\\b', 0, TE_GlobalStyles['builtin']) for i in self.SyntaxRules["other"]]
+                rules += [(f'\\b{i}\\b', 0, TE_GlobalStyles['builtin']) for i in self.SyntaxRules["builtin"]]
+                rules += [(f'\\b{i}\\b', 0, TE_GlobalStyles['meta']) for i in self.SyntaxRules["builtin2"]]
                 rules += [(f'\\b{i}\\b', 0, TE_GlobalStyles['meta']) for i in self.SyntaxRules["types"]]
                 
                 rules += [(i, 0, TE_GlobalStyles['operator']) for i in self.SyntaxRules["operators"]]
@@ -168,8 +186,10 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                     # From '@' until a newline
                     ('#[^\\n]*', 0, TE_GlobalStyles['meta']),
                     
-                    # Variables
-                    ('\\b\\w+*\\b', 0, TE_GlobalStyles['meta']),
+                    ('[A-Za-z_]\\w*', 0, TE_GlobalStyles['var']),
+                    
+                    # Function keyword arguments
+                    ('\\w+\\(.*(\\w+)=.*\\)', 1, TE_GlobalStyles['var']),
                 ]
 
                 # Build a QRegExp for each pattern
