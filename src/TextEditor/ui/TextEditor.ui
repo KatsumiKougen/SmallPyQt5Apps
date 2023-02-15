@@ -280,7 +280,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QPlainTextEdit" name="TextEditor_MainWidget">
+       <widget class="TE_CustomPlainTextEdit" name="TextEditor_MainWidget">
         <property name="palette">
          <palette>
           <active>
@@ -517,6 +517,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TE_CustomPlainTextEdit</class>
+   <extends>QPlainTextEdit</extends>
+   <header>highlighter/parenmatch.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -171,7 +171,7 @@ class Ui_MainWindow(object):
         self.FileView_TableWidget.horizontalHeader().setMinimumSectionSize(23)
         self.FileViewLayout.addWidget(self.FileView_TableWidget)
         self.TextEditorLayout.addLayout(self.FileViewLayout)
-        self.TextEditor_MainWidget = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.TextEditor_MainWidget = TE_CustomPlainTextEdit(self.centralwidget)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(141, 210, 240))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -307,3 +307,4 @@ class Ui_MainWindow(object):
         self.actionQuit.setText(_translate("MainWindow", "&Quit"))
         self.actionSH_PlainText.setText(_translate("MainWindow", "Plain text"))
         self.actionSH_Python.setText(_translate("MainWindow", "Python"))
+from highlighter.parenmatch import TE_CustomPlainTextEdit
