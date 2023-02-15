@@ -19,8 +19,9 @@ def TE_Format(RGBValue: list[int, int, int] | tuple[int, int, int], Bold: bool =
     return format_
 
 class TE_HighlightStyle:
-
-    Python = 0
+    
+    PlainText = 0
+    Python = 1
 
 TE_GlobalStyles = {
     'keyword': TE_Format([237, 31, 227], Bold=True),
@@ -190,7 +191,6 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
 
                 # Build a QRegExp for each pattern
                 self.rules = [(QtCore.QRegExp(pat), index, fmt) for (pat, index, fmt) in rules]
-
     
     def highlightBlock(self, text):
         self.tripleQuotesWithinStrings = []

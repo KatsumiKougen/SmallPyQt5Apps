@@ -38,6 +38,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.TE_DisplayTitle(self._TE_AppVariables.CurrentWorkspaceName[0])
         self.TE_UpdateTimeInBackground()
+        self.TE_SetMenuBar()
         self.TE_ShowDirectory()
         
         self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
@@ -46,7 +47,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TE_SyntaxHlActionGroup.setExclusive(True)
         
         self.TE_SetIndentationSpace(4)
-        self.highlighter = TE_Highlighter(TE_HighlightStyle.Python, self.TextEditor_MainWidget.document())
+        self.highlighter = None
+        self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
     
     def TE_DisplayTitle(self, workspace: Union[str, bool]):
         self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{workspace[0]}{'*' if not workspace[1] else ''}"))
@@ -60,6 +62,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._updater = TE_TimeUpdate()
         self._updater.time.connect(self.TE_DisplayTime)
         self._updater.start()
+    
+    # Functions for menu bar commands
+    
+    def TE_SetMenuBar(self):
+        
+        def SetAction_SyntaxHighlighting():
+            self.actionSH_PlainText.triggered.connect(self.TE_SetSyntaxHighlighting)
+            self.actionSH_Python.triggered.connect(self.TE_SetSyntaxHighlighting)
+        
+        SetAction_SyntaxHighlighting()
     
     # Functions for working with directories
     
@@ -83,6 +95,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         FontMetrics = QtGui.QFontMetricsF(Font)
         WhitespaceWidth = FontMetrics.width(" ")
         self.TextEditor_MainWidget.setTabStopDistance(WhitespaceWidth*width)
+    
+    def TE_SetSyntaxHighlighting(self, arg):
+        print(arg)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
