@@ -87,7 +87,7 @@ class VgVariant1:
         for char in bytearray_:
             out.append(e(char, key[idx]))
             idx += 1
-        return repr(bytes(out)) if readable else bytes(out)
+        return "".join([f"\\x{hex(i)[2:]:02}" for i in out]) if readable else bytes(out)
     
     def decode(self, text: str, readable: bool = True) -> str:
         d = lambda CipherChar, KeyChar: self.alp[(self.alp.index(int(CipherChar))-self.alp.index(KeyChar))%len(self.alp)]
@@ -98,7 +98,7 @@ class VgVariant1:
         for char in bytearray_:
             out.append(d(char, key[idx]))
             idx += 1
-        return repr(bytes(out)) if readable else bytes(out)
+        return "".join([f"\\x{hex(i)[2:]:02}" for i in out]) if readable else bytes(out)
 
 if __name__ == "__main__":
     test = VgVariant0("stnlymbl")
