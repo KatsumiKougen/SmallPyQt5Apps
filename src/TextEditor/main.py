@@ -29,24 +29,26 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         FileStatusLabel: str = "File: **$file**"
         
         CurrentWorkspaceName: Union[str, bool] = ["Untitled", False]
+        
+        DocumentBuffer : dict[str, str] = {
+            "saved": None,
+            "modified": None
+        }
     
     def __init__(self):
         super().__init__()
         self.setupUi(self)
         
-        self.TE_DisplayTitle(self._TE_AppVariables.CurrentWorkspaceName[0])
+        self.TE_DisplayTitle(self._TE_AppVariables.CurrentWorkspaceName)
         self.TE_UpdateTimeInBackground()
-        self.TE_SetMenuBar()
         self.TE_ShowDirectory()
         
         self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
-        self.TE_SyntaxHlActionGroup.addAction(self.actionSH_PlainText)
-        self.TE_SyntaxHlActionGroup.addAction(self.actionSH_Python)
-        self.TE_SyntaxHlActionGroup.setExclusive(True)
+        self.TE_SetMenuBar()
         
         self.TE_SetIndentationSpace(4)
         self.highlighter = None
-        self.TE_SetSyntaxHighlighting(TE_HighlightStyle.Python)
+        self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
     
     def TE_DisplayTitle(self, workspace: Union[str, bool]):
         self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{workspace[0]}{'*' if not workspace[1] else ''}"))
@@ -68,6 +70,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         def SetAction_SyntaxHighlighting():
             self.actionSH_PlainText.triggered.connect(lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText))
             self.actionSH_Python.triggered.connect(lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.Python))
+            self.TE_SyntaxHlActionGroup.addAction(self.actionSH_PlainText)
+            self.TE_SyntaxHlActionGroup.addAction(self.actionSH_Python)
+            self.TE_SyntaxHlActionGroup.setExclusive(True)
         
         SetAction_SyntaxHighlighting()
     
@@ -94,9 +99,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         WhitespaceWidth = FontMetrics.width(" ")
         self.TextEditor_MainWidget.setTabStopDistance(WhitespaceWidth*width)
     
-    def TE_SetSyntaxHighlighting(self, arg):
+    def TE_SetSyntaxHighlighting(self, arg: int):
         self.highlighter = TE_Highlighter(arg, self.TextEditor_MainWidget.document())
-        print(arg)
+        self.TE_SetSyntaxHighlightingText(arg)
+    
+    def TE_SetSyntaxHighlightingText(self, arg: int):
+        match arg:
+            case TE_HighlightStyle.PlainText:
+                self.Status_LanguageLabel.setText("Plain text")
+            case TE_HighlightStyle.Python:
+                self.Status_LanguageLabel.setText("Python")
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
