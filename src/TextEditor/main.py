@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 from ui.TextEditorUI import Ui_MainWindow
 from highlighter.highlighter import *
-import sys, time
+import sys, time, re
 from typing import Union
 from datetime import datetime
 
@@ -30,9 +30,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         CurrentWorkspaceName: Union[str, bool] = ["Untitled", False]
         
-        DocumentBuffer : dict[str, str] = {
+        DocumentBuffer: dict[str, str] = {
             "saved": None,
             "modified": None
+        }
+        
+        DocumentStatus: dict[str, int] = {
+            "line": 1,
+            "column": 1,
+            "char": 0,
+            "word": 0
         }
     
     def __init__(self):
@@ -46,9 +53,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
         self.TE_SetMenuBar()
         
+        self.TE_SetLCDWidgets()
+        
         self.TE_SetIndentationSpace(4)
         self.highlighter = None
         self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
+        self.TextEditor_MainWidget.textChanged.connect(self.TE_UpdateLCD)
     
     def TE_DisplayTitle(self, workspace: Union[str, bool]):
         self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{workspace[0]}{'*' if not workspace[1] else ''}"))
@@ -62,6 +72,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._updater = TE_TimeUpdate()
         self._updater.time.connect(self.TE_DisplayTime)
         self._updater.start()
+    
+    # Function for manipulating LCD widgets
+    
+    def TE_SetLCDWidgets(self):
+        self.Status_LCDDisplay0.setStyleSheet("QLCDNumber {background: black; color: #1438db;}")
+        self.Status_LCDDisplay1.setStyleSheet("QLCDNumber {background: black; color: #2f90eb;}")
+        self.Status_LCDDisplay2.setStyleSheet("QLCDNumber {background: black; color: #79baf7;}")
+        self.Status_LCDDisplay3.setStyleSheet("QLCDNumber {background: black; color: #dcf1f7;}")
+    
+    def TE_UpdateLCD(self):
+        self.TE_GetDocumentStatus()
+        self.Status_LCDDisplay0.display(self._TE_AppVariables.DocumentStatus["line"])
+        self.Status_LCDDisplay1.display(self._TE_AppVariables.DocumentStatus["column"])
+        self.Status_LCDDisplay2.display(self._TE_AppVariables.DocumentStatus["char"])
+        self.Status_LCDDisplay3.display(self._TE_AppVariables.DocumentStatus["word"])
     
     # Functions for menu bar commands
     
@@ -92,6 +117,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.FileView_TableWidget.setItem(idx, 5, QtWidgets.QTableWidgetItem(str(file.ownerId())))
     
     # Functions for plain text widget
+    
+    def TE_GetDocumentStatus(self):
+        cursor = self.TextEditor_MainWidget.textCursor()
+        y, x = cursor.blockNumber() + 1, cursor.position() + 1
+        self._TE_AppVariables.DocumentStatus["line"] = y
+        self._TE_AppVariables.DocumentStatus["column"] = x
+        self._TE_AppVariables.DocumentStatus["char"] = len(self.TextEditor_MainWidget.toPlainText())
+        self._TE_AppVariables.DocumentStatus["word"] = len(re.split("\\s", self.TextEditor_MainWidget.toPlainText()))
     
     def TE_SetIndentationSpace(self, width: int):
         Font = self.TextEditor_MainWidget.font()
