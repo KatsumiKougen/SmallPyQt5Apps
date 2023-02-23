@@ -28,9 +28,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         TextEdOverwriteMode: str = "`O`"
         FileStatusLabel: str = "File: **$file**"
         
-        CurrentWorkspaceName: list[Union[str, bool]] = [
-            ["Untitled", False]
-        ]
+        CurrentWorkspaceName: Union[str, bool] = ["Untitled", False]
     
     def __init__(self):
         super().__init__()
@@ -48,7 +46,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.TE_SetIndentationSpace(4)
         self.highlighter = None
-        self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
+        self.TE_SetSyntaxHighlighting(TE_HighlightStyle.Python)
     
     def TE_DisplayTitle(self, workspace: Union[str, bool]):
         self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{workspace[0]}{'*' if not workspace[1] else ''}"))
@@ -68,8 +66,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def TE_SetMenuBar(self):
         
         def SetAction_SyntaxHighlighting():
-            self.actionSH_PlainText.triggered.connect(self.TE_SetSyntaxHighlighting)
-            self.actionSH_Python.triggered.connect(self.TE_SetSyntaxHighlighting)
+            self.actionSH_PlainText.triggered.connect(lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText))
+            self.actionSH_Python.triggered.connect(lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.Python))
         
         SetAction_SyntaxHighlighting()
     
@@ -83,7 +81,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.FileView_TableWidget.insertRow(idx)
             self.FileView_TableWidget.setItem(idx, 0, QtWidgets.QTableWidgetItem(file.fileName()))
             self.FileView_TableWidget.setItem(idx, 1, QtWidgets.QTableWidgetItem(file.completeSuffix()))
-            self.FileView_TableWidget.setItem(idx, 2, QtWidgets.QTableWidgetItem("✔️" if file.isDir() else "❌"))
+            self.FileView_TableWidget.setItem(idx, 2, QtWidgets.QTableWidgetItem("Yes" if file.isDir() else "No"))
             self.FileView_TableWidget.setItem(idx, 3, QtWidgets.QTableWidgetItem(str(file.size())))
             self.FileView_TableWidget.setItem(idx, 4, QtWidgets.QTableWidgetItem(file.owner()))
             self.FileView_TableWidget.setItem(idx, 5, QtWidgets.QTableWidgetItem(str(file.ownerId())))
@@ -97,6 +95,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TextEditor_MainWidget.setTabStopDistance(WhitespaceWidth*width)
     
     def TE_SetSyntaxHighlighting(self, arg):
+        self.highlighter = TE_Highlighter(arg, self.TextEditor_MainWidget.document())
         print(arg)
 
 if __name__ == "__main__":
