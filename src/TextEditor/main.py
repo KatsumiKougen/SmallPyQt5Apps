@@ -69,9 +69,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.Status_TimeLabel.setText(arg)
     
     def TE_UpdateTimeInBackground(self):
-        self._updater = TE_TimeUpdate()
-        self._updater.time.connect(self.TE_DisplayTime)
-        self._updater.start()
+        self._TE_TimeThread = TE_TimeUpdate()
+        self._TE_TimeThread.time.connect(self.TE_DisplayTime)
+        self._TE_TimeThread.start()
     
     # Function for manipulating LCD widgets
     
