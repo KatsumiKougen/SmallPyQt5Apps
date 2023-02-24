@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(723, 510)
+        MainWindow.resize(723, 493)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -67,6 +67,7 @@ class Ui_MainWindow(object):
         self.Status_LCDDisplay1 = QtWidgets.QLCDNumber(self.centralwidget)
         self.Status_LCDDisplay1.setFrameShape(QtWidgets.QFrame.Box)
         self.Status_LCDDisplay1.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.Status_LCDDisplay1.setSmallDecimalPoint(False)
         self.Status_LCDDisplay1.setProperty("intValue", 1)
         self.Status_LCDDisplay1.setObjectName("Status_LCDDisplay1")
         self.Status_LCDLayout.addWidget(self.Status_LCDDisplay1)
@@ -257,6 +258,8 @@ class Ui_MainWindow(object):
         self.actionSH_Python = QtWidgets.QAction(MainWindow)
         self.actionSH_Python.setCheckable(True)
         self.actionSH_Python.setObjectName("actionSH_Python")
+        self.actionSetFontSizeAndIndent = QtWidgets.QAction(MainWindow)
+        self.actionSetFontSizeAndIndent.setObjectName("actionSetFontSizeAndIndent")
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addSeparator()
@@ -268,6 +271,8 @@ class Ui_MainWindow(object):
         self.menuSyntaxHighlighting.addSeparator()
         self.menuSyntaxHighlighting.addAction(self.actionSH_Python)
         self.menuView.addAction(self.menuSyntaxHighlighting.menuAction())
+        self.menuView.addSeparator()
+        self.menuView.addAction(self.actionSetFontSizeAndIndent)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuEdit.menuAction())
         self.menubar.addAction(self.menuView.menuAction())
@@ -312,4 +317,5 @@ class Ui_MainWindow(object):
         self.actionQuit.setText(_translate("MainWindow", "&Quit"))
         self.actionSH_PlainText.setText(_translate("MainWindow", "Plain text"))
         self.actionSH_Python.setText(_translate("MainWindow", "Python"))
+        self.actionSetFontSizeAndIndent.setText(_translate("MainWindow", "Set font size and i&ndent"))
 from highlighter.parenmatch import TE_CustomPlainTextEdit

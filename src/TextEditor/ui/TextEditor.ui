@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>723</width>
-    <height>510</height>
+    <height>493</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -91,6 +91,9 @@
           </property>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
+          </property>
+          <property name="smallDecimalPoint">
+           <bool>false</bool>
           </property>
           <property name="intValue" stdset="0">
            <number>1</number>
@@ -461,6 +464,8 @@
      <addaction name="actionSH_Python"/>
     </widget>
     <addaction name="menuSyntaxHighlighting"/>
+    <addaction name="separator"/>
+    <addaction name="actionSetFontSizeAndIndent"/>
    </widget>
    <widget class="QMenu" name="menuTool">
     <property name="title">
@@ -520,6 +525,11 @@
    </property>
    <property name="text">
     <string>Python</string>
+   </property>
+  </action>
+  <action name="actionSetFontSizeAndIndent">
+   <property name="text">
+    <string>Set font size and i&amp;ndent</string>
    </property>
   </action>
  </widget>
