@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1359</width>
-    <height>589</height>
+    <width>1118</width>
+    <height>541</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -146,7 +146,29 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="Status_SplashLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;[&lt;span style=&quot; font-family:'monospace'; color:#ffff00; background-color:#000000;&quot;&gt;HAHAHA! Like &amp;quot;Ay, wake yo sleepy head up!&amp;quot;&lt;/span&gt;]&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QLabel" name="Status_TimeLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>00:00:00</string>
         </property>
@@ -421,7 +443,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1359</width>
+     <width>1118</width>
      <height>25</height>
     </rect>
    </property>
