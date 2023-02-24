@@ -28,11 +28,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         TextEdOverwriteMode: str = "`O`"
         FileStatusLabel: str = "File: **$file**"
         
-        CurrentWorkspaceName: Union[str, bool] = ["Untitled", False]
+        CurrentWorkspaceName: str = "Untitled"
         
         DocumentBuffer: dict[str, str] = {
-            "saved": None,
-            "modified": None
+            "saved": "",
+            "active": ""
         }
         
         DocumentStatus: dict[str, int] = {
@@ -46,22 +46,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         
-        self.TE_DisplayTitle(self._TE_AppVariables.CurrentWorkspaceName)
+        self.TE_DisplayTitle()
         self.TE_UpdateTimeInBackground()
         self.TE_ShowDirectory()
-        
         self.TE_SetMenuBar()
-        
         self.TE_SetLCDWidgets()
+        self.TE_ConnectSignals()
         
         self.TE_SetIndentationSpace(4)
         self.highlighter = None
+    
+    def TE_ConnectSignals(self):
         self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
         self.TextEditor_MainWidget.textChanged.connect(self.TE_UpdateLCD)
         self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateLCD)
     
-    def TE_DisplayTitle(self, workspace: Union[str, bool]):
-        self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{workspace[0]}{'*' if not workspace[1] else ''}"))
+    def TE_DisplayTitle(self):
+        filename = self._TE_AppVariables.CurrentWorkspaceName
+        self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{filename}{'*' if not self.TE_FileSaved() else ''}"))
     
     # Functions for displaying time (HH:MM:SS)
     
@@ -102,7 +104,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
         SetAction_SyntaxHighlighting()
     
-    # Functions for working with directories
+    # Functions for file handling
     
     def TE_ShowDirectory(self, directory: str = QtCore.QDir.current()):
         self.CWD_DirInput.setText(directory.dirName())
@@ -117,6 +119,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.FileView_TableWidget.setItem(idx, 4, QtWidgets.QTableWidgetItem(file.owner()))
             self.FileView_TableWidget.setItem(idx, 5, QtWidgets.QTableWidgetItem(str(file.ownerId())))
     
+    def TE_FileSaved(self) -> bool:
+        return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"]
+    
     # Functions for plain text widget
     
     def TE_GetDocumentStatus(self):
@@ -126,6 +131,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._TE_AppVariables.DocumentStatus["column"] = y
         self._TE_AppVariables.DocumentStatus["char"] = len(self.TextEditor_MainWidget.toPlainText())
         self._TE_AppVariables.DocumentStatus["word"] = len(re.split("\\s+", self.TextEditor_MainWidget.toPlainText().strip()))
+        
+        self._TE_AppVariables.DocumentBuffer["active"] = self.TextEditor_MainWidget.toPlainText()
     
     def TE_SetIndentationSpace(self, width: int):
         Font = self.TextEditor_MainWidget.font()
