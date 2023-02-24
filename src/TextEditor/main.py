@@ -125,7 +125,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._TE_AppVariables.DocumentStatus["line"] = x
         self._TE_AppVariables.DocumentStatus["column"] = y
         self._TE_AppVariables.DocumentStatus["char"] = len(self.TextEditor_MainWidget.toPlainText())
-        self._TE_AppVariables.DocumentStatus["word"] = len(re.split("\\s", self.TextEditor_MainWidget.toPlainText()))
+        self._TE_AppVariables.DocumentStatus["word"] = len(re.split("\\s+", self.TextEditor_MainWidget.toPlainText().strip()))
     
     def TE_SetIndentationSpace(self, width: int):
         Font = self.TextEditor_MainWidget.font()
