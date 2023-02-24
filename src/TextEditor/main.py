@@ -65,6 +65,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         filename = self._TE_AppVariables.CurrentWorkspaceName
         self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{filename}{'*' if not self.TE_FileSaved() else ''}"))
     
+    def closeEvent(self, event):
+        if not self.TE_FileSaved():
+            filename = self._TE_AppVariables.CurrentWorkspaceName
+            MessageBox = QtWidgets.QMessageBox()
+            MessageBox.setTextFormat(QtCore.Qt.MarkdownText)
+            MessageBox.setWindowTitle("Exiting the text editor so soon?")
+            MessageBox.setText(f"**{filename}** is modified.")
+            MessageBox.setInformativeText(f"Are you sure you want to exit?\nAll unsaved changes to {filename} will be lost!\n\nPlease! *sniff* Please stay... it's just that I've never met someone like you...\nI want to hang out with you... for a little while...")
+            MessageBox.setStandardButtons(QtWidgets.QMessageBox.Save | QtWidgets.QMessageBox.Close | QtWidgets.QMessageBox.Cancel)
+            MessageBox.setDefaultButton(QtWidgets.QMessageBox.Cancel)
+            ret = MessageBox.exec()
+            match ret:
+                case QtWidgets.QMessageBox.Close:
+                    event.accept()
+                case _:
+                    event.ignore()
+    
     # Functions for displaying time (HH:MM:SS)
     
     def TE_DisplayTime(self, arg):
