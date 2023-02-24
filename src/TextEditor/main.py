@@ -50,7 +50,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TE_UpdateTimeInBackground()
         self.TE_ShowDirectory()
         
-        self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
         self.TE_SetMenuBar()
         
         self.TE_SetLCDWidgets()
@@ -59,6 +58,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.highlighter = None
         self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
         self.TextEditor_MainWidget.textChanged.connect(self.TE_UpdateLCD)
+        self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateLCD)
     
     def TE_DisplayTitle(self, workspace: Union[str, bool]):
         self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{workspace[0]}{'*' if not workspace[1] else ''}"))
@@ -99,6 +99,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.TE_SyntaxHlActionGroup.addAction(self.actionSH_Python)
             self.TE_SyntaxHlActionGroup.setExclusive(True)
         
+        self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
         SetAction_SyntaxHighlighting()
     
     # Functions for working with directories
@@ -121,8 +122,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def TE_GetDocumentStatus(self):
         cursor = self.TextEditor_MainWidget.textCursor()
         y, x = cursor.blockNumber() + 1, cursor.position() + 1
-        self._TE_AppVariables.DocumentStatus["line"] = y
-        self._TE_AppVariables.DocumentStatus["column"] = x
+        self._TE_AppVariables.DocumentStatus["line"] = x
+        self._TE_AppVariables.DocumentStatus["column"] = y
         self._TE_AppVariables.DocumentStatus["char"] = len(self.TextEditor_MainWidget.toPlainText())
         self._TE_AppVariables.DocumentStatus["word"] = len(re.split("\\s", self.TextEditor_MainWidget.toPlainText()))
     
