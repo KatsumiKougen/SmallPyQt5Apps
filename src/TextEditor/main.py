@@ -112,13 +112,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def TE_SetMenuBar(self):
         
         def SetAction_SyntaxHighlighting():
+            self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
             self.actionSH_PlainText.triggered.connect(lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText))
             self.actionSH_Python.triggered.connect(lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.Python))
             self.TE_SyntaxHlActionGroup.addAction(self.actionSH_PlainText)
             self.TE_SyntaxHlActionGroup.addAction(self.actionSH_Python)
             self.TE_SyntaxHlActionGroup.setExclusive(True)
         
-        self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
         SetAction_SyntaxHighlighting()
     
     # Functions for file handling
