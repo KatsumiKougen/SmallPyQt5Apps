@@ -89,10 +89,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     event.ignore()
     
     def TE_OpenCustomiseEditorWidget(self):
-        widget = TE_CustomiseEditorWidget()
-        widget.output0.connect(self.TE_SetFontSize)
-        widget.output1.connect(self.TE_SetIndentationSpace)
-        widget.show()
+        self._TE_CEWidget = TE_CustomiseEditorWidget(
+            self._TE_AppVariables.CurrentFontSize,
+            self._TE_AppVariables.CurrentIndentationSpace
+        )
+        self._TE_CEWidget.output0.connect(self.TE_SetFontSize)
+        self._TE_CEWidget.output1.connect(self.TE_SetIndentationSpace)
+        self._TE_CEWidget.show()
     
     # Functions for displaying time (HH:MM:SS)
     
@@ -168,7 +171,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._TE_AppVariables.DocumentBuffer["active"] = self.TextEditor_MainWidget.toPlainText()
     
     def TE_SetFontSize(self, point: int):
-        self.TextEditor_MainWidget.setFontPointSize(point)
+        self.TextEditor_MainWidget.setFont(QtGui.QFont("Monospace", point))
         self._TE_AppVariables.CurrentFontSize = point
     
     def TE_SetIndentationSpace(self, width: int):

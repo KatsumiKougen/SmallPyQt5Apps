@@ -9,9 +9,13 @@ class TE_CustomiseEditorWidget(QtWidgets.QWidget, Ui_Form):
     output0 = QtCore.pyqtSignal(int)
     output1 = QtCore.pyqtSignal(int)
     
-    def __init__(self):
+    def __init__(self, FontSize, IndentSize):
         super().__init__()
         self.setupUi(self)
+        self.CE_FontSizeHSlider.setValue(FontSize)
+        self.CE_FontSizeSpinBox.setValue(FontSize)
+        self.CE_IndentSizeHSlider.setValue(IndentSize)
+        self.CE_IndentSizeSpinBox.setValue(IndentSize)
         self.CE_ConnectSignals()
     
     def CE_ConnectSignals(self):
