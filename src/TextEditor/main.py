@@ -66,6 +66,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         def ConnectTextChangedSignal():
             self.TextEditor_MainWidget.textChanged.connect(self.TE_UpdateLCD)
             self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateLCD)
+            self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateProgressBar)
         
         ConnectTextChangedSignal()
     
