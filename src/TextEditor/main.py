@@ -61,9 +61,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.highlighter = None
     
     def TE_ConnectSignals(self):
-        self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
-        self.TextEditor_MainWidget.textChanged.connect(self.TE_UpdateLCD)
-        self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateLCD)
+        
+        def ConnectSyntaxHighlightingSignal():
+            self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
+        
+        def ConnectTextChangedSignal():
+            self.TextEditor_MainWidget.textChanged.connect(self.TE_UpdateLCD)
+            self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateLCD)
+        
+        ConnectTextChangedSignal()
+        ConnectSyntaxHighlightingSignal()
     
     # Functions for main window
     
@@ -191,6 +198,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.Status_LanguageLabel.setText("Plain text")
             case TE_HighlightStyle.Python:
                 self.Status_LanguageLabel.setText("Python")
+    
+    def TE_UpdateProgressBar(self):
+        DocumentLength = len(self.TextEditor_MainWidget.toPlainText())
+        CursorPosition = self.TextEditor_MainWidget.textCursor().position()
+        self.Misc_ProgressBar.setMaximum(DocumentLength)
+        self.Misc_ProgressBar.setValue(CursorPosition)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
