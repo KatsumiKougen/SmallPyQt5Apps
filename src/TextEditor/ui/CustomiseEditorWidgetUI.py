@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/CustomiseEditorWidget.ui'
+# Form implementation generated from reading ui file 'CustomiseEditorWidget.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -11,13 +11,21 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(412, 82)
-        self.gridLayout = QtWidgets.QGridLayout(Form)
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(438, 82)
+        self.gridLayout = QtWidgets.QGridLayout(Dialog)
         self.gridLayout.setObjectName("gridLayout")
-        self.CE_FontSizeSpinBox = QtWidgets.QSpinBox(Form)
+        self.CE_FontSizeLabel = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.CE_FontSizeLabel.sizePolicy().hasHeightForWidth())
+        self.CE_FontSizeLabel.setSizePolicy(sizePolicy)
+        self.CE_FontSizeLabel.setObjectName("CE_FontSizeLabel")
+        self.gridLayout.addWidget(self.CE_FontSizeLabel, 0, 0, 1, 1)
+        self.CE_FontSizeSpinBox = QtWidgets.QSpinBox(Dialog)
         self.CE_FontSizeSpinBox.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -32,7 +40,7 @@ class Ui_Form(object):
         self.CE_FontSizeSpinBox.setMaximum(72)
         self.CE_FontSizeSpinBox.setObjectName("CE_FontSizeSpinBox")
         self.gridLayout.addWidget(self.CE_FontSizeSpinBox, 0, 1, 1, 1)
-        self.CE_FontSizeHSlider = QtWidgets.QSlider(Form)
+        self.CE_FontSizeHSlider = QtWidgets.QSlider(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -43,24 +51,16 @@ class Ui_Form(object):
         self.CE_FontSizeHSlider.setOrientation(QtCore.Qt.Horizontal)
         self.CE_FontSizeHSlider.setObjectName("CE_FontSizeHSlider")
         self.gridLayout.addWidget(self.CE_FontSizeHSlider, 0, 2, 1, 1)
-        self.CE_FontSizeLabel = QtWidgets.QLabel(Form)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.CE_FontSizeLabel.sizePolicy().hasHeightForWidth())
-        self.CE_FontSizeLabel.setSizePolicy(sizePolicy)
-        self.CE_FontSizeLabel.setObjectName("CE_FontSizeLabel")
-        self.gridLayout.addWidget(self.CE_FontSizeLabel, 0, 0, 1, 1)
-        self.CE_IndentSizeLabel = QtWidgets.QLabel(Form)
+        self.CE_IndentSizeLabel = QtWidgets.QLabel(Dialog)
         self.CE_IndentSizeLabel.setObjectName("CE_IndentSizeLabel")
         self.gridLayout.addWidget(self.CE_IndentSizeLabel, 1, 0, 1, 1)
-        self.CE_IndentSizeSpinBox = QtWidgets.QSpinBox(Form)
+        self.CE_IndentSizeSpinBox = QtWidgets.QSpinBox(Dialog)
         self.CE_IndentSizeSpinBox.setButtonSymbols(QtWidgets.QAbstractSpinBox.PlusMinus)
         self.CE_IndentSizeSpinBox.setMinimum(2)
         self.CE_IndentSizeSpinBox.setMaximum(10)
         self.CE_IndentSizeSpinBox.setObjectName("CE_IndentSizeSpinBox")
         self.gridLayout.addWidget(self.CE_IndentSizeSpinBox, 1, 1, 1, 1)
-        self.CE_IndentSizeHSlider = QtWidgets.QSlider(Form)
+        self.CE_IndentSizeHSlider = QtWidgets.QSlider(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -72,13 +72,13 @@ class Ui_Form(object):
         self.CE_IndentSizeHSlider.setObjectName("CE_IndentSizeHSlider")
         self.gridLayout.addWidget(self.CE_IndentSizeHSlider, 1, 2, 1, 1)
 
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        self.retranslateUi(Dialog)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.CE_FontSizeSpinBox.setSuffix(_translate("Form", " pt"))
-        self.CE_FontSizeLabel.setText(_translate("Form", "Font size"))
-        self.CE_IndentSizeLabel.setText(_translate("Form", "Indent size"))
-        self.CE_IndentSizeSpinBox.setSuffix(_translate("Form", " spaces"))
+        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        self.CE_FontSizeLabel.setText(_translate("Dialog", "Font size"))
+        self.CE_FontSizeSpinBox.setSuffix(_translate("Dialog", " pt"))
+        self.CE_IndentSizeLabel.setText(_translate("Dialog", "Indent size"))
+        self.CE_IndentSizeSpinBox.setSuffix(_translate("Dialog", " spaces"))
