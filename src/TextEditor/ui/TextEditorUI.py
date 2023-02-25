@@ -261,7 +261,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.Misc_ProgressBar.setFont(font)
-        self.Misc_ProgressBar.setProperty("value", 24)
+        self.Misc_ProgressBar.setProperty("value", 0)
         self.Misc_ProgressBar.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Misc_ProgressBar.setTextVisible(False)
         self.Misc_ProgressBar.setInvertedAppearance(False)
