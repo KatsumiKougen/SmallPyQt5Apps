@@ -309,6 +309,12 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
+        self.actionCut.triggered.connect(self.TextEditor_MainWidget.cut) # type: ignore
+        self.actionCopy.triggered.connect(self.TextEditor_MainWidget.copy) # type: ignore
+        self.actionPaste.triggered.connect(self.TextEditor_MainWidget.paste) # type: ignore
+        self.actionSelectAll.triggered.connect(self.TextEditor_MainWidget.selectAll) # type: ignore
+        self.actionUndo.triggered.connect(self.TextEditor_MainWidget.undo) # type: ignore
+        self.actionRedo.triggered.connect(self.TextEditor_MainWidget.redo) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
