@@ -133,6 +133,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.TE_SyntaxHlActionGroup.addAction(self.actionSH_Python)
             self.TE_SyntaxHlActionGroup.setExclusive(True)
         
+        SetAction_OpenCustomiseEditorWidget()
         SetAction_SyntaxHighlighting()
     
     # Functions for file handling
