@@ -45,6 +45,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         CurrentFontSize = 11
         CurrentIndentationSpace = 4
+        
+        # BlockPosition = [[line, col], [line, col]]
+        BlockPosition = [[None, None], [None, None]]
     
     def __init__(self):
         super().__init__()
@@ -131,6 +134,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def TE_SetMenuBar(self):
         
+        def SetAction_WordStarBlock():
+            self.actionWSB_MarkBegin.triggered.connect(self.TE_MarkWSBegin)
+            self.actionWSB_MarkEnd.triggered.connect(self.TE_MarkWSEnd)
+        
         def SetAction_OpenCustomiseEditorWidget():
             self.actionSetFontSizeAndIndent.triggered.connect(self.TE_OpenCustomiseEditorWidget)
         
@@ -144,6 +151,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         SetAction_OpenCustomiseEditorWidget()
         SetAction_SyntaxHighlighting()
+        SetAction_WordStarBlock()
     
     # Functions for file handling
     
@@ -202,6 +210,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         CursorPosition = self.TextEditor_MainWidget.textCursor().position()
         self.Misc_ProgressBar.setMaximum(DocumentLength)
         self.Misc_ProgressBar.setValue(CursorPosition)
+    
+    # Function for working with WordStar blocks
+    
+    def TE_ShowWSBlockStatus(self):
+        position = self._TE_AppVariables.BlockPosition
+        self.Misc_WordStarBlockLabel.setText(f"WordStar block at ({position[0][0]}:{position[0][1]});({position[1][0]}:{position[1][1]})")
+    
+    def TE_MarkWSBegin(self):
+        CurrentPosition = [self.TextEditor_MainWidget.textCursor().blockNumber(), self.TextEditor_MainWidget.textCursor().position()]
+        self._TE_AppVariables.BlockPosition[0] = CurrentPosition
+        self.TE_ShowWSBlockStatus()
+    
+    def TE_MarkWSEnd(self):
+        CurrentPosition = [self.TextEditor_MainWidget.textCursor().blockNumber(), self.TextEditor_MainWidget.textCursor().position()]
+        self._TE_AppVariables.BlockPosition[1] = CurrentPosition
+        self.TE_ShowWSBlockStatus()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
