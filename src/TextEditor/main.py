@@ -58,19 +58,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TE_ConnectSignals()
         
         self.TE_SetIndentationSpace(4)
+        self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
         self.highlighter = None
     
     def TE_ConnectSignals(self):
-        
-        def ConnectSyntaxHighlightingSignal():
-            self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
         
         def ConnectTextChangedSignal():
             self.TextEditor_MainWidget.textChanged.connect(self.TE_UpdateLCD)
             self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateLCD)
         
         ConnectTextChangedSignal()
-        ConnectSyntaxHighlightingSignal()
     
     # Functions for main window
     
