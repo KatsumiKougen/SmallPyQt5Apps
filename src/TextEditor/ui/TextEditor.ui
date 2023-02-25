@@ -531,13 +531,13 @@
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
             </property>
             <property name="textVisible">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="invertedAppearance">
              <bool>false</bool>
             </property>
             <property name="format">
-             <string>%p/%m</string>
+             <string>%m/%p</string>
             </property>
            </widget>
           </item>
