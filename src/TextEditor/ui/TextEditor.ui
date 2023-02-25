@@ -603,6 +603,9 @@
     <addaction name="actionFindAndReplace"/>
     <addaction name="separator"/>
     <addaction name="menuWordStarBlocks"/>
+    <addaction name="separator"/>
+    <addaction name="actionIndentMore"/>
+    <addaction name="actionIndentLess"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -964,25 +967,66 @@
    <property name="text">
     <string>Mark begin position</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+K, B</string>
+   </property>
   </action>
   <action name="actionWSB_MarkEnd">
    <property name="text">
     <string>Mark end position</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+K, K</string>
    </property>
   </action>
   <action name="actionWSB_Copy">
    <property name="text">
     <string>Copy block to cursor</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+K, C</string>
+   </property>
   </action>
   <action name="actionWSB_Move">
    <property name="text">
     <string>Move block to cursor</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+K, M</string>
+   </property>
   </action>
   <action name="actionWSB_Delete">
    <property name="text">
     <string>Delete block</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+K, Y</string>
+   </property>
+  </action>
+  <action name="actionIndent_more">
+   <property name="text">
+    <string>Indent more</string>
+   </property>
+  </action>
+  <action name="actionIndent_less">
+   <property name="text">
+    <string>Indent less</string>
+   </property>
+  </action>
+  <action name="actionIndentMore">
+   <property name="text">
+    <string>Indent &amp;more</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+K, ,</string>
+   </property>
+  </action>
+  <action name="actionIndentLess">
+   <property name="text">
+    <string>Indent &amp;less</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+K, .</string>
    </property>
   </action>
  </widget>

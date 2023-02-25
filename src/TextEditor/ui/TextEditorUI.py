@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/TextEditor.ui'
+# Form implementation generated from reading ui file 'TextEditor.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -389,6 +389,14 @@ class Ui_MainWindow(object):
         self.actionWSB_Move.setObjectName("actionWSB_Move")
         self.actionWSB_Delete = QtWidgets.QAction(MainWindow)
         self.actionWSB_Delete.setObjectName("actionWSB_Delete")
+        self.actionIndent_more = QtWidgets.QAction(MainWindow)
+        self.actionIndent_more.setObjectName("actionIndent_more")
+        self.actionIndent_less = QtWidgets.QAction(MainWindow)
+        self.actionIndent_less.setObjectName("actionIndent_less")
+        self.actionIndentMore = QtWidgets.QAction(MainWindow)
+        self.actionIndentMore.setObjectName("actionIndentMore")
+        self.actionIndentLess = QtWidgets.QAction(MainWindow)
+        self.actionIndentLess.setObjectName("actionIndentLess")
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addSeparator()
@@ -413,6 +421,9 @@ class Ui_MainWindow(object):
         self.menuEdit.addAction(self.actionFindAndReplace)
         self.menuEdit.addSeparator()
         self.menuEdit.addAction(self.menuWordStarBlocks.menuAction())
+        self.menuEdit.addSeparator()
+        self.menuEdit.addAction(self.actionIndentMore)
+        self.menuEdit.addAction(self.actionIndentLess)
         self.menuSyntaxHighlighting.addAction(self.actionSH_PlainText)
         self.menuSyntaxHighlighting.addSeparator()
         self.menuSyntaxHighlighting.addAction(self.actionSH_Python)
@@ -561,8 +572,19 @@ class Ui_MainWindow(object):
         self.actionMark_begin.setText(_translate("MainWindow", "Mark begin"))
         self.actionMark_end.setText(_translate("MainWindow", "Mark end"))
         self.actionWSB_MarkBegin.setText(_translate("MainWindow", "Mark begin position"))
+        self.actionWSB_MarkBegin.setShortcut(_translate("MainWindow", "Ctrl+K, B"))
         self.actionWSB_MarkEnd.setText(_translate("MainWindow", "Mark end position"))
+        self.actionWSB_MarkEnd.setShortcut(_translate("MainWindow", "Ctrl+K, K"))
         self.actionWSB_Copy.setText(_translate("MainWindow", "Copy block to cursor"))
+        self.actionWSB_Copy.setShortcut(_translate("MainWindow", "Ctrl+K, C"))
         self.actionWSB_Move.setText(_translate("MainWindow", "Move block to cursor"))
+        self.actionWSB_Move.setShortcut(_translate("MainWindow", "Ctrl+K, M"))
         self.actionWSB_Delete.setText(_translate("MainWindow", "Delete block"))
+        self.actionWSB_Delete.setShortcut(_translate("MainWindow", "Ctrl+K, Y"))
+        self.actionIndent_more.setText(_translate("MainWindow", "Indent more"))
+        self.actionIndent_less.setText(_translate("MainWindow", "Indent less"))
+        self.actionIndentMore.setText(_translate("MainWindow", "Indent &more"))
+        self.actionIndentMore.setShortcut(_translate("MainWindow", "Ctrl+K, ,"))
+        self.actionIndentLess.setText(_translate("MainWindow", "Indent &less"))
+        self.actionIndentLess.setShortcut(_translate("MainWindow", "Ctrl+K, ."))
 from highlighter.parenmatch import TE_CustomPlainTextEdit
