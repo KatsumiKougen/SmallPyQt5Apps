@@ -276,6 +276,8 @@ class Ui_MainWindow(object):
         self.actionSelectAll.setObjectName("actionSelectAll")
         self.actionFindAndReplace = QtWidgets.QAction(MainWindow)
         self.actionFindAndReplace.setObjectName("actionFindAndReplace")
+        self.actionAbout = QtWidgets.QAction(MainWindow)
+        self.actionAbout.setObjectName("actionAbout")
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addSeparator()
@@ -299,6 +301,7 @@ class Ui_MainWindow(object):
         self.menuView.addAction(self.menuSyntaxHighlighting.menuAction())
         self.menuView.addSeparator()
         self.menuView.addAction(self.actionSetFontSizeAndIndent)
+        self.menuHelp.addAction(self.actionAbout)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuEdit.menuAction())
         self.menubar.addAction(self.menuView.menuAction())
@@ -360,4 +363,5 @@ class Ui_MainWindow(object):
         self.actionSelectAll.setShortcut(_translate("MainWindow", "Ctrl+A"))
         self.actionFindAndReplace.setText(_translate("MainWindow", "&Find and replace..."))
         self.actionFindAndReplace.setShortcut(_translate("MainWindow", "Ctrl+F"))
+        self.actionAbout.setText(_translate("MainWindow", "About"))
 from highlighter.parenmatch import TE_CustomPlainTextEdit
