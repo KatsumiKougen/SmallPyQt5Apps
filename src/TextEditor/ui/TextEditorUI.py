@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'TextEditor.ui'
+# Form implementation generated from reading ui file 'ui/TextEditor.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -269,7 +269,6 @@ class Ui_MainWindow(object):
         self.actionCopy = QtWidgets.QAction(MainWindow)
         self.actionCopy.setObjectName("actionCopy")
         self.actionPaste = QtWidgets.QAction(MainWindow)
-        self.actionPaste.setShortcut("")
         self.actionPaste.setObjectName("actionPaste")
         self.actionDelete = QtWidgets.QAction(MainWindow)
         self.actionDelete.setObjectName("actionDelete")
@@ -350,11 +349,15 @@ class Ui_MainWindow(object):
         self.actionRedo.setText(_translate("MainWindow", "&Redo"))
         self.actionRedo.setShortcut(_translate("MainWindow", "Ctrl+Y"))
         self.actionCut.setText(_translate("MainWindow", "Cu&t"))
+        self.actionCut.setShortcut(_translate("MainWindow", "Ctrl+X"))
         self.actionCopy.setText(_translate("MainWindow", "&Copy"))
+        self.actionCopy.setShortcut(_translate("MainWindow", "Ctrl+C"))
         self.actionPaste.setText(_translate("MainWindow", "&Paste"))
+        self.actionPaste.setShortcut(_translate("MainWindow", "Ctrl+V"))
         self.actionDelete.setText(_translate("MainWindow", "&Delete"))
         self.actionDelete.setShortcut(_translate("MainWindow", "Del"))
         self.actionSelectAll.setText(_translate("MainWindow", "Select &all"))
+        self.actionSelectAll.setShortcut(_translate("MainWindow", "Ctrl+A"))
         self.actionFindAndReplace.setText(_translate("MainWindow", "&Find and replace..."))
         self.actionFindAndReplace.setShortcut(_translate("MainWindow", "Ctrl+F"))
 from highlighter.parenmatch import TE_CustomPlainTextEdit

@@ -562,10 +562,16 @@
    <property name="text">
     <string>Cu&amp;t</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
   </action>
   <action name="actionCopy">
    <property name="text">
     <string>&amp;Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
    </property>
   </action>
   <action name="actionPaste">
@@ -573,7 +579,7 @@
     <string>&amp;Paste</string>
    </property>
    <property name="shortcut">
-    <string/>
+    <string>Ctrl+V</string>
    </property>
   </action>
   <action name="actionDelete">
@@ -587,6 +593,9 @@
   <action name="actionSelectAll">
    <property name="text">
     <string>Select &amp;all</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
    </property>
   </action>
   <action name="actionFindAndReplace">
