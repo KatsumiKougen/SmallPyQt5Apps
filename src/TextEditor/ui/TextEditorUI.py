@@ -363,5 +363,5 @@ class Ui_MainWindow(object):
         self.actionSelectAll.setShortcut(_translate("MainWindow", "Ctrl+A"))
         self.actionFindAndReplace.setText(_translate("MainWindow", "&Find and replace..."))
         self.actionFindAndReplace.setShortcut(_translate("MainWindow", "Ctrl+F"))
-        self.actionAbout.setText(_translate("MainWindow", "About"))
+        self.actionAbout.setText(_translate("MainWindow", "&About"))
 from highlighter.parenmatch import TE_CustomPlainTextEdit
