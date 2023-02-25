@@ -92,7 +92,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         widget = TE_CustomiseEditorWidget()
         widget.output0.connect(self.TE_SetFontSize)
         widget.output1.connect(self.TE_SetIndentationSpace)
-        widget.exec()
+        widget.show()
     
     # Functions for displaying time (HH:MM:SS)
     
