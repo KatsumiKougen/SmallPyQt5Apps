@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>723</width>
-    <height>493</height>
+    <width>989</width>
+    <height>568</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -289,137 +289,232 @@
        </layout>
       </item>
       <item>
-       <widget class="TE_CustomPlainTextEdit" name="TextEditor_MainWidget">
-        <property name="palette">
-         <palette>
-          <active>
-           <colorrole role="Text">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>141</red>
-              <green>210</green>
-              <blue>240</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="ButtonText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>0</red>
-              <green>0</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="Base">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>19</red>
-              <green>22</green>
-              <blue>31</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="128">
-              <red>160</red>
-              <green>170</green>
-              <blue>172</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
-          <inactive>
-           <colorrole role="Text">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>141</red>
-              <green>210</green>
-              <blue>240</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="ButtonText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>0</red>
-              <green>0</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="Base">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>19</red>
-              <green>22</green>
-              <blue>31</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="128">
-              <red>0</red>
-              <green>0</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
-          <disabled>
-           <colorrole role="Text">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>190</red>
-              <green>190</green>
-              <blue>190</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="ButtonText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>190</red>
-              <green>190</green>
-              <blue>190</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="Base">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>239</red>
-              <green>239</green>
-              <blue>239</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="128">
-              <red>0</red>
-              <green>0</green>
-              <blue>0</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
-         </palette>
-        </property>
-        <property name="font">
-         <font>
-          <family>Monospace</family>
-         </font>
-        </property>
-        <property name="lineWrapMode">
-         <enum>QPlainTextEdit::NoWrap</enum>
-        </property>
-        <property name="tabStopWidth">
-         <number>40</number>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="TextEditor_VertLayout">
+        <item>
+         <widget class="TE_CustomPlainTextEdit" name="TextEditor_MainWidget">
+          <property name="palette">
+           <palette>
+            <active>
+             <colorrole role="Text">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>141</red>
+                <green>210</green>
+                <blue>240</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="ButtonText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Base">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>19</red>
+                <green>22</green>
+                <blue>31</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="128">
+                <red>160</red>
+                <green>170</green>
+                <blue>172</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </active>
+            <inactive>
+             <colorrole role="Text">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>141</red>
+                <green>210</green>
+                <blue>240</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="ButtonText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Base">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>19</red>
+                <green>22</green>
+                <blue>31</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="128">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </inactive>
+            <disabled>
+             <colorrole role="Text">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>190</red>
+                <green>190</green>
+                <blue>190</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="ButtonText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>190</red>
+                <green>190</green>
+                <blue>190</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Base">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>239</red>
+                <green>239</green>
+                <blue>239</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="128">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </disabled>
+           </palette>
+          </property>
+          <property name="font">
+           <font>
+            <family>Monospace</family>
+           </font>
+          </property>
+          <property name="lineWrapMode">
+           <enum>QPlainTextEdit::NoWrap</enum>
+          </property>
+          <property name="tabStopWidth">
+           <number>40</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="TextEditor_MiscLayout">
+          <item>
+           <widget class="QProgressBar" name="Misc_ProgressBar">
+            <property name="palette">
+             <palette>
+              <active>
+               <colorrole role="Base">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>107</red>
+                  <green>63</green>
+                  <blue>250</blue>
+                 </color>
+                </brush>
+               </colorrole>
+               <colorrole role="Highlight">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>252</red>
+                  <green>243</green>
+                  <blue>65</blue>
+                 </color>
+                </brush>
+               </colorrole>
+              </active>
+              <inactive>
+               <colorrole role="Base">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>107</red>
+                  <green>63</green>
+                  <blue>250</blue>
+                 </color>
+                </brush>
+               </colorrole>
+               <colorrole role="Highlight">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>252</red>
+                  <green>243</green>
+                  <blue>65</blue>
+                 </color>
+                </brush>
+               </colorrole>
+              </inactive>
+              <disabled>
+               <colorrole role="Base">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>239</red>
+                  <green>239</green>
+                  <blue>239</blue>
+                 </color>
+                </brush>
+               </colorrole>
+               <colorrole role="Highlight">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>145</red>
+                  <green>145</green>
+                  <blue>145</blue>
+                 </color>
+                </brush>
+               </colorrole>
+              </disabled>
+             </palette>
+            </property>
+            <property name="value">
+             <number>24</number>
+            </property>
+            <property name="textVisible">
+             <bool>false</bool>
+            </property>
+            <property name="invertedAppearance">
+             <bool>false</bool>
+            </property>
+            <property name="format">
+             <string>%p/%m</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="Misc_WordStarBlockLabel">
+            <property name="text">
+             <string>WordStar block at (None:None);(None:None)</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
@@ -430,7 +525,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>723</width>
+     <width>989</width>
      <height>25</height>
     </rect>
    </property>
@@ -450,6 +545,16 @@
     <property name="title">
      <string>&amp;Edit</string>
     </property>
+    <widget class="QMenu" name="menuWordStarBlocks">
+     <property name="title">
+      <string>&amp;WordStar blocks...</string>
+     </property>
+     <addaction name="actionWSB_MarkBegin"/>
+     <addaction name="actionWSB_MarkEnd"/>
+     <addaction name="actionWSB_Copy"/>
+     <addaction name="actionWSB_Move"/>
+     <addaction name="actionWSB_Delete"/>
+    </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
@@ -460,6 +565,8 @@
     <addaction name="separator"/>
     <addaction name="actionSelectAll"/>
     <addaction name="actionFindAndReplace"/>
+    <addaction name="separator"/>
+    <addaction name="menuWordStarBlocks"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -481,6 +588,42 @@
     <property name="title">
      <string>&amp;Tool</string>
     </property>
+    <widget class="QMenu" name="menuInsertBracket">
+     <property name="title">
+      <string>Insert &amp;bracket...</string>
+     </property>
+     <addaction name="actionIB_RoundBracket"/>
+     <addaction name="actionIB_SquareBracket"/>
+     <addaction name="actionIB_CurlyBracket"/>
+     <addaction name="actionIB_AngleBracket"/>
+     <addaction name="separator"/>
+     <addaction name="actionIB_SingleQuote"/>
+     <addaction name="actionIB_DoubleQuote"/>
+     <addaction name="actionIB_Guillemet"/>
+    </widget>
+    <widget class="QMenu" name="menu_Spawn_points">
+     <property name="title">
+      <string>&amp;Spawn points</string>
+     </property>
+     <addaction name="actionSP_AddSpawnPoint"/>
+     <addaction name="actionSP_ClearAllSpawnPoints"/>
+     <addaction name="separator"/>
+     <addaction name="actionSP_SpawnPoint0"/>
+     <addaction name="actionSP_SpawnPoint1"/>
+     <addaction name="actionSP_SpawnPoint2"/>
+     <addaction name="actionSP_SpawnPoint3"/>
+     <addaction name="actionSP_SpawnPoint4"/>
+     <addaction name="actionSP_SpawnPoint5"/>
+     <addaction name="actionSP_SpawnPoint6"/>
+     <addaction name="actionSP_SpawnPoint7"/>
+    </widget>
+    <addaction name="actionToggleInsertOverwriteMode"/>
+    <addaction name="separator"/>
+    <addaction name="menuInsertBracket"/>
+    <addaction name="menu_Spawn_points"/>
+    <addaction name="separator"/>
+    <addaction name="actionDefineFunction"/>
+    <addaction name="actionDefineClass"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -610,6 +753,200 @@
   <action name="actionAbout">
    <property name="text">
     <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="actionToggleInsertOverwriteMode">
+   <property name="text">
+    <string>To&amp;ggle insert/overwrite mode</string>
+   </property>
+   <property name="shortcut">
+    <string>Ins</string>
+   </property>
+  </action>
+  <action name="actionIB_RoundBracket">
+   <property name="text">
+    <string>Round bracket ()</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L, 9</string>
+   </property>
+  </action>
+  <action name="actionIB_SquareBracket">
+   <property name="text">
+    <string>Square bracket []</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L, [</string>
+   </property>
+  </action>
+  <action name="actionIB_CurlyBracket">
+   <property name="text">
+    <string>Curly bracket {}</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L, {</string>
+   </property>
+  </action>
+  <action name="actionIB_AngleBracket">
+   <property name="text">
+    <string>Angle bracket &lt;&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L, ,</string>
+   </property>
+  </action>
+  <action name="actionIB_SingleQuote">
+   <property name="text">
+    <string>Single quote ''</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L, I</string>
+   </property>
+  </action>
+  <action name="actionIB_DoubleQuote">
+   <property name="text">
+    <string>Double quote &quot;&quot;</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L, O</string>
+   </property>
+  </action>
+  <action name="actionIB_Guillemet">
+   <property name="text">
+    <string>Guillemet «»</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L, P</string>
+   </property>
+  </action>
+  <action name="actionSP_AddSpawnPoint">
+   <property name="text">
+    <string>Add spawn &amp;point</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M, A</string>
+   </property>
+  </action>
+  <action name="actionSP_ClearAllSpawnPoints">
+   <property name="text">
+    <string>Clear &amp;all spawn points</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M, X</string>
+   </property>
+  </action>
+  <action name="actionSP_SpawnPoint0">
+   <property name="text">
+    <string>Spawn point 0</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M, 0</string>
+   </property>
+  </action>
+  <action name="actionSP_SpawnPoint1">
+   <property name="text">
+    <string>Spawn point 1</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M, 1</string>
+   </property>
+  </action>
+  <action name="actionSP_SpawnPoint2">
+   <property name="text">
+    <string>Spawn point 2</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M, 2</string>
+   </property>
+  </action>
+  <action name="actionSP_SpawnPoint3">
+   <property name="text">
+    <string>Spawn point 3</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M, 3</string>
+   </property>
+  </action>
+  <action name="actionSP_SpawnPoint4">
+   <property name="text">
+    <string>Spawn point 4</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M, 4</string>
+   </property>
+  </action>
+  <action name="actionSP_SpawnPoint5">
+   <property name="text">
+    <string>Spawn point 5</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M, 5</string>
+   </property>
+  </action>
+  <action name="actionSP_SpawnPoint6">
+   <property name="text">
+    <string>Spawn point 6</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M, 6</string>
+   </property>
+  </action>
+  <action name="actionSP_SpawnPoint7">
+   <property name="text">
+    <string>Spawn point 7</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M, 7</string>
+   </property>
+  </action>
+  <action name="actionDefine_a_Python_function">
+   <property name="text">
+    <string>Define a Python function</string>
+   </property>
+  </action>
+  <action name="actionDefineFunction">
+   <property name="text">
+    <string>Define a &amp;function</string>
+   </property>
+  </action>
+  <action name="actionDefineClass">
+   <property name="text">
+    <string>Define a &amp;class</string>
+   </property>
+  </action>
+  <action name="actionMark_begin">
+   <property name="text">
+    <string>Mark begin</string>
+   </property>
+  </action>
+  <action name="actionMark_end">
+   <property name="text">
+    <string>Mark end</string>
+   </property>
+  </action>
+  <action name="actionWSB_MarkBegin">
+   <property name="text">
+    <string>Mark begin position</string>
+   </property>
+  </action>
+  <action name="actionWSB_MarkEnd">
+   <property name="text">
+    <string>Mark end position</string>
+   </property>
+  </action>
+  <action name="actionWSB_Copy">
+   <property name="text">
+    <string>Copy block to cursor</string>
+   </property>
+  </action>
+  <action name="actionWSB_Move">
+   <property name="text">
+    <string>Move block to cursor</string>
+   </property>
+  </action>
+  <action name="actionWSB_Delete">
+   <property name="text">
+    <string>Delete block</string>
    </property>
   </action>
  </widget>
