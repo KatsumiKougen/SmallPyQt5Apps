@@ -1,5 +1,6 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 from ui.TextEditorUI import Ui_MainWindow
+from text_ed_utils.CustomiseEditor import TE_CustomiseEditorWidget
 from highlighter.highlighter import *
 import sys, time, re
 from typing import Union
@@ -41,6 +42,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "char": 0,
             "word": 0
         }
+        
+        CurrentFontSize = 11
+        CurrentIndentationSpace = 4
     
     def __init__(self):
         super().__init__()
@@ -60,6 +64,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
         self.TextEditor_MainWidget.textChanged.connect(self.TE_UpdateLCD)
         self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateLCD)
+    
+    # Functions for main window
     
     def TE_DisplayTitle(self):
         filename = self._TE_AppVariables.CurrentWorkspaceName
@@ -81,6 +87,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     event.accept()
                 case _:
                     event.ignore()
+    
+    def TE_OpenCustomiseEditorWidget(self):
+        widget = TE_CustomiseEditorWidget()
+        widget.output0.connect(self.TE_SetFontSize)
+        widget.output1.connect(self.TE_SetIndentationSpace)
     
     # Functions for displaying time (HH:MM:SS)
     
@@ -110,6 +121,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Functions for menu bar commands
     
     def TE_SetMenuBar(self):
+        
+        def SetAction_OpenCustomiseEditorWidget():
+            self.actionSetFontSizeAndIndent.triggered.connect(self.TE_OpenCustomiseEditorWidget)
         
         def SetAction_SyntaxHighlighting():
             self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
@@ -151,11 +165,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self._TE_AppVariables.DocumentBuffer["active"] = self.TextEditor_MainWidget.toPlainText()
     
+    def TE_SetFontSize(self, point: int):
+        self.TextEditor_MainWidget.setFontPointSize(point)
+        self._TE_AppVariables.CurrentFontSize = point
+    
     def TE_SetIndentationSpace(self, width: int):
         Font = self.TextEditor_MainWidget.font()
         FontMetrics = QtGui.QFontMetricsF(Font)
         WhitespaceWidth = FontMetrics.width(" ")
         self.TextEditor_MainWidget.setTabStopDistance(WhitespaceWidth*width)
+        self._TE_AppVariables.CurrentIndentationSpace = width
     
     def TE_SetSyntaxHighlighting(self, arg: int):
         self.highlighter = TE_Highlighter(arg, self.TextEditor_MainWidget.document())
