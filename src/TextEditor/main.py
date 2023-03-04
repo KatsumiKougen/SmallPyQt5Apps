@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 from ui.TextEditorUI import Ui_MainWindow
-from text_ed_utils.CustomiseEditor import TE_CustomiseEditorWidget
+from text_ed_utils.CustomiseEditor import TE_CustomiseEditorDialog
+from text_ed_utils.ViewBlock import TE_ViewBlockDialog
 from highlighter.highlighter import *
 import sys, time, re
 from typing import Union
@@ -105,22 +106,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Functions for extra dialogs
     
     def TE_OpenCustomiseEditorDialog(self):
-        self._TE_CEWidget = TE_CustomiseEditorWidget(
+        self._TE_CEDialog = TE_CustomiseEditorDialog(
             self._TE_AppVariables.CurrentFontSize,
             self._TE_AppVariables.CurrentIndentationSpace
         )
-        self._TE_CEWidget.output0.connect(self.TE_SetFontSize)
-        self._TE_CEWidget.output1.connect(self.TE_SetIndentationSpace)
-        self._TE_CEWidget.show()
+        self._TE_CEDialog.output0.connect(self.TE_SetFontSize)
+        self._TE_CEDialog.output1.connect(self.TE_SetIndentationSpace)
+        self._TE_CEDialog.show()
     
     def TE_OpenViewBlockDialog(self):
-        self._TE_CEWidget = TE_CustomiseEditorWidget(
-            self._TE_AppVariables.CurrentFontSize,
-            self._TE_AppVariables.CurrentIndentationSpace
-        )
-        self._TE_CEWidget.output0.connect(self.TE_SetFontSize)
-        self._TE_CEWidget.output1.connect(self.TE_SetIndentationSpace)
-        self._TE_CEWidget.show()
+        self._TE_VBDialog = TE_ViewBlockDialog()
+        self._TE_VBDialog.show()
     
     # Functions for displaying time (HH:MM:SS)
     
@@ -154,6 +150,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         def SetAction_WordStarBlock():
             self.actionWSB_MarkBegin.triggered.connect(self.TE_MarkWSBegin)
             self.actionWSB_MarkEnd.triggered.connect(self.TE_MarkWSEnd)
+            self.actionWSB_ViewBlock.triggered.connect(self.TE_OpenViewBlockDialog)
         
         def SetAction_OpenCustomiseEditorWidget():
             self.actionSetFontSizeAndIndent.triggered.connect(self.TE_OpenCustomiseEditorDialog)

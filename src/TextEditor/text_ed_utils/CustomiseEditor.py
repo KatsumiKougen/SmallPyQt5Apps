@@ -2,9 +2,9 @@ import sys
 from PyQt5 import QtWidgets, QtCore, QtGui
 
 sys.path.append(".")
-from ui.CustomiseEditorWidgetUI import Ui_Dialog
+from ui.CustomiseEditorDialogUI import Ui_Dialog
 
-class TE_CustomiseEditorWidget(QtWidgets.QDialog, Ui_Dialog):
+class TE_CustomiseEditorDialog(QtWidgets.QDialog, Ui_Dialog):
     
     output0 = QtCore.pyqtSignal(int)
     output1 = QtCore.pyqtSignal(int)
