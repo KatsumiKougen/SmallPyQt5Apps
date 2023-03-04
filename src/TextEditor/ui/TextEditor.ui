@@ -590,6 +590,8 @@
      <addaction name="actionWSB_Copy"/>
      <addaction name="actionWSB_Move"/>
      <addaction name="actionWSB_Delete"/>
+     <addaction name="separator"/>
+     <addaction name="actionWSB_ViewBlock"/>
     </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -1027,6 +1029,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+K, .</string>
+   </property>
+  </action>
+  <action name="actionWSB_ViewBlock">
+   <property name="text">
+    <string>View block</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+K, Shift+L</string>
    </property>
   </action>
  </widget>

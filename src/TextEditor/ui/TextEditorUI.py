@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'TextEditor.ui'
+# Form implementation generated from reading ui file 'ui/TextEditor.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -397,6 +397,8 @@ class Ui_MainWindow(object):
         self.actionIndentMore.setObjectName("actionIndentMore")
         self.actionIndentLess = QtWidgets.QAction(MainWindow)
         self.actionIndentLess.setObjectName("actionIndentLess")
+        self.actionWSB_ViewBlock = QtWidgets.QAction(MainWindow)
+        self.actionWSB_ViewBlock.setObjectName("actionWSB_ViewBlock")
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addSeparator()
@@ -409,6 +411,8 @@ class Ui_MainWindow(object):
         self.menuWordStarBlocks.addAction(self.actionWSB_Copy)
         self.menuWordStarBlocks.addAction(self.actionWSB_Move)
         self.menuWordStarBlocks.addAction(self.actionWSB_Delete)
+        self.menuWordStarBlocks.addSeparator()
+        self.menuWordStarBlocks.addAction(self.actionWSB_ViewBlock)
         self.menuEdit.addAction(self.actionUndo)
         self.menuEdit.addAction(self.actionRedo)
         self.menuEdit.addSeparator()
@@ -587,4 +591,6 @@ class Ui_MainWindow(object):
         self.actionIndentMore.setShortcut(_translate("MainWindow", "Ctrl+K, ,"))
         self.actionIndentLess.setText(_translate("MainWindow", "Indent &less"))
         self.actionIndentLess.setShortcut(_translate("MainWindow", "Ctrl+K, ."))
+        self.actionWSB_ViewBlock.setText(_translate("MainWindow", "View block"))
+        self.actionWSB_ViewBlock.setShortcut(_translate("MainWindow", "Ctrl+K, Shift+L"))
 from highlighter.parenmatch import TE_CustomPlainTextEdit
