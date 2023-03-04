@@ -46,7 +46,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         CurrentFontSize = 11
         CurrentIndentationSpace = 4
         
-        # BlockPosition = [[line, col], [line, col]]
+        # BlockPosition = [[line, col, raw], [line, col, raw]]
         BlockPosition = [[None, None], [None, None]]
     
     def __init__(self):
@@ -86,7 +86,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             MessageBox.setTextFormat(QtCore.Qt.MarkdownText)
             MessageBox.setWindowTitle("Exiting the text editor so soon?")
             MessageBox.setText(f"**{filename}** is modified.")
-            MessageBox.setInformativeText(f"Are you sure you want to exit?\nAll unsaved changes to {filename} will be lost!\n\nPlease! *sniff* Please stay... it's just that I've never met someone like you...\nI want to hang out with you... for a little while...")
+            MessageBox.setInformativeText(
+                f"Are you sure you want to exit?\n"
+                f"All unsaved changes to {filename} will be lost!\n"
+                "\n"
+                "Please! *sniff* Please stay... it's just that I've never met someone like you...\n"
+                "I want to hang out with you... for a little while..."
+            )
             MessageBox.setStandardButtons(QtWidgets.QMessageBox.Save | QtWidgets.QMessageBox.Close | QtWidgets.QMessageBox.Cancel)
             MessageBox.setDefaultButton(QtWidgets.QMessageBox.Cancel)
             ret = MessageBox.exec()
@@ -96,7 +102,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 case _:
                     event.ignore()
     
-    def TE_OpenCustomiseEditorWidget(self):
+    # Functions for extra dialogs
+    
+    def TE_OpenCustomiseEditorDialog(self):
+        self._TE_CEWidget = TE_CustomiseEditorWidget(
+            self._TE_AppVariables.CurrentFontSize,
+            self._TE_AppVariables.CurrentIndentationSpace
+        )
+        self._TE_CEWidget.output0.connect(self.TE_SetFontSize)
+        self._TE_CEWidget.output1.connect(self.TE_SetIndentationSpace)
+        self._TE_CEWidget.show()
+    
+    def TE_OpenViewBlockDialog(self):
         self._TE_CEWidget = TE_CustomiseEditorWidget(
             self._TE_AppVariables.CurrentFontSize,
             self._TE_AppVariables.CurrentIndentationSpace
@@ -139,7 +156,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.actionWSB_MarkEnd.triggered.connect(self.TE_MarkWSEnd)
         
         def SetAction_OpenCustomiseEditorWidget():
-            self.actionSetFontSizeAndIndent.triggered.connect(self.TE_OpenCustomiseEditorWidget)
+            self.actionSetFontSizeAndIndent.triggered.connect(self.TE_OpenCustomiseEditorDialog)
         
         def SetAction_SyntaxHighlighting():
             self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
