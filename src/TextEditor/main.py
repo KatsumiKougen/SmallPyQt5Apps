@@ -48,7 +48,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         CurrentIndentationSpace = 4
         
         # BlockPosition = [[line, col, raw], [line, col, raw]]
-        BlockPosition = [[None, None], [None, None]]
+        BlockPosition = [[None, None, 0], [None, None, 0]]
+        BlockContent = None
     
     def __init__(self):
         super().__init__()
@@ -60,6 +61,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TE_SetMenuBar()
         self.TE_SetLCDWidgets()
         self.TE_ConnectSignals()
+        self.TE_ShowWSBlockStatus()
         
         self.TE_SetIndentationSpace(4)
         self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
@@ -115,7 +117,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._TE_CEDialog.show()
     
     def TE_OpenViewBlockDialog(self):
-        self._TE_VBDialog = TE_ViewBlockDialog()
+        self._TE_VBDialog = TE_ViewBlockDialog(self._TE_AppVariables.BlockContent)
         self._TE_VBDialog.show()
     
     # Functions for displaying time (HH:MM:SS)
@@ -189,7 +191,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def TE_GetDocumentStatus(self):
         cursor = self.TextEditor_MainWidget.textCursor()
-        y, x = cursor.blockNumber() + 1, cursor.position() + 1
+        y, x = cursor.blockNumber() + 1, cursor.positionInBlock() + 1
         self._TE_AppVariables.DocumentStatus["line"] = x
         self._TE_AppVariables.DocumentStatus["column"] = y
         self._TE_AppVariables.DocumentStatus["char"] = len(self.TextEditor_MainWidget.toPlainText())
@@ -227,19 +229,40 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     # Function for working with WordStar blocks
     
+    def TE_WSBlockExists(self) -> bool:
+        return [None, None, None] not in self._TE_AppVariables.BlockPosition
+    
     def TE_ShowWSBlockStatus(self):
         position = self._TE_AppVariables.BlockPosition
-        self.Misc_WordStarBlockLabel.setText(f"WordStar block at ({position[0][0]}:{position[0][1]});({position[1][0]}:{position[1][1]})")
+        if self.TE_WSBlockExists():
+            self.Misc_WordStarBlockLabel.setText(f"WordStar block at ({position[0][0]}:{position[0][1]});({position[1][0]}:{position[1][1]})")
+        else:
+            self.Misc_WordStarBlockLabel.setText("No block")
     
     def TE_MarkWSBegin(self):
-        CurrentPosition = [self.TextEditor_MainWidget.textCursor().blockNumber(), self.TextEditor_MainWidget.textCursor().position()]
+        CurrentPosition = [
+            self.TextEditor_MainWidget.textCursor().blockNumber(),
+            self.TextEditor_MainWidget.textCursor().positionInBlock(),
+            self.TextEditor_MainWidget.textCursor().position(),
+        ]
         self._TE_AppVariables.BlockPosition[0] = CurrentPosition
+        if self.TE_WSBlockExists:
+            self._TE_AppVariables.BlockContent = self.TextEditor_MainWidget.toPlainText()[self._TE_AppVariables.BlockPosition[0][2]:self._TE_AppVariables.BlockPosition[1][2]]
         self.TE_ShowWSBlockStatus()
     
     def TE_MarkWSEnd(self):
-        CurrentPosition = [self.TextEditor_MainWidget.textCursor().blockNumber(), self.TextEditor_MainWidget.textCursor().position()]
+        CurrentPosition = [
+            self.TextEditor_MainWidget.textCursor().blockNumber(),
+            self.TextEditor_MainWidget.textCursor().positionInBlock(),
+            self.TextEditor_MainWidget.textCursor().position(),
+        ]
         self._TE_AppVariables.BlockPosition[1] = CurrentPosition
+        if self.TE_WSBlockExists:
+            self._TE_AppVariables.BlockContent = self.TextEditor_MainWidget.toPlainText()[self._TE_AppVariables.BlockPosition[0][2]:self._TE_AppVariables.BlockPosition[1][2]]
         self.TE_ShowWSBlockStatus()
+    
+    def TE_ModifyWSBlock(self):
+        pass
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

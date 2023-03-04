@@ -15,13 +15,13 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="VB_GroupBox">
      <property name="title">
       <string>View block</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QPlainTextEdit" name="plainTextEdit">
+       <widget class="QPlainTextEdit" name="VB_BlockWidget">
         <property name="font">
          <font>
           <family>Monospace</family>
@@ -29,6 +29,9 @@
           <weight>75</weight>
           <bold>true</bold>
          </font>
+        </property>
+        <property name="textInteractionFlags">
+         <set>Qt::NoTextInteraction</set>
         </property>
         <property name="placeholderText">
          <string>No block</string>
@@ -39,7 +42,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
+    <widget class="QDialogButtonBox" name="VB_ButtonBox">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -53,7 +56,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>VB_ButtonBox</sender>
    <signal>accepted()</signal>
    <receiver>Dialog</receiver>
    <slot>accept()</slot>
@@ -69,7 +72,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>VB_ButtonBox</sender>
    <signal>rejected()</signal>
    <receiver>Dialog</receiver>
    <slot>reject()</slot>
