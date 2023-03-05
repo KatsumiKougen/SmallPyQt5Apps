@@ -57,7 +57,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.TE_DisplayTitle()
         self.TE_UpdateTimeInBackground()
-        self.TE_ShowDirectory()
         self.TE_SetMenuBar()
         self.TE_SetLCDWidgets()
         self.TE_ConnectSignals()
@@ -171,19 +170,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         SetAction_WordStarBlock()
     
     # Functions for file handling
-    
-    def TE_ShowDirectory(self, directory: str = QtCore.QDir.current()):
-        self.CWD_DirInput.setText(directory.dirName())
-        self.FileView_TableWidget.clearContents()
-        FileList = directory.entryInfoList()
-        for idx, file in enumerate(FileList):
-            self.FileView_TableWidget.insertRow(idx)
-            self.FileView_TableWidget.setItem(idx, 0, QtWidgets.QTableWidgetItem(file.fileName()))
-            self.FileView_TableWidget.setItem(idx, 1, QtWidgets.QTableWidgetItem(file.completeSuffix()))
-            self.FileView_TableWidget.setItem(idx, 2, QtWidgets.QTableWidgetItem("Yes" if file.isDir() else "No"))
-            self.FileView_TableWidget.setItem(idx, 3, QtWidgets.QTableWidgetItem(str(file.size())))
-            self.FileView_TableWidget.setItem(idx, 4, QtWidgets.QTableWidgetItem(file.owner()))
-            self.FileView_TableWidget.setItem(idx, 5, QtWidgets.QTableWidgetItem(str(file.ownerId())))
     
     def TE_FileSaved(self) -> bool:
         return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"]
