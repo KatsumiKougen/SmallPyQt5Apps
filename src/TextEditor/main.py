@@ -153,6 +153,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.actionWSB_MarkBegin.triggered.connect(self.TE_MarkWSBegin)
             self.actionWSB_MarkEnd.triggered.connect(self.TE_MarkWSEnd)
             self.actionWSB_ViewBlock.triggered.connect(self.TE_OpenViewBlockDialog)
+            self.actionWSB_Copy.triggered.connect(self.TE_CopyWSBlock)
         
         def SetAction_OpenCustomiseEditorWidget():
             self.actionSetFontSizeAndIndent.triggered.connect(self.TE_OpenCustomiseEditorDialog)
@@ -230,7 +231,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Function for working with WordStar blocks
     
     def TE_WSBlockExists(self) -> bool:
-        return [None, None, None] not in self._TE_AppVariables.BlockPosition
+        return [None, None, 0] not in self._TE_AppVariables.BlockPosition
     
     def TE_ShowWSBlockStatus(self):
         position = self._TE_AppVariables.BlockPosition
@@ -240,29 +241,39 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.Misc_WordStarBlockLabel.setText("No block")
     
     def TE_MarkWSBegin(self):
-        CurrentPosition = [
+        NewPosition = [
             self.TextEditor_MainWidget.textCursor().blockNumber(),
             self.TextEditor_MainWidget.textCursor().positionInBlock(),
             self.TextEditor_MainWidget.textCursor().position(),
         ]
-        self._TE_AppVariables.BlockPosition[0] = CurrentPosition
+        CurrentPosition = self._TE_AppVariables.BlockPosition[0]
+        if NewPosition[2] > CurrentPosition[2]:
+            self._TE_AppVariables.BlockPosition[0] = self._TE_AppVariables.BlockPosition[1]
+            self._TE_AppVariables.BlockPosition[1] = NewPosition
+        else:
+            self._TE_AppVariables.BlockPosition[0] = NewPosition
         if self.TE_WSBlockExists:
             self._TE_AppVariables.BlockContent = self.TextEditor_MainWidget.toPlainText()[self._TE_AppVariables.BlockPosition[0][2]:self._TE_AppVariables.BlockPosition[1][2]]
         self.TE_ShowWSBlockStatus()
     
     def TE_MarkWSEnd(self):
-        CurrentPosition = [
+        NewPosition = [
             self.TextEditor_MainWidget.textCursor().blockNumber(),
             self.TextEditor_MainWidget.textCursor().positionInBlock(),
             self.TextEditor_MainWidget.textCursor().position(),
         ]
-        self._TE_AppVariables.BlockPosition[1] = CurrentPosition
+        CurrentPosition = self._TE_AppVariables.BlockPosition[1]
+        if NewPosition[2] < CurrentPosition[2]:
+            self._TE_AppVariables.BlockPosition[1] = self._TE_AppVariables.BlockPosition[0]
+            self._TE_AppVariables.BlockPosition[0] = NewPosition
+        else:
+            self._TE_AppVariables.BlockPosition[1] = NewPosition
         if self.TE_WSBlockExists:
             self._TE_AppVariables.BlockContent = self.TextEditor_MainWidget.toPlainText()[self._TE_AppVariables.BlockPosition[0][2]:self._TE_AppVariables.BlockPosition[1][2]]
         self.TE_ShowWSBlockStatus()
     
-    def TE_ModifyWSBlock(self):
-        pass
+    def TE_CopyWSBlock(self):
+        self.TextEditor_MainWidget.insertPlainText(self._TE_AppVariables.BlockContent)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
