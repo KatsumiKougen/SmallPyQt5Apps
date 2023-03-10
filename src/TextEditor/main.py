@@ -154,6 +154,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.actionWSB_ViewBlock.triggered.connect(self.TE_OpenViewBlockDialog)
             self.actionWSB_Copy.triggered.connect(self.TE_CopyWSBlock)
             self.actionWSB_Move.triggered.connect(self.TE_MoveWSBlock)
+            self.actionWSB_Delete.triggered.connect(self.TE_DeleteWSBlock)
         
         def SetAction_OpenCustomiseEditorWidget():
             self.actionSetFontSizeAndIndent.triggered.connect(self.TE_OpenCustomiseEditorDialog)
@@ -261,14 +262,42 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def TE_MoveWSBlock(self):
         CurrentCursorPos = self.TextEditor_MainWidget.textCursor().position()
         InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
+        FinalBlockPos = self._TE_AppVariables.BlockPosition[1][2]
         self.TE_CopyWSBlock()
-        print(InitialBlockPos, CurrentCursorPos)
-        if InitialBlockPos > CurrentCursorPos:
+        if InitialBlockPos < CurrentCursorPos:
             Cursor = self.TextEditor_MainWidget.textCursor()
             Cursor.setPosition(InitialBlockPos)
-            #for i in self._TE_AppVariables.BlockContent:
-            #    Cursor.deletePreviousChar()
-            #Cursor.setPosition(CurrentCursorPos)
+            for i in self._TE_AppVariables.BlockContent:
+                Cursor.deleteChar()
+            Cursor.setPosition(CurrentCursorPos)
+            self.TextEditor_MainWidget.setTextCursor(Cursor)
+        elif InitialBlockPos > CurrentCursorPos:
+            BlockLen = len(self._TE_AppVariables.BlockContent)
+            Cursor = self.TextEditor_MainWidget.textCursor()
+            Cursor.setPosition(FinalBlockPos+BlockLen)
+            for i in self._TE_AppVariables.BlockContent:
+                Cursor.deletePreviousChar()
+            Cursor.setPosition(CurrentCursorPos+BlockLen)
+            self.TextEditor_MainWidget.setTextCursor(Cursor)
+    
+    def TE_DeleteWSBlock(self):
+        CurrentCursorPos = self.TextEditor_MainWidget.textCursor().position()
+        InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
+        if InitialBlockPos < CurrentCursorPos:
+            BlockLen = len(self._TE_AppVariables.BlockContent)
+            Cursor = self.TextEditor_MainWidget.textCursor()
+            Cursor.setPosition(InitialBlockPos)
+            for i in self._TE_AppVariables.BlockContent:
+                Cursor.deleteChar()
+            Cursor.setPosition(CurrentCursorPos-BlockLen)
+            self.TextEditor_MainWidget.setTextCursor(Cursor)
+        elif InitialBlockPos > CurrentCursorPos:
+            BlockLen = len(self._TE_AppVariables.BlockContent)
+            Cursor = self.TextEditor_MainWidget.textCursor()
+            Cursor.setPosition(InitialBlockPos)
+            for i in self._TE_AppVariables.BlockContent:
+                Cursor.deleteChar()
+            Cursor.setPosition(CurrentCursorPos)
             self.TextEditor_MainWidget.setTextCursor(Cursor)
 
 if __name__ == "__main__":
