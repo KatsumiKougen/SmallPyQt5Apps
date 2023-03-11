@@ -70,10 +70,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         def ConnectTextChangedSignal():
             self.TextEditor_MainWidget.textChanged.connect(self.TE_UpdateLCD)
+        
+        def ConnectCursorPosChangedSignal():
             self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateLCD)
             self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateProgressBar)
         
         ConnectTextChangedSignal()
+        ConnectCursorPosChangedSignal()
     
     # Functions for main window
     
@@ -148,16 +151,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def TE_SetMenuBar(self):
         
-        def SetAction_WordStarBlock():
-            self.actionWSB_MarkBegin.triggered.connect(self.TE_MarkWSBegin)
-            self.actionWSB_MarkEnd.triggered.connect(self.TE_MarkWSEnd)
-            self.actionWSB_ViewBlock.triggered.connect(self.TE_OpenViewBlockDialog)
-            self.actionWSB_Copy.triggered.connect(self.TE_CopyWSBlock)
-            self.actionWSB_Move.triggered.connect(self.TE_MoveWSBlock)
-            self.actionWSB_Delete.triggered.connect(self.TE_DeleteWSBlock)
-        
         def SetAction_OpenCustomiseEditorWidget():
             self.actionSetFontSizeAndIndent.triggered.connect(self.TE_OpenCustomiseEditorDialog)
+        
+        def SetAction_OverwriteMode():
+            self.actionToggleInsertOverwriteMode.triggered.connect(self.TE_ToggleOverwrite)
         
         def SetAction_SyntaxHighlighting():
             self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
@@ -167,7 +165,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.TE_SyntaxHlActionGroup.addAction(self.actionSH_Python)
             self.TE_SyntaxHlActionGroup.setExclusive(True)
         
+        def SetAction_WordStarBlock():
+            self.actionWSB_MarkBegin.triggered.connect(self.TE_MarkWSBegin)
+            self.actionWSB_MarkEnd.triggered.connect(self.TE_MarkWSEnd)
+            self.actionWSB_ViewBlock.triggered.connect(self.TE_OpenViewBlockDialog)
+            self.actionWSB_Copy.triggered.connect(self.TE_CopyWSBlock)
+            self.actionWSB_Move.triggered.connect(self.TE_MoveWSBlock)
+            self.actionWSB_Delete.triggered.connect(self.TE_DeleteWSBlock)
+        
         SetAction_OpenCustomiseEditorWidget()
+        SetAction_OverwriteMode()
         SetAction_SyntaxHighlighting()
         SetAction_WordStarBlock()
     
@@ -209,6 +216,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.Status_LanguageLabel.setText("Plain text")
             case TE_HighlightStyle.Python:
                 self.Status_LanguageLabel.setText("Python")
+    
+    def TE_ToggleOverwrite(self):
+        if self.TextEditor_MainWidget.overwriteMode():
+            self.TextEditor_MainWidget.setOverwriteMode(False)
+            self.Status_TextEdModeLabel.setText(self._TE_AppVariables.TextEdInsertMode)
+        else:
+            self.TextEditor_MainWidget.setOverwriteMode(True)
+            self.Status_TextEdModeLabel.setText(self._TE_AppVariables.TextEdOverwriteMode)
     
     def TE_UpdateProgressBar(self):
         DocumentLength = len(self.TextEditor_MainWidget.toPlainText())
