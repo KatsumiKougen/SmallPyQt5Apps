@@ -24,7 +24,7 @@ class TE_TimeUpdate(QtCore.QThread):
         while True:
             cur = datetime.now().strftime("%H:%M:%S")
             self.time.emit(cur)
-            time.sleep(.5)
+            time.sleep(.001)
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
