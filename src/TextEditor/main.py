@@ -136,26 +136,42 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def TE_OpenSaveFileDialog(self, mode: int = 0):
         CurrentBuffer = self._TE_AppVariables.DocumentBuffer
-        if not os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName):
-            SaveFileName = QtWidgets.QFileDialog.getSaveFileName(
-                parent=self,
-                caption="Save...",
-                directory=self._TE_AppVariables.CurrentWorkspaceName,
-                filter="All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;Python source code (*.py, *.py3, *.pyw, *.pyd)"
-            )
-            if SaveFileName != ("", ""):
-                with open(SaveFileName[0], "w") as fo:
-                    fo.write(CurrentBuffer["active"])
-                self._TE_AppVariables.DocumentBuffer["saved"] = CurrentBuffer["active"]
-                self._TE_AppVariables.CurrentWorkspaceName = SaveFileName[0].split(TE_DirectorySeparator)[-1]
-                self.TE_UpdateFileNameLabel()
-                self.TE_DisplayTitle()
-        else:
-            CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName
-            with open(CurrentFileName, "w") as fo:
-                fo.write(CurrentBuffer["active"])
-            self._TE_AppVariables.DocumentBuffer["saved"] = CurrentBuffer["active"]
-            self.TE_DisplayTitle()
+        match mode:
+            case 0: # Save
+                if not os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName):
+                    SaveFileName = QtWidgets.QFileDialog.getSaveFileName(
+                        parent=self,
+                        caption="Save...",
+                        directory=self._TE_AppVariables.CurrentWorkspaceName,
+                        filter="All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;Python source code (*.py, *.py3, *.pyw, *.pyd)"
+                    )
+                    if SaveFileName != ("", ""):
+                        with open(SaveFileName[0], "w") as fo:
+                            fo.write(CurrentBuffer["active"])
+                        self._TE_AppVariables.DocumentBuffer["saved"] = CurrentBuffer["active"]
+                        self._TE_AppVariables.CurrentWorkspaceName = SaveFileName[0].split(TE_DirectorySeparator)[-1]
+                        self.TE_UpdateFileNameLabel()
+                        self.TE_DisplayTitle()
+                else:
+                    CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName
+                    with open(CurrentFileName, "w") as fo:
+                        fo.write(CurrentBuffer["active"])
+                    self._TE_AppVariables.DocumentBuffer["saved"] = CurrentBuffer["active"]
+                    self.TE_DisplayTitle()
+            case 1: # Save as
+                SaveFileName = QtWidgets.QFileDialog.getSaveFileName(
+                    parent=self,
+                    caption="Save...",
+                    directory=self._TE_AppVariables.CurrentWorkspaceName,
+                    filter="All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;Python source code (*.py, *.py3, *.pyw, *.pyd)"
+                )
+                if SaveFileName != ("", ""):
+                    with open(SaveFileName[0], "w") as fo:
+                        fo.write(CurrentBuffer["active"])
+                    self._TE_AppVariables.DocumentBuffer["saved"] = CurrentBuffer["active"]
+                    self._TE_AppVariables.CurrentWorkspaceName = SaveFileName[0].split(TE_DirectorySeparator)[-1]
+                    self.TE_UpdateFileNameLabel()
+                    self.TE_DisplayTitle()
     
     # Functions for displaying time (HH:MM:SS)
     
@@ -188,6 +204,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         def SetAction_OpenAndSave():
             self.actionSave.triggered.connect(self.TE_OpenSaveFileDialog)
+            self.actionSaveAs.triggered.connect(lambda: self.TE_OpenSaveFileDialog(1))
         
         def SetAction_OpenCustomiseEditorWidget():
             self.actionSetFontSizeAndIndent.triggered.connect(self.TE_OpenCustomiseEditorDialog)
