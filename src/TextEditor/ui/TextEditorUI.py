@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/TextEditor.ui'
+# Form implementation generated from reading ui file 'TextEditor.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -436,10 +436,14 @@ class Ui_MainWindow(object):
         self.menu_Spawn_points.setTitle(_translate("MainWindow", "&Spawn points"))
         self.menuHelp.setTitle(_translate("MainWindow", "&Help"))
         self.actionNew.setText(_translate("MainWindow", "&New"))
+        self.actionNew.setShortcut(_translate("MainWindow", "Ctrl+N"))
         self.actionOpen.setText(_translate("MainWindow", "&Open"))
+        self.actionOpen.setShortcut(_translate("MainWindow", "Ctrl+O"))
         self.actionSave.setText(_translate("MainWindow", "&Save"))
+        self.actionSave.setShortcut(_translate("MainWindow", "Ctrl+S"))
         self.actionSaveAs.setText(_translate("MainWindow", "Save &as"))
         self.actionQuit.setText(_translate("MainWindow", "&Quit"))
+        self.actionQuit.setShortcut(_translate("MainWindow", "Ctrl+Q"))
         self.actionSH_PlainText.setText(_translate("MainWindow", "Plain text"))
         self.actionSH_Python.setText(_translate("MainWindow", "Python"))
         self.actionSetFontSizeAndIndent.setText(_translate("MainWindow", "Set font size and i&ndent"))
