@@ -49,6 +49,6 @@ class TE_CustomiseEditorDialog(QtWidgets.QDialog, Ui_Dialog):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    window = MainWindow()
+    window = TE_CustomiseEditorDialog(10, 4)
     window.show()
     sys.exit(app.exec())
