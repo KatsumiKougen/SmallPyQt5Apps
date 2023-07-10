@@ -87,6 +87,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     # Functions for main window
     
+    def TE_UpdateFileNameLabel(self):
+        CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName
+        NewFileNameLabel = self._TE_AppVariables.FileStatusLabel.replace("$file", CurrentFileName)
+        self.Status_FileNameLabel.setText(NewFileNameLabel)
+    
     def TE_DisplayTitle(self):
         CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName
         self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{CurrentFileName}{'*' if not self.TE_FileSaved() else ''}"))
@@ -143,6 +148,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     fo.write(CurrentBuffer["active"])
                 self._TE_AppVariables.DocumentBuffer["saved"] = CurrentBuffer["active"]
                 self._TE_AppVariables.CurrentWorkspaceName = SaveFileName[0].split(TE_DirectorySeparator)[-1]
+                self.TE_UpdateFileNameLabel()
                 self.TE_DisplayTitle()
         else:
             CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName
