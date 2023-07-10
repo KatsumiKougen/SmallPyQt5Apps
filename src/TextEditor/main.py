@@ -117,7 +117,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 case QtWidgets.QMessageBox.Close:
                     event.accept()
                 case QtWidgets.QMessageBox.Save:
-                    self.TF_OpenSaveFileDialog()
+                    self.TE_SaveFile()
                     event.accept()
                 case _:
                     event.ignore()
@@ -137,7 +137,73 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._TE_VBDialog = TE_ViewBlockDialog(self._TE_AppVariables.BlockContent)
         self._TE_VBDialog.show()
     
-    def TE_OpenSaveFileDialog(self, mode: int = 0):
+    # Functions for displaying time (HH:MM:SS)
+    
+    def TE_DisplayTime(self, arg):
+        self.Status_TimeLabel.setText(arg)
+    
+    def TE_UpdateTimeInBackground(self):
+        self._TE_TimeThread = TE_TimeUpdate()
+        self._TE_TimeThread.time.connect(self.TE_DisplayTime)
+        self._TE_TimeThread.start()
+    
+    # Function for manipulating LCD widgets
+    
+    def TE_SetLCDWidgets(self):
+        self.Status_LCDDisplay0.setStyleSheet("QLCDNumber {background: black; color: #1438db;}")
+        self.Status_LCDDisplay1.setStyleSheet("QLCDNumber {background: black; color: #2f90eb;}")
+        self.Status_LCDDisplay2.setStyleSheet("QLCDNumber {background: black; color: #79baf7;}")
+        self.Status_LCDDisplay3.setStyleSheet("QLCDNumber {background: black; color: #dcf1f7;}")
+    
+    def TE_UpdateLCD(self):
+        self.TE_GetDocumentStatus()
+        self.Status_LCDDisplay0.display(self._TE_AppVariables.DocumentStatus["line"])
+        self.Status_LCDDisplay1.display(self._TE_AppVariables.DocumentStatus["column"])
+        self.Status_LCDDisplay2.display(self._TE_AppVariables.DocumentStatus["char"])
+        self.Status_LCDDisplay3.display(self._TE_AppVariables.DocumentStatus["word"])
+    
+    # Functions for menu bar commands
+    
+    def TE_SetMenuBar(self):
+        
+        def SetAction_OpenAndSave():
+            self.actionSave.triggered.connect(self.TE_SaveFile)
+            self.actionSaveAs.triggered.connect(lambda: self.TE_SaveFile(1))
+        
+        def SetAction_OpenCustomiseEditorWidget():
+            self.actionSetFontSizeAndIndent.triggered.connect(self.TE_OpenCustomiseEditorDialog)
+        
+        def SetAction_OverwriteMode():
+            self.actionToggleInsertOverwriteMode.triggered.connect(self.TE_ToggleOverwrite)
+        
+        def SetAction_SyntaxHighlighting():
+            self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
+            self.actionSH_PlainText.triggered.connect(lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText))
+            self.actionSH_Python.triggered.connect(lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.Python))
+            self.TE_SyntaxHlActionGroup.addAction(self.actionSH_PlainText)
+            self.TE_SyntaxHlActionGroup.addAction(self.actionSH_Python)
+            self.TE_SyntaxHlActionGroup.setExclusive(True)
+        
+        def SetAction_WordStarBlock():
+            self.actionWSB_MarkBegin.triggered.connect(self.TE_MarkWSBegin)
+            self.actionWSB_MarkEnd.triggered.connect(self.TE_MarkWSEnd)
+            self.actionWSB_ViewBlock.triggered.connect(self.TE_OpenViewBlockDialog)
+            self.actionWSB_Copy.triggered.connect(self.TE_CopyWSBlock)
+            self.actionWSB_Move.triggered.connect(self.TE_MoveWSBlock)
+            self.actionWSB_Delete.triggered.connect(self.TE_DeleteWSBlock)
+        
+        SetAction_OpenAndSave()
+        SetAction_OpenCustomiseEditorWidget()
+        SetAction_OverwriteMode()
+        SetAction_SyntaxHighlighting()
+        SetAction_WordStarBlock()
+    
+    # Functions for file handling
+    
+    def TE_FileSaved(self) -> bool:
+        return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName)
+    
+    def TE_SaveFile(self, mode: int = 0):
         CurrentBuffer = self._TE_AppVariables.DocumentBuffer
         match mode:
             case 0: # Save
@@ -175,72 +241,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     self._TE_AppVariables.CurrentWorkspaceName = SaveFileName[0].split(TE_DirectorySeparator)[-1]
                     self.TE_UpdateFileNameLabel()
                     self.TE_DisplayTitle()
-    
-    # Functions for displaying time (HH:MM:SS)
-    
-    def TE_DisplayTime(self, arg):
-        self.Status_TimeLabel.setText(arg)
-    
-    def TE_UpdateTimeInBackground(self):
-        self._TE_TimeThread = TE_TimeUpdate()
-        self._TE_TimeThread.time.connect(self.TE_DisplayTime)
-        self._TE_TimeThread.start()
-    
-    # Function for manipulating LCD widgets
-    
-    def TE_SetLCDWidgets(self):
-        self.Status_LCDDisplay0.setStyleSheet("QLCDNumber {background: black; color: #1438db;}")
-        self.Status_LCDDisplay1.setStyleSheet("QLCDNumber {background: black; color: #2f90eb;}")
-        self.Status_LCDDisplay2.setStyleSheet("QLCDNumber {background: black; color: #79baf7;}")
-        self.Status_LCDDisplay3.setStyleSheet("QLCDNumber {background: black; color: #dcf1f7;}")
-    
-    def TE_UpdateLCD(self):
-        self.TE_GetDocumentStatus()
-        self.Status_LCDDisplay0.display(self._TE_AppVariables.DocumentStatus["line"])
-        self.Status_LCDDisplay1.display(self._TE_AppVariables.DocumentStatus["column"])
-        self.Status_LCDDisplay2.display(self._TE_AppVariables.DocumentStatus["char"])
-        self.Status_LCDDisplay3.display(self._TE_AppVariables.DocumentStatus["word"])
-    
-    # Functions for menu bar commands
-    
-    def TE_SetMenuBar(self):
-        
-        def SetAction_OpenAndSave():
-            self.actionSave.triggered.connect(self.TE_OpenSaveFileDialog)
-            self.actionSaveAs.triggered.connect(lambda: self.TE_OpenSaveFileDialog(1))
-        
-        def SetAction_OpenCustomiseEditorWidget():
-            self.actionSetFontSizeAndIndent.triggered.connect(self.TE_OpenCustomiseEditorDialog)
-        
-        def SetAction_OverwriteMode():
-            self.actionToggleInsertOverwriteMode.triggered.connect(self.TE_ToggleOverwrite)
-        
-        def SetAction_SyntaxHighlighting():
-            self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
-            self.actionSH_PlainText.triggered.connect(lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText))
-            self.actionSH_Python.triggered.connect(lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.Python))
-            self.TE_SyntaxHlActionGroup.addAction(self.actionSH_PlainText)
-            self.TE_SyntaxHlActionGroup.addAction(self.actionSH_Python)
-            self.TE_SyntaxHlActionGroup.setExclusive(True)
-        
-        def SetAction_WordStarBlock():
-            self.actionWSB_MarkBegin.triggered.connect(self.TE_MarkWSBegin)
-            self.actionWSB_MarkEnd.triggered.connect(self.TE_MarkWSEnd)
-            self.actionWSB_ViewBlock.triggered.connect(self.TE_OpenViewBlockDialog)
-            self.actionWSB_Copy.triggered.connect(self.TE_CopyWSBlock)
-            self.actionWSB_Move.triggered.connect(self.TE_MoveWSBlock)
-            self.actionWSB_Delete.triggered.connect(self.TE_DeleteWSBlock)
-        
-        SetAction_OpenAndSave()
-        SetAction_OpenCustomiseEditorWidget()
-        SetAction_OverwriteMode()
-        SetAction_SyntaxHighlighting()
-        SetAction_WordStarBlock()
-    
-    # Functions for file handling
-    
-    def TE_FileSaved(self) -> bool:
-        return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName)
     
     # Functions for plain text widget
     
