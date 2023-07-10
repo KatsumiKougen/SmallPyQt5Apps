@@ -116,6 +116,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             match ret:
                 case QtWidgets.QMessageBox.Close:
                     event.accept()
+                case QtWidgets.QMessageBox.Save:
+                    self.TF_OpenSaveFileDialog()
+                    event.accept()
                 case _:
                     event.ignore()
     
