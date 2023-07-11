@@ -166,7 +166,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def TE_SetMenuBar(self):
         
-        def SetAction_OpenAndSave():
+        def SetAction_FileOperations():
             self.actionOpen.triggered.connect(self.TE_OpenFile)
             self.actionSave.triggered.connect(self.TE_SaveFile)
             self.actionSaveAs.triggered.connect(lambda: self.TE_SaveFile(1))
@@ -196,7 +196,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         def SetAction_Misc():
             self.actionConvertTabsToSpaces.triggered.connect(self.TE_ConvertIndentation)
         
-        SetAction_OpenAndSave()
+        SetAction_FileOperations()
         SetAction_OpenCustomiseEditorWidget()
         SetAction_OverwriteMode()
         SetAction_SyntaxHighlighting()
