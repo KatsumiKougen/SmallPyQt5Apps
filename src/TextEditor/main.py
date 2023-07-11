@@ -4,7 +4,7 @@ from text_ed_utils.CustomiseEditor import TE_CustomiseEditorDialog
 from text_ed_utils.ViewBlock import TE_ViewBlockDialog
 from highlighter.highlighter import *
 import sys, time, re, os
-from typing import Union
+from typing import Union, Optional
 from datetime import datetime
 
 match os.name:
@@ -36,7 +36,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         TextEdOverwriteMode: str = "`O`"
         FileStatusLabel: str = "File: **$file**"
         
-        CurrentWorkspaceName: str = "Untitled"
+        CurrentWorkspaceName: Optional[str] = None
         
         DocumentBuffer: dict[str, str] = {
             "saved": "",
@@ -62,6 +62,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         
         self.TE_DisplayTitle()
+        self.TE_UpdateFileNameLabel()
         self.TE_UpdateTimeInBackground()
         self.TE_SetMenuBar()
         self.TE_SetLCDWidgets()
@@ -88,17 +89,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Functions for main window
     
     def TE_UpdateFileNameLabel(self):
-        CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName
+        CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName if isinstance(self._TE_AppVariables.CurrentWorkspaceName, str) else "[Untitled]"
         NewFileNameLabel = self._TE_AppVariables.FileStatusLabel.replace("$file", CurrentFileName)
         self.Status_FileNameLabel.setText(NewFileNameLabel)
     
     def TE_DisplayTitle(self):
-        CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName
+        CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName if isinstance(self._TE_AppVariables.CurrentWorkspaceName, str) else "[Untitled]"
         self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{CurrentFileName}{'*' if not self.TE_FileSaved() else ''}"))
     
     def closeEvent(self, event):
         if not self.TE_FileSaved():
-            CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName
+            CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName if isinstance(self._TE_AppVariables.CurrentWorkspaceName, str) else "[Untitled]"
             MessageBox = QtWidgets.QMessageBox()
             MessageBox.setTextFormat(QtCore.Qt.MarkdownText)
             MessageBox.setWindowTitle("Exiting the text editor so soon?")
@@ -206,7 +207,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Functions for file handling
     
     def TE_FileSaved(self) -> bool:
-        return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName)
+        if self._TE_AppVariables.CurrentWorkspaceName != None:
+            return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName)
+        else:
+            return False
     
     def TE_OpenFile(self):
         OpenFileName = QtWidgets.QFileDialog.getOpenFileName(
