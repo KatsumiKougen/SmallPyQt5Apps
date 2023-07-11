@@ -167,6 +167,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def TE_SetMenuBar(self):
         
         def SetAction_OpenAndSave():
+            self.actionOpen.triggered.connect(self.TE_OpenFile)
             self.actionSave.triggered.connect(self.TE_SaveFile)
             self.actionSaveAs.triggered.connect(lambda: self.TE_SaveFile(1))
         
@@ -203,6 +204,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def TE_FileSaved(self) -> bool:
         return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName)
     
+    def TE_OpenFile(self):
+        OpenFileName = QtWidgets.QFileDialog.getOpenFileName(
+            parent=self,
+            caption="Open...",
+            directory="./",
+            filter="All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;Python source code (*.py, *.py3, *.pyw, *.pyd)",
+        )
+        with open(OpenFileName[0], "r") as fi:
+            OpenFileContent = fi.read()
+            self._TE_AppVariables.DocumentBuffer["saved"] = OpenFileContent
+            self._TE_AppVariables.DocumentBuffer["active"] = OpenFileContent
+            self.TextEditor_MainWidget.clear()
+            self.TextEditor_MainWidget.insertPlainText(OpenFileContent)
+            self._TE_AppVariables.CurrentWorkspaceName = OpenFileName[0].split(TE_DirectorySeparator)[-1]
+            self.TE_UpdateFileNameLabel()
+            self.TE_DisplayTitle()
+    
     def TE_SaveFile(self, mode: int = 0):
         CurrentBuffer = self._TE_AppVariables.DocumentBuffer
         match mode:
@@ -230,7 +248,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             case 1: # Save as
                 SaveFileName = QtWidgets.QFileDialog.getSaveFileName(
                     parent=self,
-                    caption="Save...",
+                    caption="Save as...",
                     directory=self._TE_AppVariables.CurrentWorkspaceName,
                     filter="All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;Python source code (*.py, *.py3, *.pyw, *.pyd)"
                 )
