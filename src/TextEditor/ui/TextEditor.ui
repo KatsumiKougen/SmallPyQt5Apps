@@ -545,6 +545,8 @@
     <addaction name="separator"/>
     <addaction name="actionDefineFunction"/>
     <addaction name="actionDefineClass"/>
+    <addaction name="separator"/>
+    <addaction name="actionConvertTabsToSpaces"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -929,6 +931,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+K, Shift+L</string>
+   </property>
+  </action>
+  <action name="actionConvertTabsToSpaces">
+   <property name="text">
+    <string>Convert tabs to spaces</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+\</string>
    </property>
   </action>
  </widget>

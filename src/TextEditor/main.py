@@ -193,11 +193,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.actionWSB_Move.triggered.connect(self.TE_MoveWSBlock)
             self.actionWSB_Delete.triggered.connect(self.TE_DeleteWSBlock)
         
+        def SetAction_Misc():
+            self.actionConvertTabsToSpaces.triggered.connect(self.TE_ConvertIndentation)
+        
         SetAction_OpenAndSave()
         SetAction_OpenCustomiseEditorWidget()
         SetAction_OverwriteMode()
         SetAction_SyntaxHighlighting()
         SetAction_WordStarBlock()
+        SetAction_Misc()
     
     # Functions for file handling
     
@@ -269,7 +273,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._TE_AppVariables.DocumentStatus["column"] = y
         self._TE_AppVariables.DocumentStatus["char"] = len(self.TextEditor_MainWidget.toPlainText())
         self._TE_AppVariables.DocumentStatus["word"] = len(re.split("\\s+", self.TextEditor_MainWidget.toPlainText().strip()))
-        
         self._TE_AppVariables.DocumentBuffer["active"] = self.TextEditor_MainWidget.toPlainText()
     
     def TE_SetFontSize(self, point: int):
@@ -282,6 +285,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         WhitespaceWidth = FontMetrics.width(" ")
         self.TextEditor_MainWidget.setTabStopDistance(WhitespaceWidth*width)
         self._TE_AppVariables.CurrentIndentationSpace = width
+    
+    def TE_ConvertIndentation(self):
+        IndentationWidth = self._TE_AppVariables.CurrentIndentationSpace
+        MainWidgetContent = self.TextEditor_MainWidget.toPlainText()
+        self.TextEditor_MainWidget.clear()
+        self.TextEditor_MainWidget.insertPlainText(MainWidgetContent.replace("\t", " "*IndentationWidth))
     
     def TE_SetSyntaxHighlighting(self, arg: int):
         self.highlighter = TE_Highlighter(arg, self.TextEditor_MainWidget.document())
