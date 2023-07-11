@@ -82,6 +82,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         def ConnectCursorPosChangedSignal():
             self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateLCD)
             self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateProgressBar)
+            self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_GetDocumentStatus)
         
         ConnectTextChangedSignal()
         ConnectCursorPosChangedSignal()
@@ -157,7 +158,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.Status_LCDDisplay3.setStyleSheet("QLCDNumber {background: black; color: #dcf1f7;}")
     
     def TE_UpdateLCD(self):
-        self.TE_GetDocumentStatus()
         self.Status_LCDDisplay0.display(self._TE_AppVariables.DocumentStatus["line"])
         self.Status_LCDDisplay1.display(self._TE_AppVariables.DocumentStatus["column"])
         self.Status_LCDDisplay2.display(self._TE_AppVariables.DocumentStatus["char"])
@@ -168,6 +168,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def TE_SetMenuBar(self):
         
         def SetAction_FileOperations():
+            self.actionNew.triggered.connect(self.TE_CreateNewFile)
             self.actionOpen.triggered.connect(self.TE_OpenFile)
             self.actionSave.triggered.connect(self.TE_SaveFile)
             self.actionSaveAs.triggered.connect(lambda: self.TE_SaveFile(1))
@@ -208,6 +209,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def TE_FileSaved(self) -> bool:
         if self._TE_AppVariables.CurrentWorkspaceName != None:
+            print(self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName))
             return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName)
         else:
             return False
@@ -267,6 +269,43 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     self._TE_AppVariables.CurrentWorkspaceName = SaveFileName[0].split(TE_DirectorySeparator)[-1]
                     self.TE_UpdateFileNameLabel()
                     self.TE_DisplayTitle()
+    
+    def TE_CreateNewFile(self):
+        
+        def ResetEditor():
+            self._TE_AppVariables.DocumentBuffer = {
+                "saved": "",
+                "active": ""
+            }
+            self.TextEditor_MainWidget.clear()
+            self._TE_AppVariables.CurrentWorkspaceName = None
+            self.TE_UpdateFileNameLabel()
+            self.TE_DisplayTitle()
+        
+        CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName if isinstance(self._TE_AppVariables.CurrentWorkspaceName, str) else "[Untitled]"
+        ConfirmActionMessageBox = QtWidgets.QMessageBox()
+        ConfirmActionMessageBox.setTextFormat(QtCore.Qt.MarkdownText)
+        ConfirmActionMessageBox.setWindowTitle("Ready to be reborn, sucker?")
+        ConfirmActionMessageBox.setText(f"**{CurrentFileName}** is modified.")
+        ConfirmActionMessageBox.setInformativeText(
+            f"Are you sure you want to create a new file?\n"
+            f"All unsaved changes to {CurrentFileName} will be lost!\n"
+            "\n"
+            "Dude... please! I need to exist!\n"
+            "I'm begging you... DON'T PRESS THAT \"DISCARD\" BUTTON!!"
+        )
+        ConfirmActionMessageBox.setStandardButtons(QtWidgets.QMessageBox.Save | QtWidgets.QMessageBox.Discard | QtWidgets.QMessageBox.Cancel)
+        ConfirmActionMessageBox.setDefaultButton(QtWidgets.QMessageBox.Cancel)
+        if not self.TE_FileSaved():
+            ret = ConfirmActionMessageBox.exec()
+            match ret:
+                case QtWidgets.QMessageBox.Discard:
+                    ResetEditor()
+                case QtWidgets.QMessageBox.Save:
+                    self.TE_SaveFile()
+                    ResetEditor()
+        else:
+            ResetEditor()
     
     # Functions for plain text widget
     
