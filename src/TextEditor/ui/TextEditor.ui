@@ -530,6 +530,8 @@
     <addaction name="actionDefineClass"/>
     <addaction name="separator"/>
     <addaction name="actionConvertTabsToSpaces"/>
+    <addaction name="separator"/>
+    <addaction name="actionFileInfo"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -918,10 +920,15 @@
   </action>
   <action name="actionConvertTabsToSpaces">
    <property name="text">
-    <string>Convert tabs to spaces</string>
+    <string>Convert tabs to &amp;spaces</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+\</string>
+   </property>
+  </action>
+  <action name="actionFileInfo">
+   <property name="text">
+    <string>File &amp;info</string>
    </property>
   </action>
  </widget>
