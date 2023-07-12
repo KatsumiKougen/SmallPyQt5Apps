@@ -222,7 +222,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         )
         with open(OpenFileName[0], "r") as fi:
             OpenFileContent = fi.read()
-            print(repr(OpenFileContent))
             self._TE_AppVariables.DocumentBuffer["saved"] = OpenFileContent
             self._TE_AppVariables.DocumentBuffer["active"] = OpenFileContent
             self.TextEditor_MainWidget.clear()
@@ -235,7 +234,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         CurrentBuffer = self._TE_AppVariables.DocumentBuffer
         match mode:
             case 0: # Save
-                if not os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName):
+                if self._TE_AppVariables.CurrentWorkspaceName == None or not os.path.isfile(f"{os.getcwd()}/{self._TE_AppVariables.CurrentWorkspaceName}"):
                     SaveFileName = QtWidgets.QFileDialog.getSaveFileName(
                         parent=self,
                         caption="Save...",
@@ -243,17 +242,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         filter="All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;Python source code (*.py, *.py3, *.pyw, *.pyd)"
                     )
                     if SaveFileName != ("", ""):
-                        with open(SaveFileName[0], "w") as fo:
-                            fo.write(CurrentBuffer["active"])
                         self._TE_AppVariables.DocumentBuffer["saved"] = CurrentBuffer["active"]
+                        with open(SaveFileName[0], "w") as fo:
+                            fo.write(CurrentBuffer["saved"])
                         self._TE_AppVariables.CurrentWorkspaceName = SaveFileName[0].split(TE_DirectorySeparator)[-1]
                         self.TE_UpdateFileNameLabel()
                         self.TE_DisplayTitle()
                 else:
                     CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName
-                    with open(CurrentFileName, "w") as fo:
-                        fo.write(CurrentBuffer["active"])
                     self._TE_AppVariables.DocumentBuffer["saved"] = CurrentBuffer["active"]
+                    with open(CurrentFileName, "w") as fo:
+                        fo.write(CurrentBuffer["saved"])
                     self.TE_DisplayTitle()
             case 1: # Save as
                 SaveFileName = QtWidgets.QFileDialog.getSaveFileName(
@@ -263,9 +262,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     filter="All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;Python source code (*.py, *.py3, *.pyw, *.pyd)"
                 )
                 if SaveFileName != ("", ""):
-                    with open(SaveFileName[0], "w") as fo:
-                        fo.write(CurrentBuffer["active"])
                     self._TE_AppVariables.DocumentBuffer["saved"] = CurrentBuffer["active"]
+                    with open(SaveFileName[0], "w") as fo:
+                        fo.write(CurrentBuffer["saved"])
                     self._TE_AppVariables.CurrentWorkspaceName = SaveFileName[0].split(TE_DirectorySeparator)[-1]
                     self.TE_UpdateFileNameLabel()
                     self.TE_DisplayTitle()
