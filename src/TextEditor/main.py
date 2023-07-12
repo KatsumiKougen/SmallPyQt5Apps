@@ -207,9 +207,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     # Functions for file handling
     
+    def TE_FileExists(self) -> bool:
+        return os.path.isfile(f"{os.getcwd()}/{self._TE_AppVariables.CurrentWorkspaceName}")
+    
     def TE_FileSaved(self) -> bool:
         if self._TE_AppVariables.CurrentWorkspaceName != None:
-            return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName)
+            return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and self.TE_FileExists():
         else:
             return False
     
@@ -234,7 +237,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         CurrentBuffer = self._TE_AppVariables.DocumentBuffer
         match mode:
             case 0: # Save
-                if self._TE_AppVariables.CurrentWorkspaceName == None or not os.path.isfile(f"{os.getcwd()}/{self._TE_AppVariables.CurrentWorkspaceName}"):
+                if self._TE_AppVariables.CurrentWorkspaceName == None or not self.TE_FileExists():
                     SaveFileName = QtWidgets.QFileDialog.getSaveFileName(
                         parent=self,
                         caption="Save...",
