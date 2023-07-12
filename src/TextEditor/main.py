@@ -209,7 +209,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def TE_FileSaved(self) -> bool:
         if self._TE_AppVariables.CurrentWorkspaceName != None:
-            print(self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName))
             return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and os.path.isfile(self._TE_AppVariables.CurrentWorkspaceName)
         else:
             return False
@@ -223,6 +222,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         )
         with open(OpenFileName[0], "r") as fi:
             OpenFileContent = fi.read()
+            print(repr(OpenFileContent))
             self._TE_AppVariables.DocumentBuffer["saved"] = OpenFileContent
             self._TE_AppVariables.DocumentBuffer["active"] = OpenFileContent
             self.TextEditor_MainWidget.clear()
