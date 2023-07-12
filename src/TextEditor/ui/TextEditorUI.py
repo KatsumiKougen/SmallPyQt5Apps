@@ -440,7 +440,7 @@ class Ui_MainWindow(object):
         self.actionSH_PlainText.setText(_translate("MainWindow", "Plain text"))
         self.actionSH_Python.setText(_translate("MainWindow", "Python"))
         self.actionSetFontSizeAndIndent.setText(_translate("MainWindow", "Set font size and i&ndent"))
-        self.actionSetFontSizeAndIndent.setShortcut(_translate("MainWindow", "Ctrl+Shift+Z"))
+        self.actionSetFontSizeAndIndent.setShortcut(_translate("MainWindow", "Alt+A"))
         self.actionUndo.setText(_translate("MainWindow", "&Undo"))
         self.actionUndo.setShortcut(_translate("MainWindow", "Ctrl+Z"))
         self.actionRedo.setText(_translate("MainWindow", "&Redo"))

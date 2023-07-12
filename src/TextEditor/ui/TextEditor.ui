@@ -606,7 +606,7 @@
     <string>Set font size and i&amp;ndent</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+Z</string>
+    <string>Alt+A</string>
    </property>
   </action>
   <action name="actionUndo">
