@@ -485,9 +485,6 @@
     <addaction name="actionFindAndReplace"/>
     <addaction name="separator"/>
     <addaction name="menuWordStarBlocks"/>
-    <addaction name="separator"/>
-    <addaction name="actionIndentMore"/>
-    <addaction name="actionIndentLess"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
