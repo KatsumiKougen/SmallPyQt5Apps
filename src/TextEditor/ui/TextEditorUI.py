@@ -440,6 +440,7 @@ class Ui_MainWindow(object):
         self.actionSH_PlainText.setText(_translate("MainWindow", "Plain text"))
         self.actionSH_Python.setText(_translate("MainWindow", "Python"))
         self.actionSetFontSizeAndIndent.setText(_translate("MainWindow", "Set font size and i&ndent"))
+        self.actionSetFontSizeAndIndent.setShortcut(_translate("MainWindow", "Ctrl+Shift+Z"))
         self.actionUndo.setText(_translate("MainWindow", "&Undo"))
         self.actionUndo.setShortcut(_translate("MainWindow", "Ctrl+Z"))
         self.actionRedo.setText(_translate("MainWindow", "&Redo"))
@@ -519,4 +520,5 @@ class Ui_MainWindow(object):
         self.actionConvertTabsToSpaces.setText(_translate("MainWindow", "Convert tabs to &spaces"))
         self.actionConvertTabsToSpaces.setShortcut(_translate("MainWindow", "Ctrl+\\"))
         self.actionFileInfo.setText(_translate("MainWindow", "File &info"))
+        self.actionFileInfo.setShortcut(_translate("MainWindow", "Ctrl+I"))
 from highlighter.parenmatch import TE_CustomPlainTextEdit

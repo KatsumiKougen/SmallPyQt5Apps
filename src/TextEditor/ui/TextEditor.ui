@@ -605,6 +605,9 @@
    <property name="text">
     <string>Set font size and i&amp;ndent</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
+   </property>
   </action>
   <action name="actionUndo">
    <property name="text">
@@ -929,6 +932,9 @@
   <action name="actionFileInfo">
    <property name="text">
     <string>File &amp;info</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
    </property>
   </action>
  </widget>
