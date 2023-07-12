@@ -212,7 +212,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def TE_FileSaved(self) -> bool:
         if self._TE_AppVariables.CurrentWorkspaceName != None:
-            return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and self.TE_FileExists():
+            return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and self.TE_FileExists()
         else:
             return False
     
