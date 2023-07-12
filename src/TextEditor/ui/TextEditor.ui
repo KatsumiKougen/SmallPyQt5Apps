@@ -522,26 +522,9 @@
      <addaction name="actionIB_DoubleQuote"/>
      <addaction name="actionIB_Guillemet"/>
     </widget>
-    <widget class="QMenu" name="menu_Spawn_points">
-     <property name="title">
-      <string>&amp;Spawn points</string>
-     </property>
-     <addaction name="actionSP_AddSpawnPoint"/>
-     <addaction name="actionSP_ClearAllSpawnPoints"/>
-     <addaction name="separator"/>
-     <addaction name="actionSP_SpawnPoint0"/>
-     <addaction name="actionSP_SpawnPoint1"/>
-     <addaction name="actionSP_SpawnPoint2"/>
-     <addaction name="actionSP_SpawnPoint3"/>
-     <addaction name="actionSP_SpawnPoint4"/>
-     <addaction name="actionSP_SpawnPoint5"/>
-     <addaction name="actionSP_SpawnPoint6"/>
-     <addaction name="actionSP_SpawnPoint7"/>
-    </widget>
     <addaction name="actionToggleInsertOverwriteMode"/>
     <addaction name="separator"/>
     <addaction name="menuInsertBracket"/>
-    <addaction name="menu_Spawn_points"/>
     <addaction name="separator"/>
     <addaction name="actionDefineFunction"/>
     <addaction name="actionDefineClass"/>
