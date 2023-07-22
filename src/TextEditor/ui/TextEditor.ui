@@ -523,9 +523,6 @@
     <addaction name="separator"/>
     <addaction name="menuInsertBracket"/>
     <addaction name="separator"/>
-    <addaction name="actionDefineFunction"/>
-    <addaction name="actionDefineClass"/>
-    <addaction name="separator"/>
     <addaction name="actionConvertTabsToSpaces"/>
     <addaction name="separator"/>
     <addaction name="actionFileInfo"/>
