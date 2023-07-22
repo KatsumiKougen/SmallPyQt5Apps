@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 from ui.TextEditorUI import Ui_MainWindow
 from text_ed_utils.CustomiseEditor import TE_CustomiseEditorDialog
 from text_ed_utils.ViewBlock import TE_ViewBlockDialog
+from about.About import TE_AboutDialog
 from highlighter.highlighter import *
 import sys, time, re, os
 from typing import Union, Optional
@@ -139,6 +140,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._TE_VBDialog = TE_ViewBlockDialog(self._TE_AppVariables.BlockContent)
         self._TE_VBDialog.show()
     
+    def TE_OpenAboutDialog(self):
+        self._TE_AboutDialog = TE_AboutDialog()
+        self._TE_AboutDialog.show()
+    
     # Functions for displaying time (HH:MM:SS)
     
     def TE_DisplayTime(self, arg):
@@ -197,6 +202,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         def SetAction_Misc():
             self.actionConvertTabsToSpaces.triggered.connect(self.TE_ConvertIndentation)
+            self.actionAbout.triggered.connect(self.TE_OpenAboutDialog)
         
         SetAction_FileOperations()
         SetAction_OpenCustomiseEditorWidget()
