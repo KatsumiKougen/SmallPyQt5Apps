@@ -65,6 +65,7 @@ class Ui_Dialog(object):
         self.verticalLayout.addWidget(self.AboutDialog_CloseButton)
 
         self.retranslateUi(Dialog)
+        self.AboutDialog_CloseButton.clicked.connect(Dialog.close) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
