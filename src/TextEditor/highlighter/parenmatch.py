@@ -26,10 +26,24 @@ class TE_TextBlockData(QtGui.QTextBlockUserData):
 class TE_CustomPlainTextEdit(QtWidgets.QPlainTextEdit):
     
     # TODO: add support for bracket and curly brackets
-    def __init__(self, parent):
+    def __init__(self, parent, indent: int = 4):
         super().__init__(parent)
         self.highlighter = TE_ParenMatchHighlighter(self.document())
         self.cursorPositionChanged.connect(self.matchParentheses)
+        self.IndentationSpace = indent
+    
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Tab:
+            Cursor = self.textCursor()
+            CursorPosition = Cursor.position()
+            
+            Cursor.insertText(" "*self.IndentationSpace)
+            Cursor.movePosition(Cursor.EndOfLine)
+            
+            event.accept()
+            return
+        
+        super().keyPressEvent(event)
     
     def matchParentheses(self):
         self.setExtraSelections([])

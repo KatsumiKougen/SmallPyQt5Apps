@@ -336,6 +336,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         WhitespaceWidth = FontMetrics.width(" ")
         self.TextEditor_MainWidget.setTabStopDistance(WhitespaceWidth*width)
         self._TE_AppVariables.CurrentIndentationSpace = width
+        self.TextEditor_MainWidget.IndentationSpace = width
     
     def TE_ConvertIndentation(self):
         IndentationWidth = self._TE_AppVariables.CurrentIndentationSpace
