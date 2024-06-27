@@ -381,7 +381,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             self.Misc_WordStarBlockLabel.setText("No block")
     
-    def TE_UpdateWSBlockPositions(self, position, index):
+    def TE_UpdateWSBlockPositions(self, position: tuple[int | None, int | None, int], index: int):
         self._TE_AppVariables.BlockPosition[index] = position
         
         if self._TE_AppVariables.BlockPosition[0][2] > self._TE_AppVariables.BlockPosition[1][2]:
