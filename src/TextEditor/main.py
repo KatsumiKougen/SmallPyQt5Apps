@@ -415,24 +415,40 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def TE_MoveWSBlock(self):
         Cursor = self.TextEditor_MainWidget.textCursor()
         CurrentCursorPos = Cursor.position()
+        
+        if not self.TE_WSBlockExists():
+            return
+        
         InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
         FinalBlockPos = self._TE_AppVariables.BlockPosition[1][2]
-        self.TE_CopyWSBlock()
-        if InitialBlockPos < CurrentCursorPos:
-            Cursor = self.TextEditor_MainWidget.textCursor()
-            Cursor.setPosition(InitialBlockPos)
-            for i in self._TE_AppVariables.BlockContent:
-                Cursor.deleteChar()
-            Cursor.setPosition(CurrentCursorPos)
-            self.TextEditor_MainWidget.setTextCursor(Cursor)
-        elif InitialBlockPos > CurrentCursorPos:
-            BlockLen = len(self._TE_AppVariables.BlockContent)
-            Cursor = self.TextEditor_MainWidget.textCursor()
-            Cursor.setPosition(FinalBlockPos+BlockLen)
-            for i in self._TE_AppVariables.BlockContent:
-                Cursor.deletePreviousChar()
-            Cursor.setPosition(CurrentCursorPos+BlockLen)
-            self.TextEditor_MainWidget.setTextCursor(Cursor)
+        
+        if InitialBlockPos == FinalBlockPos:
+            return
+        
+        BlockContent = self.TextEditor_MainWidget.toPlainText()[InitialBlockPos:FinalBlockPos]
+        
+        if InitialBlockPos < CurrentCursorPos < FinalBlockPos:
+            return
+        
+        Cursor.setPosition(InitialBlockPos)
+        Cursor.setPosition(FinalBlockPos, QtGui.QTextCursor.KeepAnchor)
+        Cursor.removeSelectedText()
+        
+        if CurrentCursorPos > FinalBlockPos:
+            CurrentCursorPos -= len(BlockContent)
+        
+        Cursor.setPosition(CurrentCursorPos)
+        Cursor.insertText(BlockContent)
+        
+        self.TextEditor_MainWidget.setTextCursor(Cursor)
+        self._TE_AppVariables.DocumentBuffer["active"] = self.TextEditor_MainWidget.toPlainText()
+
+        NewBlockBeginPos = CurrentCursorPos
+        NewBlockEndPos = CurrentCursorPos + len(BlockContent)
+        self._TE_AppVariables.BlockPosition = [
+            [None, None, NewBlockBeginPos],
+            [None, None, NewBlockEndPos]
+        ]
     
     def TE_DeleteWSBlock(self):
         CurrentCursorPos = self.TextEditor_MainWidget.textCursor().position()
