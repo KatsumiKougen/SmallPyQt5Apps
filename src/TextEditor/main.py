@@ -392,6 +392,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             ]
         
         self.TE_ShowWSBlockStatus()
+
+    def TE_UpdateWSBlockContent(self):
+        if self.TE_WSBlockExists():
+            InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
+            FinalBlockPos = self._TE_AppVariables.BlockPosition[1][2]
+            
+            self._TE_AppVariables.BlockContent = self.TextEditor_MainWidget.toPlainText()[
+                InitialBlockPos:FinalBlockPos
+            ]
+            
+        else:
+            self._TE_AppVariables.BlockContent = None
     
     def TE_MarkWSBegin(self):
         NewBeginPosition = [
