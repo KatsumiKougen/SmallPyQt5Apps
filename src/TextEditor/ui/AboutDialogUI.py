@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(660, 293)
+        Dialog.resize(805, 293)
         Dialog.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout.setContentsMargins(9, -1, -1, -1)
@@ -75,5 +75,5 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "About"))
         self.AboutDialog_Image.setText(_translate("Dialog", "Image"))
         self.AboutDialog_ImageCreditLabel.setText(_translate("Dialog", "Art by **darktrident** @ pixiv"))
-        self.AboutDialog_IntroductionLabel.setText(_translate("Dialog", "<html><head/><body><h1 style=\" margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:xx-large; font-weight:600;\">The text editor</span></h1><p>Written by Katsumi (<a href=\"https://twitter.com/realKatsumi_vn\"><span style=\" text-decoration: underline; color:#0000ff;\">twitter.com/realKatsumi_vn</span></a>)</p><p>This program is not meant to be an actual text editor — it is made for demonstration purposes only.</p><hr/><p>Copyright 2023</p></body></html>"))
+        self.AboutDialog_IntroductionLabel.setText(_translate("Dialog", "<html><head/><body><h1 style=\" margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:xx-large; font-weight:600;\">The text editor</span></h1><p>Written by Katsumi (<a href=\"https://x.com/realKatsumi_vn\"><span style=\" text-decoration: underline; color:#0000ff;\">x.com/realKatsumi_vn</span></a>)</p><p>This program is not meant to be an actual text editor — it is made for demonstration purposes only.</p><hr/><p>Copyright 2023–2024</p></body></html>"))
         self.AboutDialog_CloseButton.setText(_translate("Dialog", "Close"))
