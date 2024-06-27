@@ -381,7 +381,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             self.Misc_WordStarBlockLabel.setText("No block")
     
-    def TE_UpdateWSBlockPositions(self, position: tuple[int | None, int | None, int], index: int):
+    def _TE_UpdateWSBlockPositions(self, position: tuple[int | None, int | None, int], index: int):
         self._TE_AppVariables.BlockPosition[index] = position
         
         if self._TE_AppVariables.BlockPosition[0][2] > self._TE_AppVariables.BlockPosition[1][2]:
@@ -411,7 +411,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.TextEditor_MainWidget.textCursor().positionInBlock(),
             self.TextEditor_MainWidget.textCursor().position(),
         ]
-        self.TE_UpdateWSBlockPositions(NewBeginPosition, 0)
+        self._TE_UpdateWSBlockPositions(NewBeginPosition, 0)
     
     def TE_MarkWSEnd(self):
         NewEndPosition = [
@@ -419,7 +419,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.TextEditor_MainWidget.textCursor().positionInBlock(),
             self.TextEditor_MainWidget.textCursor().position(),
         ]
-        self.TE_UpdateWSBlockPositions(NewEndPosition, 1)
+        self._TE_UpdateWSBlockPositions(NewEndPosition, 1)
     
     def TE_CopyWSBlock(self):
         self.TextEditor_MainWidget.insertPlainText(self._TE_AppVariables.BlockContent)
