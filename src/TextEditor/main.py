@@ -371,12 +371,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     # Function for working with WordStar blocks
     
-    def TE_WSBlockExists(self) -> bool:
+    def _TE_WSBlockExists(self) -> bool:
         return [None, None, 0] not in self._TE_AppVariables.BlockPosition
     
     def TE_ShowWSBlockStatus(self):
         position = self._TE_AppVariables.BlockPosition
-        if self.TE_WSBlockExists():
+        if self._TE_WSBlockExists():
             self.Misc_WordStarBlockLabel.setText(f"WordStar block at ({position[0][0]}:{position[0][1]});({position[1][0]}:{position[1][1]})")
         else:
             self.Misc_WordStarBlockLabel.setText("No block")
@@ -386,7 +386,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         if self._TE_AppVariables.BlockPosition[0][2] > self._TE_AppVariables.BlockPosition[1][2]:
             self._TE_AppVariables.BlockPosition.reverse()
-        if self.TE_WSBlockExists():
+        if self._TE_WSBlockExists():
             self._TE_AppVariables.BlockContent = self.TextEditor_MainWidget.toPlainText()[
                 self._TE_AppVariables.BlockPosition[0][2]:self._TE_AppVariables.BlockPosition[1][2]
             ]
@@ -394,7 +394,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TE_ShowWSBlockStatus()
 
     def TE_UpdateWSBlockContent(self):
-        if self.TE_WSBlockExists():
+        if self._TE_WSBlockExists():
             InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
             FinalBlockPos = self._TE_AppVariables.BlockPosition[1][2]
             
@@ -428,7 +428,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         Cursor = self.TextEditor_MainWidget.textCursor()
         CurrentCursorPos = Cursor.position()
         
-        if not self.TE_WSBlockExists():
+        if not self._TE_WSBlockExists():
             return
         
         InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
@@ -463,7 +463,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         ]
     
     def TE_DeleteWSBlock(self):
-        if not self.TE_WSBlockExists():
+        if not self._TE_WSBlockExists():
             return
         
         Cursor = self.TextEditor_MainWidget.textCursor()
