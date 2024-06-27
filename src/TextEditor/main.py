@@ -413,7 +413,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TextEditor_MainWidget.insertPlainText(self._TE_AppVariables.BlockContent)
     
     def TE_MoveWSBlock(self):
-        CurrentCursorPos = self.TextEditor_MainWidget.textCursor().position()
+        Cursor = self.TextEditor_MainWidget.textCursor()
+        CurrentCursorPos = Cursor.position()
         InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
         FinalBlockPos = self._TE_AppVariables.BlockPosition[1][2]
         self.TE_CopyWSBlock()
