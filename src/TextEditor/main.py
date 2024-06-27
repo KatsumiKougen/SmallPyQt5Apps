@@ -393,7 +393,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.TE_ShowWSBlockStatus()
 
-    def TE_UpdateWSBlockContent(self):
+    def _TE_UpdateWSBlockContent(self):
         if self._TE_WSBlockExists():
             InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
             FinalBlockPos = self._TE_AppVariables.BlockPosition[1][2]
