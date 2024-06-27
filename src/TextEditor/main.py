@@ -381,6 +381,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             self.Misc_WordStarBlockLabel.setText("No block")
     
+    def TE_UpdateWSBlockPositions(self, position, index):
+        self._TE_AppVariables.BlockPosition[index] = position
+        
+        if self._TE_AppVariables.BlockPosition[0][2] > self._TE_AppVariables.BlockPosition[1][2]:
+            self._TE_AppVariables.BlockPosition.reverse()
+        if self.TE_WSBlockExists():
+            self._TE_AppVariables.BlockContent = self.TextEditor_MainWidget.toPlainText()[
+                self._TE_AppVariables.BlockPosition[0][2]:self._TE_AppVariables.BlockPosition[1][2]
+            ]
+        
+        self.TE_ShowWSBlockStatus()
+    
     def TE_MarkWSBegin(self):
         NewBeginPosition = [
             self.TextEditor_MainWidget.textCursor().blockNumber(),
