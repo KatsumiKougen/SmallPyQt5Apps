@@ -381,19 +381,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             self.Misc_WordStarBlockLabel.setText("No block")
     
-    def _TE_UpdateWSBlockPositions(self, position: tuple[int | None, int | None, int], index: int):
-        self._TE_AppVariables.BlockPosition[index] = position
-        
-        if self._TE_AppVariables.BlockPosition[0][2] > self._TE_AppVariables.BlockPosition[1][2]:
-            self._TE_AppVariables.BlockPosition.reverse()
-        if self._TE_WSBlockExists():
-            self._TE_AppVariables.BlockContent = self.TextEditor_MainWidget.toPlainText()[
-                self._TE_AppVariables.BlockPosition[0][2]:self._TE_AppVariables.BlockPosition[1][2]
-            ]
-        
-        self.TE_ShowWSBlockStatus()
-
-    def __TE_UpdateWSBlockPositions(self):
+    def _TE_UpdateWSBlockPositions(self):
         if self._TE_WSBlockExists():
             InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
             FinalBlockPos = self._TE_AppVariables.BlockPosition[1][2]
@@ -491,7 +479,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         Cursor.setPosition(FinalBlockPos, QtGui.QTextCursor.KeepAnchor)
         Cursor.removeSelectedText()
         
-        cursor.setPosition(InitialBlockPos)
+        Cursor.setPosition(InitialBlockPos)
         self.TextEditor_MainWidget.setTextCursor(cursor)
         
         self._TE_AppVariables.BlockPosition = [[None, None, 0], [None, None, 0]]
