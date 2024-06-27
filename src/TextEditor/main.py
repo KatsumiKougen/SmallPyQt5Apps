@@ -318,8 +318,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Functions for plain text widget
     
     def TE_GetDocumentStatus(self):
-        cursor = self.TextEditor_MainWidget.textCursor()
-        y, x = cursor.blockNumber() + 1, cursor.positionInBlock() + 1
+        Cursor = self.TextEditor_MainWidget.textCursor()
+        y, x = Cursor.blockNumber() + 1, Cursor.positionInBlock() + 1
         self._TE_AppVariables.DocumentStatus["line"] = x
         self._TE_AppVariables.DocumentStatus["column"] = y
         self._TE_AppVariables.DocumentStatus["char"] = len(self.TextEditor_MainWidget.toPlainText())
@@ -480,7 +480,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         Cursor.removeSelectedText()
         
         Cursor.setPosition(InitialBlockPos)
-        self.TextEditor_MainWidget.setTextCursor(cursor)
+        self.TextEditor_MainWidget.setTextCursor(Cursor)
         
         self._TE_AppVariables.BlockPosition = [[None, None, 0], [None, None, 0]]
         self._TE_AppVariables.BlockContent = None
