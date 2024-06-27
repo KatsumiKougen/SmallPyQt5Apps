@@ -5,7 +5,7 @@ from text_ed_utils.ViewBlock import TE_ViewBlockDialog
 from about.About import TE_AboutDialog
 from highlighter.highlighter import *
 import sys, time, re, os
-from typing import Union, Optional
+from typing import Optional
 from datetime import datetime
 
 match os.name:
