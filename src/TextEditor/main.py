@@ -407,7 +407,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.TextEditor_MainWidget.textCursor().positionInBlock(),
             self.TextEditor_MainWidget.textCursor().position(),
         ]
-        self.TE_UpdateWSBlockPositions(self, NewBeginPosition, 1)
+        self.TE_UpdateWSBlockPositions(self, NewEndPosition, 1)
     
     def TE_CopyWSBlock(self):
         self.TextEditor_MainWidget.insertPlainText(self._TE_AppVariables.BlockContent)
