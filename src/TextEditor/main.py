@@ -471,6 +471,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             return
         
         Cursor = self.TextEditor_MainWidget.textCursor()
+        CurrentCursorPos = Cursor.position()
         InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
         FinalBlockPos = self._TE_AppVariables.BlockPosition[1][2]
         BlockLen = FinalBlockPos - InitialBlockPos
@@ -479,7 +480,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         Cursor.setPosition(FinalBlockPos, QtGui.QTextCursor.KeepAnchor)
         Cursor.removeSelectedText()
         
-        Cursor.setPosition(InitialBlockPos)
+        Cursor.setPosition(CurrentCursorPos-BlockLen)
         self.TextEditor_MainWidget.setTextCursor(Cursor)
         
         self._TE_AppVariables.BlockPosition = [[None, None, 0], [None, None, 0]]
