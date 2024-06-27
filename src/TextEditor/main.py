@@ -393,7 +393,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.TE_ShowWSBlockStatus()
 
-    def _TE_UpdateWSBlockContent(self):
+    def __TE_UpdateWSBlockPositions(self):
         if self._TE_WSBlockExists():
             InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
             FinalBlockPos = self._TE_AppVariables.BlockPosition[1][2]
@@ -406,20 +406,36 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self._TE_AppVariables.BlockContent = None
     
     def TE_MarkWSBegin(self):
+        Cursor = self.TextEditor_MainWidget.textCursor()
         NewBeginPosition = [
-            self.TextEditor_MainWidget.textCursor().blockNumber(),
-            self.TextEditor_MainWidget.textCursor().positionInBlock(),
-            self.TextEditor_MainWidget.textCursor().position(),
+            Cursor.blockNumber(),
+            Cursor.positionInBlock(),
+            Cursor.position(),
         ]
-        self._TE_UpdateWSBlockPositions(NewBeginPosition, 0)
+        
+        if self._TE_AppVariables.BlockPosition[1][2] is not None and NewBeginPosition[2] > self._TE_AppVariables.BlockPosition[1][2]:
+            self._TE_AppVariables.BlockPosition[1], self._TE_AppVariables.BlockPosition[0] = self._TE_AppVariables.BlockPosition[0], NewBeginPosition
+        else:
+            self._TE_AppVariables.BlockPosition[0] = NewBeginPosition
+        
+        self._TE_UpdateWSBlockPositions()
+        self.TE_ShowWSBlockStatus()
     
     def TE_MarkWSEnd(self):
+        Cursor = self.TextEditor_MainWidget.textCursor()
         NewEndPosition = [
-            self.TextEditor_MainWidget.textCursor().blockNumber(),
-            self.TextEditor_MainWidget.textCursor().positionInBlock(),
-            self.TextEditor_MainWidget.textCursor().position(),
+            Cursor.blockNumber(),
+            Cursor.positionInBlock(),
+            Cursor.position(),
         ]
-        self._TE_UpdateWSBlockPositions(NewEndPosition, 1)
+        
+        if self._TE_AppVariables.BlockPosition[0][2] is not None and NewEndPosition[2] < self._TE_AppVariables.BlockPosition[0][2]:
+            self._TE_AppVariables.BlockPosition[0], self._TE_AppVariables.BlockPosition[1] = NewEndPosition, self._TE_AppVariables.BlockPosition[1]
+        else:
+            self._TE_AppVariables.BlockPosition[1] = NewEndPosition
+        
+        self._TE_UpdateWSBlockPositions()
+        self.TE_ShowWSBlockStatus()
     
     def TE_CopyWSBlock(self):
         self.TextEditor_MainWidget.insertPlainText(self._TE_AppVariables.BlockContent)
@@ -467,17 +483,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             return
         
         Cursor = self.TextEditor_MainWidget.textCursor()
-        CurrentCursorPos = Cursor.position()
         InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
         FinalBlockPos = self._TE_AppVariables.BlockPosition[1][2]
         BlockLen = FinalBlockPos - InitialBlockPos
         
         Cursor.setPosition(InitialBlockPos)
-        for i in range(BlockLen):
-            Cursor.deleteChar()
+        Cursor.setPosition(FinalBlockPos, QtGui.QTextCursor.KeepAnchor)
+        Cursor.removeSelectedText()
         
-        Cursor.setPosition(min(Cursor.position(), Cursor.position()-BlockLen))
-        self.TextEditor_MainWidget.setTextCursor(Cursor)
+        cursor.setPosition(InitialBlockPos)
+        self.TextEditor_MainWidget.setTextCursor(cursor)
+        
         self._TE_AppVariables.BlockPosition = [[None, None, 0], [None, None, 0]]
         self._TE_AppVariables.BlockContent = None
         self.TE_ShowWSBlockStatus()
