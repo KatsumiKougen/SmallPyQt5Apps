@@ -443,32 +443,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TextEditor_MainWidget.setTextCursor(Cursor)
         self._TE_AppVariables.DocumentBuffer["active"] = self.TextEditor_MainWidget.toPlainText()
 
-        NewBlockBeginPos = CurrentCursorPos
-        NewBlockEndPos = CurrentCursorPos + len(BlockContent)
+        NewInitialBlockPos = CurrentCursorPos
+        NewFinalBlockPos = CurrentCursorPos + len(BlockContent)
         self._TE_AppVariables.BlockPosition = [
-            [None, None, NewBlockBeginPos],
-            [None, None, NewBlockEndPos]
+            [None, None, NewInitialBlockPos],
+            [None, None, NewFinalBlockPos]
         ]
     
     def TE_DeleteWSBlock(self):
-        CurrentCursorPos = self.TextEditor_MainWidget.textCursor().position()
+        if not self.TE_WSBlockExists():
+            return
+        
+        Cursor = self.TextEditor_MainWidget.textCursor()
+        CurrentCursorPos = Cursor.position()
         InitialBlockPos = self._TE_AppVariables.BlockPosition[0][2]
-        if InitialBlockPos < CurrentCursorPos:
-            BlockLen = len(self._TE_AppVariables.BlockContent)
-            Cursor = self.TextEditor_MainWidget.textCursor()
-            Cursor.setPosition(InitialBlockPos)
-            for i in self._TE_AppVariables.BlockContent:
-                Cursor.deleteChar()
-            Cursor.setPosition(CurrentCursorPos-BlockLen)
-            self.TextEditor_MainWidget.setTextCursor(Cursor)
-        elif InitialBlockPos > CurrentCursorPos:
-            BlockLen = len(self._TE_AppVariables.BlockContent)
-            Cursor = self.TextEditor_MainWidget.textCursor()
-            Cursor.setPosition(InitialBlockPos)
-            for i in self._TE_AppVariables.BlockContent:
-                Cursor.deleteChar()
-            Cursor.setPosition(CurrentCursorPos)
-            self.TextEditor_MainWidget.setTextCursor(Cursor)
+        FinalBlockPos = self._TE_AppVariables.BlockPosition[1][2]
+        BlockLen = FinalBlockPos - InitialBlockPos
+        
+        Cursor.setPosition(InitialBlockPos)
+        for i in range(BlockLen):
+            Cursor.deleteChar()
+        
+        Cursor.setPosition(min(Cursor.position(), Cursor.position()-BlockLen))
+        self.TextEditor_MainWidget.setTextCursor(cursor)
+        self._TE_AppVariables.BlockPosition = [[None, None, 0], [None, None, 0]]
+        self._TE_AppVariables.BlockContent = None
+        self.TE_ShowWSBlockStatus()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
