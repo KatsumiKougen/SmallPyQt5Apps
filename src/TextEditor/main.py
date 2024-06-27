@@ -399,7 +399,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.TextEditor_MainWidget.textCursor().positionInBlock(),
             self.TextEditor_MainWidget.textCursor().position(),
         ]
-        self.TE_UpdateWSBlockPositions(self, NewBeginPosition, 0)
+        self.TE_UpdateWSBlockPositions(NewBeginPosition, 0)
     
     def TE_MarkWSEnd(self):
         NewEndPosition = [
@@ -407,7 +407,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.TextEditor_MainWidget.textCursor().positionInBlock(),
             self.TextEditor_MainWidget.textCursor().position(),
         ]
-        self.TE_UpdateWSBlockPositions(self, NewEndPosition, 1)
+        self.TE_UpdateWSBlockPositions(NewEndPosition, 1)
     
     def TE_CopyWSBlock(self):
         self.TextEditor_MainWidget.insertPlainText(self._TE_AppVariables.BlockContent)
@@ -465,7 +465,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             Cursor.deleteChar()
         
         Cursor.setPosition(min(Cursor.position(), Cursor.position()-BlockLen))
-        self.TextEditor_MainWidget.setTextCursor(cursor)
+        self.TextEditor_MainWidget.setTextCursor(Cursor)
         self._TE_AppVariables.BlockPosition = [[None, None, 0], [None, None, 0]]
         self._TE_AppVariables.BlockContent = None
         self.TE_ShowWSBlockStatus()
