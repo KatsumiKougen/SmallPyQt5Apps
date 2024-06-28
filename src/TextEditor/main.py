@@ -547,13 +547,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TextEditor_MainWidget.setTextCursor(Cursor)
         self._TE_AppVariables.DocumentBuffer["active"] = \
             self.TextEditor_MainWidget.toPlainText()
-
-        NewInitialBlockPos = CurrentCursorPos
-        NewFinalBlockPos = CurrentCursorPos + len(BlockContent)
-        self._TE_AppVariables.BlockPosition = [
-            [None, None, NewInitialBlockPos],
-            [None, None, NewFinalBlockPos]
-        ]
+        
+        self._TE_ResetWSBlock()
+        self.TE_ShowWSBlockStatus()
     
     def TE_DeleteWSBlock(self):
         if not self._TE_WSBlockExists():
