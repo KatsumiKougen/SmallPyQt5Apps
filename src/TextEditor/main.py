@@ -471,6 +471,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             self._TE_AppVariables.BlockContent = None
     
+    def _TE_ResetWSBlock(self):
+        self._TE_AppVariables.BlockPosition = [[None, None, 0], [None, None, 0]]
+        self._TE_AppVariables.BlockContent = None
+    
     def TE_MarkWSBegin(self):
         Cursor = self.TextEditor_MainWidget.textCursor()
         NewBeginPosition = [
@@ -568,8 +572,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         Cursor.setPosition(CurrentCursorPos-BlockLen)
         self.TextEditor_MainWidget.setTextCursor(Cursor)
         
-        self._TE_AppVariables.BlockPosition = [[None, None, 0], [None, None, 0]]
-        self._TE_AppVariables.BlockContent = None
+        self._TE_ResetWSBlock()
         self.TE_ShowWSBlockStatus()
 
 if __name__ == "__main__":
