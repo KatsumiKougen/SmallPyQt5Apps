@@ -31,7 +31,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     class _TE_AppVariables:
         
-        WindowTitle: str = "The text editor - $file" if os.name == "posix" else "The text editor ~ Windows Edition - $file"
+        WindowTitle: str = \
+            "The text editor - $file" \
+            if os.name == "posix" \
+            else "The text editor ~ Windows Edition - $file"
         
         TextEdInsertMode: str = "`I`"
         TextEdOverwriteMode: str = "`O`"
@@ -81,9 +84,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.TextEditor_MainWidget.textChanged.connect(self.TE_DisplayTitle)
         
         def ConnectCursorPosChangedSignal():
-            self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateLCD)
-            self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_UpdateProgressBar)
-            self.TextEditor_MainWidget.cursorPositionChanged.connect(self.TE_GetDocumentStatus)
+            self.TextEditor_MainWidget.cursorPositionChanged.connect(
+                self.TE_UpdateLCD
+            )
+            self.TextEditor_MainWidget.cursorPositionChanged.connect(
+                self.TE_UpdateProgressBar
+            )
+            self.TextEditor_MainWidget.cursorPositionChanged.connect(
+                self.TE_GetDocumentStatus
+            )
         
         ConnectTextChangedSignal()
         ConnectCursorPosChangedSignal()
@@ -91,17 +100,31 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Functions for main window
     
     def TE_UpdateFileNameLabel(self):
-        CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName if isinstance(self._TE_AppVariables.CurrentWorkspaceName, str) else "[Untitled]"
-        NewFileNameLabel = self._TE_AppVariables.FileStatusLabel.replace("$file", CurrentFileName)
+        CurrentFileName = \
+            self._TE_AppVariables.CurrentWorkspaceName if isinstance(
+                self._TE_AppVariables.CurrentWorkspaceName, str
+            ) \
+            else "[Untitled]"
+        NewFileNameLabel = self._TE_AppVariables.FileStatusLabel.replace(
+            "$file", CurrentFileName
+        )
         self.Status_FileNameLabel.setText(NewFileNameLabel)
     
     def TE_DisplayTitle(self):
-        CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName if isinstance(self._TE_AppVariables.CurrentWorkspaceName, str) else "[Untitled]"
-        self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace("$file", f"{CurrentFileName}{'*' if not self.TE_FileSaved() else ''}"))
+        CurrentFileName = \
+            self._TE_AppVariables.CurrentWorkspaceName \
+            if isinstance(self._TE_AppVariables.CurrentWorkspaceName, str) \
+            else "[Untitled]"
+        self.setWindowTitle(self._TE_AppVariables.WindowTitle.replace(
+            "$file", f"{CurrentFileName}{'*' if not self.TE_FileSaved() else ''}"
+        ))
     
     def closeEvent(self, event):
         if not self.TE_FileSaved():
-            CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName if isinstance(self._TE_AppVariables.CurrentWorkspaceName, str) else "[Untitled]"
+            CurrentFileName = \
+                self._TE_AppVariables.CurrentWorkspaceName \
+                if isinstance(self._TE_AppVariables.CurrentWorkspaceName, str) else "[Untitled]"
+            
             MessageBox = QtWidgets.QMessageBox()
             MessageBox.setTextFormat(QtCore.Qt.MarkdownText)
             MessageBox.setWindowTitle("Exiting the text editor so soon?")
@@ -110,11 +133,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 f"Are you sure you want to exit?\n"
                 f"All unsaved changes to {CurrentFileName} will be lost!\n"
                 "\n"
-                "Please! *sniff* Please stay... it's just that I've never met someone like you...\n"
+                "Please! *sniff* Please stay... "
+                "it's just that I've never met someone like you...\n"
                 "I want to hang out with you... for a little while..."
             )
-            MessageBox.setStandardButtons(QtWidgets.QMessageBox.Save | QtWidgets.QMessageBox.Close | QtWidgets.QMessageBox.Cancel)
+            MessageBox.setStandardButtons(
+                QtWidgets.QMessageBox.Save |
+                QtWidgets.QMessageBox.Close |
+                QtWidgets.QMessageBox.Cancel
+            )
             MessageBox.setDefaultButton(QtWidgets.QMessageBox.Cancel)
+            
             ret = MessageBox.exec()
             match ret:
                 case QtWidgets.QMessageBox.Close:
@@ -157,10 +186,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Function for manipulating LCD widgets
     
     def TE_SetLCDWidgets(self):
-        self.Status_LCDDisplay0.setStyleSheet("QLCDNumber {background: black; color: #1438db;}")
-        self.Status_LCDDisplay1.setStyleSheet("QLCDNumber {background: black; color: #2f90eb;}")
-        self.Status_LCDDisplay2.setStyleSheet("QLCDNumber {background: black; color: #79baf7;}")
-        self.Status_LCDDisplay3.setStyleSheet("QLCDNumber {background: black; color: #dcf1f7;}")
+        self.Status_LCDDisplay0.setStyleSheet(
+            "QLCDNumber {background: black; color: #1438db;}"
+        )
+        self.Status_LCDDisplay1.setStyleSheet(
+            "QLCDNumber {background: black; color: #2f90eb;}"
+        )
+        self.Status_LCDDisplay2.setStyleSheet(
+            "QLCDNumber {background: black; color: #79baf7;}"
+        )
+        self.Status_LCDDisplay3.setStyleSheet(
+            "QLCDNumber {background: black; color: #dcf1f7;}"
+        )
     
     def TE_UpdateLCD(self):
         self.Status_LCDDisplay0.display(self._TE_AppVariables.DocumentStatus["line"])
@@ -179,15 +216,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.actionSaveAs.triggered.connect(lambda: self.TE_SaveFile(1))
         
         def SetAction_OpenCustomiseEditorWidget():
-            self.actionSetFontSizeAndIndent.triggered.connect(self.TE_OpenCustomiseEditorDialog)
+            self.actionSetFontSizeAndIndent.triggered.connect(
+                self.TE_OpenCustomiseEditorDialog
+            )
         
         def SetAction_OverwriteMode():
             self.actionToggleInsertOverwriteMode.triggered.connect(self.TE_ToggleOverwrite)
         
         def SetAction_SyntaxHighlighting():
             self.TE_SyntaxHlActionGroup = QtWidgets.QActionGroup(self)
-            self.actionSH_PlainText.triggered.connect(lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText))
-            self.actionSH_Python.triggered.connect(lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.Python))
+            self.actionSH_PlainText.triggered.connect(
+                lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
+            )
+            self.actionSH_Python.triggered.connect(
+                lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.Python)
+            )
             self.TE_SyntaxHlActionGroup.addAction(self.actionSH_PlainText)
             self.TE_SyntaxHlActionGroup.addAction(self.actionSH_Python)
             self.TE_SyntaxHlActionGroup.setExclusive(True)
@@ -214,11 +257,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # Functions for file handling
     
     def TE_FileExists(self) -> bool:
-        return os.path.isfile(f"{os.getcwd()}/{self._TE_AppVariables.CurrentWorkspaceName}")
+        return os.path.isfile(
+            f"{os.getcwd()}/{self._TE_AppVariables.CurrentWorkspaceName}"
+        )
     
     def TE_FileSaved(self) -> bool:
         if self._TE_AppVariables.CurrentWorkspaceName != None:
-            return self._TE_AppVariables.DocumentBuffer["active"] == self._TE_AppVariables.DocumentBuffer["saved"] and self.TE_FileExists()
+            return (
+                self._TE_AppVariables.DocumentBuffer["active"] ==
+                self._TE_AppVariables.DocumentBuffer["saved"] and self.TE_FileExists()
+            )
         else:
             return False
     
@@ -227,34 +275,45 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             parent=self,
             caption="Open...",
             directory="./",
-            filter="All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;Python source code (*.py, *.py3, *.pyw, *.pyd)",
+            filter=
+                "All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;"
+                "Python source code (*.py, *.py3, *.pyw, *.pyd)",
         )
+        
         with open(OpenFileName[0], "r") as fi:
             OpenFileContent = fi.read()
             self._TE_AppVariables.DocumentBuffer["saved"] = OpenFileContent
             self._TE_AppVariables.DocumentBuffer["active"] = OpenFileContent
+            
             self.TextEditor_MainWidget.clear()
             self.TextEditor_MainWidget.insertPlainText(OpenFileContent)
-            self._TE_AppVariables.CurrentWorkspaceName = OpenFileName[0].split(TE_DirectorySeparator)[-1]
+            self._TE_AppVariables.CurrentWorkspaceName = \
+                OpenFileName[0].split(TE_DirectorySeparator)[-1]
+            
             self.TE_UpdateFileNameLabel()
             self.TE_DisplayTitle()
     
     def TE_SaveFile(self, mode: int = 0):
         CurrentBuffer = self._TE_AppVariables.DocumentBuffer
+        
         match mode:
             case 0: # Save
-                if self._TE_AppVariables.CurrentWorkspaceName == None or not self.TE_FileExists():
+                if (self._TE_AppVariables.CurrentWorkspaceName == None
+                or not self.TE_FileExists()):
                     SaveFileName = QtWidgets.QFileDialog.getSaveFileName(
                         parent=self,
                         caption="Save...",
                         directory=self._TE_AppVariables.CurrentWorkspaceName,
-                        filter="All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;Python source code (*.py, *.py3, *.pyw, *.pyd)"
+                        filter=
+                            "All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;"
+                            "Python source code (*.py, *.py3, *.pyw, *.pyd)",
                     )
                     if SaveFileName != ("", ""):
                         self._TE_AppVariables.DocumentBuffer["saved"] = CurrentBuffer["active"]
                         with open(SaveFileName[0], "w") as fo:
                             fo.write(CurrentBuffer["saved"])
-                        self._TE_AppVariables.CurrentWorkspaceName = SaveFileName[0].split(TE_DirectorySeparator)[-1]
+                        self._TE_AppVariables.CurrentWorkspaceName = \
+                            SaveFileName[0].split(TE_DirectorySeparator)[-1]
                         self.TE_UpdateFileNameLabel()
                         self.TE_DisplayTitle()
                 else:
@@ -268,13 +327,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     parent=self,
                     caption="Save as...",
                     directory=self._TE_AppVariables.CurrentWorkspaceName,
-                    filter="All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;Python source code (*.py, *.py3, *.pyw, *.pyd)"
+                    filter=
+                        "All file formats (*.*);;Text file (*.txt);;Markdown document (*.md);;"
+                        "Python source code (*.py, *.py3, *.pyw, *.pyd)"
                 )
                 if SaveFileName != ("", ""):
                     self._TE_AppVariables.DocumentBuffer["saved"] = CurrentBuffer["active"]
                     with open(SaveFileName[0], "w") as fo:
                         fo.write(CurrentBuffer["saved"])
-                    self._TE_AppVariables.CurrentWorkspaceName = SaveFileName[0].split(TE_DirectorySeparator)[-1]
+                    self._TE_AppVariables.CurrentWorkspaceName = \
+                        SaveFileName[0].split(TE_DirectorySeparator)[-1]
                     self.TE_UpdateFileNameLabel()
                     self.TE_DisplayTitle()
     
@@ -290,7 +352,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.TE_UpdateFileNameLabel()
             self.TE_DisplayTitle()
         
-        CurrentFileName = self._TE_AppVariables.CurrentWorkspaceName if isinstance(self._TE_AppVariables.CurrentWorkspaceName, str) else "[Untitled]"
+        CurrentFileName = \
+            self._TE_AppVariables.CurrentWorkspaceName \
+            if isinstance(self._TE_AppVariables.CurrentWorkspaceName, str) else "[Untitled]"
         ConfirmActionMessageBox = QtWidgets.QMessageBox()
         ConfirmActionMessageBox.setTextFormat(QtCore.Qt.MarkdownText)
         ConfirmActionMessageBox.setWindowTitle("Ready to be reborn, sucker?")
@@ -302,7 +366,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "Dude... please! I need to exist!\n"
             "I'm begging you... DON'T PRESS THAT \"DISCARD\" BUTTON!!"
         )
-        ConfirmActionMessageBox.setStandardButtons(QtWidgets.QMessageBox.Save | QtWidgets.QMessageBox.Discard | QtWidgets.QMessageBox.Cancel)
+        ConfirmActionMessageBox.setStandardButtons(
+            QtWidgets.QMessageBox.Save |
+            QtWidgets.QMessageBox.Discard |
+            QtWidgets.QMessageBox.Cancel
+        )
         ConfirmActionMessageBox.setDefaultButton(QtWidgets.QMessageBox.Cancel)
         if not self.TE_FileSaved():
             ret = ConfirmActionMessageBox.exec()
@@ -322,9 +390,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         y, x = Cursor.blockNumber() + 1, Cursor.positionInBlock() + 1
         self._TE_AppVariables.DocumentStatus["line"] = x
         self._TE_AppVariables.DocumentStatus["column"] = y
-        self._TE_AppVariables.DocumentStatus["char"] = len(self.TextEditor_MainWidget.toPlainText())
-        self._TE_AppVariables.DocumentStatus["word"] = len(re.split("\\s+", self.TextEditor_MainWidget.toPlainText().strip()))
-        self._TE_AppVariables.DocumentBuffer["active"] = self.TextEditor_MainWidget.toPlainText()
+        self._TE_AppVariables.DocumentStatus["char"] = len(
+            self.TextEditor_MainWidget.toPlainText()
+        )
+        self._TE_AppVariables.DocumentStatus["word"] = len(
+            re.split("\\s+", self.TextEditor_MainWidget.toPlainText().strip())
+        )
+        self._TE_AppVariables.DocumentBuffer["active"] = \
+            self.TextEditor_MainWidget.toPlainText()
     
     def TE_SetFontSize(self, point: int):
         self.TextEditor_MainWidget.setFont(QtGui.QFont("Monospace", point))
@@ -342,7 +415,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         IndentationWidth = self._TE_AppVariables.CurrentIndentationSpace
         MainWidgetContent = self.TextEditor_MainWidget.toPlainText()
         self.TextEditor_MainWidget.clear()
-        self.TextEditor_MainWidget.insertPlainText(MainWidgetContent.replace("\t", " "*IndentationWidth))
+        self.TextEditor_MainWidget.insertPlainText(
+            MainWidgetContent.replace("\t", " "*IndentationWidth)
+        )
     
     def TE_SetSyntaxHighlighting(self, arg: int):
         self.highlighter = TE_Highlighter(arg, self.TextEditor_MainWidget.document())
@@ -377,7 +452,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def TE_ShowWSBlockStatus(self):
         position = self._TE_AppVariables.BlockPosition
         if self._TE_WSBlockExists():
-            self.Misc_WordStarBlockLabel.setText(f"WordStar block at ({position[0][0]}:{position[0][1]});({position[1][0]}:{position[1][1]})")
+            self.Misc_WordStarBlockLabel.setText(
+                f"WordStar block at ({position[0][0]}:{position[0][1]});"
+                f"({position[1][0]}:{position[1][1]})"
+            )
         else:
             self.Misc_WordStarBlockLabel.setText("No block")
     
@@ -401,8 +479,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             Cursor.position(),
         ]
         
-        if self._TE_AppVariables.BlockPosition[1][2] is not None and NewBeginPosition[2] > self._TE_AppVariables.BlockPosition[1][2]:
-            self._TE_AppVariables.BlockPosition[1], self._TE_AppVariables.BlockPosition[0] = self._TE_AppVariables.BlockPosition[0], NewBeginPosition
+        if (self._TE_AppVariables.BlockPosition[1][2] is not None
+        and NewBeginPosition[2] > self._TE_AppVariables.BlockPosition[1][2]):
+            self._TE_AppVariables.BlockPosition[1], self._TE_AppVariables.BlockPosition[0] = \
+                self._TE_AppVariables.BlockPosition[0], NewBeginPosition
         else:
             self._TE_AppVariables.BlockPosition[0] = NewBeginPosition
         
@@ -417,8 +497,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             Cursor.position(),
         ]
         
-        if self._TE_AppVariables.BlockPosition[0][2] is not None and NewEndPosition[2] < self._TE_AppVariables.BlockPosition[0][2]:
-            self._TE_AppVariables.BlockPosition[0], self._TE_AppVariables.BlockPosition[1] = NewEndPosition, self._TE_AppVariables.BlockPosition[1]
+        if (self._TE_AppVariables.BlockPosition[0][2] is not None
+        and NewEndPosition[2] < self._TE_AppVariables.BlockPosition[0][2]):
+            self._TE_AppVariables.BlockPosition[0], self._TE_AppVariables.BlockPosition[1] = \
+                NewEndPosition, self._TE_AppVariables.BlockPosition[1]
         else:
             self._TE_AppVariables.BlockPosition[1] = NewEndPosition
         
@@ -441,7 +523,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if InitialBlockPos == FinalBlockPos:
             return
         
-        BlockContent = self.TextEditor_MainWidget.toPlainText()[InitialBlockPos:FinalBlockPos]
+        BlockContent = self.TextEditor_MainWidget.toPlainText()[
+            InitialBlockPos:FinalBlockPos
+        ]
         
         if InitialBlockPos < CurrentCursorPos < FinalBlockPos:
             return
@@ -457,7 +541,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         Cursor.insertText(BlockContent)
         
         self.TextEditor_MainWidget.setTextCursor(Cursor)
-        self._TE_AppVariables.DocumentBuffer["active"] = self.TextEditor_MainWidget.toPlainText()
+        self._TE_AppVariables.DocumentBuffer["active"] = \
+            self.TextEditor_MainWidget.toPlainText()
 
         NewInitialBlockPos = CurrentCursorPos
         NewFinalBlockPos = CurrentCursorPos + len(BlockContent)
