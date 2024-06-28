@@ -45,8 +45,10 @@ TE_GlobalStyles = {
 
 class TE_Highlighter(QtGui.QSyntaxHighlighter):
     
-    def __init__(self, lang: int, parent: QtGui.QTextDocument):
+    def __init__(self, highlight_flag: bool, lang: int, parent: QtGui.QTextDocument):
         super().__init__(parent)
+        
+        self.HighlightingEnabled = highlight_flag
     
         self.SyntaxRules = {}
         match lang:
@@ -193,45 +195,45 @@ class TE_Highlighter(QtGui.QSyntaxHighlighter):
                 self.rules = [(QtCore.QRegExp(pat), index, fmt) for (pat, index, fmt) in rules]
     
     def highlightBlock(self, text):
-        try:
-            self.tripleQuotesWithinStrings = []
-            # Do other syntax formatting
-            for expression, nth, format in self.rules:
-                index = expression.indexIn(text, 0)
-                if index >= 0:
-                    # if there is a string we check
-                    # if there are some triple quotes within the string
-                    # they will be ignored if they are matched again
-                    if expression.pattern() in ['"[^"\\\\]*(\\\\.[^"\\\\]*)*"', "'[^'\\\\]*(\\\\.[^'\\\\]*)*'"]:
-                        innerIndex = self.tri_single[0].indexIn(text, index + 1)
-                        if innerIndex == -1:
-                            innerIndex = self.tri_double[0].indexIn(text, index + 1)
+        if not self.HighlightingEnabled:
+            return
+        
+        self.tripleQuotesWithinStrings = []
+        # Do other syntax formatting
+        for expression, nth, format in self.rules:
+            index = expression.indexIn(text, 0)
+            if index >= 0:
+                # if there is a string we check
+                # if there are some triple quotes within the string
+                # they will be ignored if they are matched again
+                if expression.pattern() in ['"[^"\\\\]*(\\\\.[^"\\\\]*)*"', "'[^'\\\\]*(\\\\.[^'\\\\]*)*'"]:
+                    innerIndex = self.tri_single[0].indexIn(text, index + 1)
+                    if innerIndex == -1:
+                        innerIndex = self.tri_double[0].indexIn(text, index + 1)
 
-                        if innerIndex != -1:
-                            tripleQuoteIndexes = range(innerIndex, innerIndex + 3)
-                            self.tripleQuotesWithinStrings.extend(tripleQuoteIndexes)
+                    if innerIndex != -1:
+                        tripleQuoteIndexes = range(innerIndex, innerIndex + 3)
+                        self.tripleQuotesWithinStrings.extend(tripleQuoteIndexes)
 
-                while index >= 0:
-                    # skipping triple quotes within strings
-                    if index in self.tripleQuotesWithinStrings:
-                        index += 1
-                        expression.indexIn(text, index)
-                        continue
+            while index >= 0:
+                # skipping triple quotes within strings
+                if index in self.tripleQuotesWithinStrings:
+                    index += 1
+                    expression.indexIn(text, index)
+                    continue
 
-                    # We actually want the index of the nth match
-                    index = expression.pos(nth)
-                    length = len(expression.cap(nth))
-                    self.setFormat(index, length, format)
-                    index = expression.indexIn(text, index + length)
+                # We actually want the index of the nth match
+                index = expression.pos(nth)
+                length = len(expression.cap(nth))
+                self.setFormat(index, length, format)
+                index = expression.indexIn(text, index + length)
 
-            self.setCurrentBlockState(0)
+        self.setCurrentBlockState(0)
 
-            # Do multi-line strings
-            in_multiline = self.MatchMultiline(text, *self.tri_single)
-            if not in_multiline:
-                in_multiline = self.MatchMultiline(text, *self.tri_double)
-        except AttributeError:
-            pass
+        # Do multi-line strings
+        in_multiline = self.MatchMultiline(text, *self.tri_single)
+        if not in_multiline:
+            in_multiline = self.MatchMultiline(text, *self.tri_double)
 
     def MatchMultiline(self, text, delimiter, in_state, style):
         # If inside triple-single quotes, start at 0

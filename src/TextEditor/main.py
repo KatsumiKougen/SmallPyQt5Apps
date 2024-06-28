@@ -229,7 +229,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.PlainText)
             )
             self.actionSH_Python.triggered.connect(
-                lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.Python)
+                lambda: self.TE_SetSyntaxHighlighting(TE_HighlightStyle.Python, enabled=True)
             )
             self.TE_SyntaxHlActionGroup.addAction(self.actionSH_PlainText)
             self.TE_SyntaxHlActionGroup.addAction(self.actionSH_Python)
@@ -419,16 +419,17 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             MainWidgetContent.replace("\t", " "*IndentationWidth)
         )
     
-    def TE_SetSyntaxHighlighting(self, arg: int):
-        self.highlighter = TE_Highlighter(arg, self.TextEditor_MainWidget.document())
+    def TE_SetSyntaxHighlighting(self, arg: int, enabled: bool = False):
+        self.Highlighter = TE_Highlighter(enabled, arg, self.TextEditor_MainWidget.document())
+        self.Highlighter.rehighlight()
         self.TE_SetSyntaxHighlightingText(arg)
     
     def TE_SetSyntaxHighlightingText(self, arg: int):
         match arg:
-            case TE_HighlightStyle.PlainText:
-                self.Status_LanguageLabel.setText("Plain text")
             case TE_HighlightStyle.Python:
                 self.Status_LanguageLabel.setText("Python")
+            case _:
+                self.Status_LanguageLabel.setText("Plain text")
     
     def TE_ToggleOverwrite(self):
         if self.TextEditor_MainWidget.overwriteMode():
