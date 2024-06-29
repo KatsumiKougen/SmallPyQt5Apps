@@ -183,7 +183,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self._TE_TimeThread.time.connect(self.TE_DisplayTime)
         self._TE_TimeThread.start()
     
-    # Function for manipulating LCD widgets
+    # Functions for manipulating LCD widgets
     
     def TE_SetLCDWidgets(self):
         self.Status_LCDDisplay0.setStyleSheet(
@@ -445,7 +445,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.Misc_ProgressBar.setMaximum(DocumentLength)
         self.Misc_ProgressBar.setValue(CursorPosition)
     
-    # Function for working with WordStar blocks
+    # Functions for working with WordStar blocks
     
     def _TE_WSBlockExists(self) -> bool:
         return [None, None, 0] not in self._TE_AppVariables.BlockPosition
@@ -571,6 +571,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self._TE_ResetWSBlock()
         self.TE_ShowWSBlockStatus()
+    
+    # Functions for inserting brackets
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
