@@ -247,12 +247,36 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.actionConvertTabsToSpaces.triggered.connect(self.TE_ConvertIndentation)
             self.actionAbout.triggered.connect(self.TE_OpenAboutDialog)
         
+        def SetAction_InsertBrackets():
+            self.actionIB_RoundBracket.triggered.connect(
+                lambda: self.TE_InsertBrackets("round")
+            )
+            self.actionIB_SquareBracket.triggered.connect(
+                lambda: self.TE_InsertBrackets("square")
+            )
+            self.actionIB_CurlyBracket.triggered.connect(
+                lambda: self.TE_InsertBrackets("curly")
+            )
+            self.actionIB_AngleBracket.triggered.connect(
+                lambda: self.TE_InsertBrackets("angle")
+            )
+            self.actionIB_SingleQuote.triggered.connect(
+                lambda: self.TE_InsertBrackets("squote")
+            )
+            self.actionIB_DoubleQuote.triggered.connect(
+                lambda: self.TE_InsertBrackets("dquote")
+            )
+            self.actionIB_Guillemet.triggered.connect(
+                lambda: self.TE_InsertBrackets("guillemet")
+            )
+        
         SetAction_FileOperations()
         SetAction_OpenCustomiseEditorWidget()
         SetAction_OverwriteMode()
         SetAction_SyntaxHighlighting()
         SetAction_WordStarBlock()
         SetAction_Misc()
+        SetAction_InsertBrackets()
     
     # Functions for file handling
     
