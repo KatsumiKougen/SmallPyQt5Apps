@@ -573,6 +573,29 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.TE_ShowWSBlockStatus()
     
     # Functions for inserting brackets
+    
+    def TE_InsertBrackets(self, bracket_type: str):
+        Brackets = {
+            "round": "()",
+            "square": "[]",
+            "curly": "{}",
+            "angle": "<>",
+            "squote": "''",
+            "dquote": "\"\"",
+            "guillemet": "«»",
+        }
+        Cursor = self.TextEditor_MainWidget.textCursor()
+        
+        if not Cursor.hasSelection():
+            return
+        
+        SelectedText = Cursor.selectedText().replace("\u2029", "\n")
+        Cursor.removeSelectedText()
+        Cursor.insertText(
+            f"{Brackets[bracket_type][0]}{SelectedText}{Brackets[bracket_type][1]}"
+        )
+        Cursor.setPosition(Cursor.position()-1)
+        self.TextEditor_MainWidget.setTextCursor(Cursor)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
