@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QLabel" name="CPG_CP_Colour">
+    <widget class="QLabel" name="CPG_CP_ColourRect">
      <property name="text">
       <string/>
      </property>
