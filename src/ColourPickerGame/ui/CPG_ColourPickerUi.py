@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_CPG_CP_IncompleteWidget(object):
     def setupUi(self, CPG_CP_IncompleteWidget):
         CPG_CP_IncompleteWidget.setObjectName("CPG_CP_IncompleteWidget")
-        CPG_CP_IncompleteWidget.resize(407, 449)
+        CPG_CP_IncompleteWidget.resize(818, 572)
         self.horizontalLayout = QtWidgets.QHBoxLayout(CPG_CP_IncompleteWidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.CPG_CP_ColourRect = QtWidgets.QLabel(CPG_CP_IncompleteWidget)
