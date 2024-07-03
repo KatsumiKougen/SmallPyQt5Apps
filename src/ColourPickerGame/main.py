@@ -1,14 +1,15 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
-from ui.CPG_MainUi import CPG_MainWindow
+from ui.CPG_MainUi import Ui_MainWindow
 import sys
 
-class Main:
+class CPG_MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def __init__(self):
-        self.App = QtWidgets.QApplication(sys.argv)
-        self.MainWindow = CPG_MainWindow(800, 600, "The Colour Picker Game")
-        self.MainWindow.show()
-        sys.exit(self.App.exec())
+        super().__init__()
+        self.setupUi(self)
 
 if __name__ == "__main__":
-    a = Main()
+    App = QtWidgets.QApplication(sys.argv)
+    Window = CPG_MainWindow()
+    Window.show()
+    sys.exit(App.exec())
